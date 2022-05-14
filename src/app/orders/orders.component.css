@@ -30,7 +30,7 @@
   font-weight: bold;
 }
 .item-display {
-  /* border: 2px solid #ced4da; */
+  border: 2px solid #ced4da;
   border-radius: 1vh;
   background-color: white;
 }
@@ -49,6 +49,7 @@
 .expandable {
   height: 0;
   overflow: hidden;
+  border-radius: 1vh;
 }
 .expandable-data div {
   margin-right: 3em;
