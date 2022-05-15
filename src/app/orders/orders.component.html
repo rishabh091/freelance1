@@ -1,6 +1,6 @@
 <div class="background-image">
   <div class="center">
-    <div class="container bg-light m-3 p-3">
+    <div class="container bg-light m-3 p-3" style="border-radius: 1vh">
       <div class="space-around mb-5">
         <button
           type="button"
@@ -44,25 +44,26 @@
             </div>
           </div>
 
-          <div *ngIf="item.item && item.item.length" class="bg-light mt-3 mb-3 expandable">
-            <div *ngFor="let d of item.item;">
+          <div
+            *ngIf="item.item && item.item.length"
+            class="bg-light mt-3 mb-1 expandable"
+          >
+            <div *ngFor="let d of item.item">
               <div class="d-flex expandable-data pb-1 pt-1 pl-2">
-                <div>
-                  <span class="sub-head">Name :</span> {{ d.name }}
-                </div>
+                <div><span class="sub-head">Name :</span> {{ d.name }}</div>
                 <div>
                   <span class="sub-head">Quantity :</span> {{ d.quantity }}
                 </div>
-                <div>
-                  <span class="sub-head">Cost :</span> {{ d.cost }}
-                </div>
+                <div><span class="sub-head">Cost :</span> {{ d.cost }}</div>
               </div>
             </div>
           </div>
 
           <div class="text-right">
-            <i class="material-icons down-icon" (click)="expand(i)">arrow_downward</i>
-        </div>
+            <i class="material-icons down-icon" (click)="expand(i)"
+              >arrow_downward</i
+            >
+          </div>
         </div>
       </div>
     </div>

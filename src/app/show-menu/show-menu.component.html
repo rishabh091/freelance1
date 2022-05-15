@@ -1,0 +1,30 @@
+<div class="background-image">
+  <div class="center">
+    <div class="container bg-light m-3 p-3" style="border-radius: 1vh">
+      <div class="center heading m-2">HELLO MENU</div>
+      <div class="center">
+        <div class="sub-heading m-2 pb-4 mb-5">
+          khf shfdd iurddrig dg rdihgi df kfsjf h fufgur ug rugu gfd
+        </div>
+      </div>
+
+      <div *ngFor="let item of menu; let i = index">
+        <div class="container-fluid pr-0 item-display mb-2 shadow">
+          <div class="row borderRight" >
+            <div class="col-sm-6 p-4 ">
+              <div class="category-name">{{ item.category }}</div>
+              <div>{{ item.description }}</div>
+            </div>
+            <div class="col-sm-6 pl-0" >
+              <img style="height: 13vh;"
+                class="category-image"
+                src="{{item.image}}"
+                alt=""
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
