@@ -28,6 +28,7 @@
   font-size: large;
   color: grey;
   border-bottom: 2px dashed grey;
+  text-align: center;
 }
 .item-display {
   border: 2px solid #ced4da;

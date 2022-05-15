@@ -1,8 +1,110 @@
 <div class="background-image">
-    <div class="center">
-      <div class="container bg-light m-3 p-3" style="border-radius: 1vh;">
-       
+  <div class="center">
+    <div class="container bg-light m-3 p-3" style="border-radius: 1vh">
+      <div class="center heading m-2">ADD ITEMS TO THE MENU</div>
+      <div class="center">
+        <div class="sub-heading m-2 pb-4 mb-5">
+          Make your menu more interesting and add varities of dishes
+        </div>
+      </div>
+      <div class="register-form">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+          <div class="form-group">
+            <label>Item Category</label>
+            <input
+              type="text"
+              formControlName="itemCategory"
+              class="form-control"
+              [ngClass]="{ 'is-invalid': submitted && f.itemCategory.errors }"
+            />
+            <div
+              *ngIf="submitted && f.itemCategory.errors"
+              class="invalid-feedback"
+            >
+              <div *ngIf="f.itemCategory.errors.required">
+                Item Category is required
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Item Name</label>
+            <input
+              type="text"
+              formControlName="itemName"
+              class="form-control"
+              [ngClass]="{ 'is-invalid': submitted && f.itemName.errors }"
+            />
+            <div
+              *ngIf="submitted && f.itemName.errors"
+              class="invalid-feedback"
+            >
+              <div *ngIf="f.itemName.errors.required">
+                Item Name is required
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Item Description</label>
+            <input
+              type="text"
+              formControlName="itemDesc"
+              class="form-control"
+              [ngClass]="{ 'is-invalid': submitted && f.itemDesc.errors }"
+            />
+            <div
+              *ngIf="submitted && f.itemDesc.errors"
+              class="invalid-feedback"
+            >
+              <div *ngIf="f.itemDesc.errors.required">
+                Item Description is required
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Item Price</label>
+            <input
+              type="number"
+              formControlName="itemAmount"
+              class="form-control"
+              [ngClass]="{ 'is-invalid': submitted && f.itemAmount.errors }"
+            />
+            <div
+              *ngIf="submitted && f.itemAmount.errors"
+              class="invalid-feedback"
+            >
+              <div *ngIf="f.itemAmount.errors.required">
+                Item Amount is required
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Is item veg?</label>
+            <input
+              type="text"
+              formControlName="itemisVeg"
+              class="form-control"
+              [ngClass]="{ 'is-invalid': submitted && f.itemisVeg.errors }"
+            />
+            <div
+              *ngIf="submitted && f.itemisVeg.errors"
+              class="invalid-feedback"
+            >
+              <div *ngIf="f.itemisVeg.errors.required">Field is required</div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary">Register</button>
+            <button
+              type="button"
+              (click)="onReset()"
+              class="btn btn-warning float-right"
+            >
+              Reset
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   </div>
-  
+</div>

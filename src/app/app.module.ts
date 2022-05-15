@@ -8,6 +8,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { ShowMenuComponent } from './show-menu/show-menu.component';
 import { AddMenuComponent } from './add-menu/add-menu.component';
 
+import { ReactiveFormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     AppComponent,
@@ -18,7 +19,8 @@ import { AddMenuComponent } from './add-menu/add-menu.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
