@@ -56,3 +56,16 @@
 .expandable-hide {
   display: none;
 }
+.borderBox {
+  background-color: white;
+  border: 1px solid grey;
+  border-radius: 5px;
+}
+.opacityText {
+  opacity: 0.5;
+}
+.edit {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
