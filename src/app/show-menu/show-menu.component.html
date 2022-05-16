@@ -8,19 +8,38 @@
         </div>
       </div>
 
-      <div *ngFor="let item of menu; let i = index">
-        <div class="container-fluid pr-0 item-display mb-2 shadow">
-          <div class="row borderRight" >
+      <div *ngFor="let item of menu; let i = index" (click)="expandMenu(i)">
+        <div class="container-fluid pr-0 borderRight item-display mb-2 shadow">
+          <div class="row" >
             <div class="col-sm-6 p-4 ">
               <div class="category-name">{{ item.category }}</div>
               <div>{{ item.description }}</div>
             </div>
             <div class="col-sm-6 pl-0" >
-              <img style="height: 13vh;"
+              <img style="height: 25vh;"
                 class="category-image"
                 src="{{item.image}}"
                 alt=""
               />
+            </div>
+          </div>
+
+          <div [ngClass]="{'expandable-hide': expand[i]}" class="bg-light mt-4 p-3">
+            <div *ngFor="let product of item.items" class="border p-4 mb-3">
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="d-flex">
+                    <div style="font-size: 1.2rem; word-spacing: 7px; letter-spacing: 2px;" class="font-weight-bold text-uppercase">
+                      {{ product.itemName }}
+                    </div>
+                    <img *ngIf="!product.isVeg" src="https://img.icons8.com/fluency/48/000000/non-vegetarian-food-symbol.png" class="img-fluid ml-2 mt-1" style="height: 20px;"/>
+                    <img *ngIf="product.isVeg" src="https://cdn-icons.flaticon.com/png/512/3967/premium/3967436.png?token=exp=1652703817~hmac=72eb2dade01e3c1e28b8f0a4717dfb7d" class="img-fluid ml-2 mt-1" style="height: 20px;"/>
+                  </div>
+                  <div class="text-muted">{{ product.itemDes }}</div>
+                  <div class="font-weight-bold text-success mt-3">₹ {{ product.price }}</div>
+                </div>
+                <div class="col-sm-6"></div>
+              </div>
             </div>
           </div>
         </div>

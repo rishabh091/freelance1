@@ -34,6 +34,10 @@
   border: 2px solid #ced4da;
   border-radius: 1vh;
   background-color: white;
+  cursor: pointer;
+}
+.item-display:hover {
+  box-shadow: 0px 0px 10px grey;
 }
 .category-name {
   font-size: 30px;
@@ -47,4 +51,8 @@
 .borderRight {
   border-left: 1vh solid #fec134;
   border-radius: 1vh;
+}
+
+.expandable-hide {
+  display: none;
 }

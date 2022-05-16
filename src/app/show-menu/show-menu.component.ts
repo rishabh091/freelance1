@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
 
 @Component({
   selector: 'app-show-menu',
@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./show-menu.component.css'],
 })
 export class ShowMenuComponent implements OnInit {
-  constructor() {}
+  constructor(private element: ElementRef) {}
 
   public menu = [
     {
@@ -15,23 +15,17 @@ export class ShowMenuComponent implements OnInit {
       image: 'https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
       items: [
         {
-          itemName: 'sk',
+          itemName: 'Noodles',
           itemDes: 'hd',
           price: 240,
           isVeg: true,
         },
         {
-          itemName: 'sk',
+          itemName: 'egg roll',
           itemDes: 'hd',
           price: 240,
-          isVeg: true,
-        },
-        {
-          itemName: 'sk',
-          itemDes: 'hd',
-          price: 240,
-          isVeg: true,
-        },
+          isVeg: false,
+        }
       ],
     },
     {
@@ -186,5 +180,13 @@ export class ShowMenuComponent implements OnInit {
       ],
     },
   ];
-  ngOnInit(): void {}
+  public expand = []
+  ngOnInit(): void {
+    // move it to api from where menu is coming
+    this.expand = this.menu.map(obj => { return true })
+  }
+
+  expandMenu(index: number) {
+    this.expand[index] = !this.expand[index]
+  }
 }
