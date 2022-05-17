@@ -7,9 +7,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavbarComponent implements OnInit {
 
+  public showNav: boolean = true
+
   constructor() { }
 
   ngOnInit(): void {
+    let url = location.href.split('/').pop()
+    if (!url || url.toLowerCase() == 'signup') this.showNav = false
+    else this.showNav = true
   }
 
 }
