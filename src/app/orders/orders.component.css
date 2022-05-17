@@ -53,6 +53,16 @@
   margin-right: 3em;
 }
 
+.borderRight {
+  border-left: 1vh solid #fec134;
+  border-radius: 1vh;
+}
+.btn-background{
+  background-color:  #00a989;
+  color: white;
+}
+
+
 @keyframes rotate-animation {
   from {
     transform: rotate(0deg);

@@ -1,0 +1,60 @@
+.background-image {
+  background-color: #424c5a;
+
+  background-repeat: repeat;
+  background-attachment: fixed;
+  /* background-size: cover; */
+  /* background-size: 100% 100%; */
+  min-height: 100vh;
+}
+.center {
+  display: flex;
+  justify-content: center;
+}
+.space-around {
+  display: flex;
+  /* justify-content: space-around; */
+  flex-wrap: wrap;
+}
+.heading {
+  font-size: xx-large;
+  color: white;
+  font-family: unset;
+}
+.sub-heading {
+  font-size: large;
+  color: grey;
+  border-bottom: 2px dashed grey;
+  text-align: center;
+}
+label {
+  font-weight: bold;
+  color: white;
+}
+.img-fork {
+  height: 15vh;
+  width: 15vh;
+}
+.btn-login {
+  background-color: #00a989;
+  color: white;
+  width: 40%;
+  font-weight: bold;
+  height: 5vh;
+}
+.a-link {
+  color: white;
+}
+.form-control {
+  border-radius: 0rem;
+  height: 5vh;
+}
+
+.error-color {
+  color: #ff9393;
+}
+
+.form-control.is-invalid,
+.was-validated .form-control:invalid {
+  border-color: #ff9393;
+}
