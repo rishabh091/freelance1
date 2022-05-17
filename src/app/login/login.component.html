@@ -13,6 +13,7 @@
               type="number"
               formControlName="phone"
               class="form-control"
+              placeholder="Enter phone"
               [ngClass]="{ 'is-invalid': submitted && f.phone.errors }"
             />
             <div *ngIf="submitted && f.phone.errors" class="invalid-feedback">
@@ -20,11 +21,16 @@
                 Phone Number is required
               </div>
             </div>
+
+            <div *ngIf="requestedOTP" class="mt-4">
+              <input type="number" class="form-control" [(ngModel)]="otp" placeholder="Enter OTP" [ngModelOptions]="{standalone: true}">
+            </div>
           </div>
 
           <div class="form-group">
             <div class="center">
-              <button type="submit" class="btn btn-login mt-3">SEND OTP</button>
+              <button *ngIf="!requestedOTP" type="submit" class="btn btn-login mt-3">SEND OTP</button>
+              <button *ngIf="requestedOTP" type="button" class="btn btn-login mt-3" (click)="verifyOtp()">VERIFY OTP</button>
 
             </div>
             <a href="/signup" class="font-weight-bold p-2 center a-link mt-1">

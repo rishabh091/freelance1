@@ -13,8 +13,10 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
-  form: FormGroup;
-  submitted = false;
+  public form: FormGroup;
+  public submitted = false;
+  public otp: any
+  public requestedOTP: boolean = false
 
   constructor(private formBuilder: FormBuilder, private router: Router) {}
  
@@ -36,12 +38,16 @@ export class LoginComponent implements OnInit {
     if (this.form.invalid) {
       return;
     }
-    this.router.navigate(['/orders'])
+    this.requestedOTP = true
     console.log(JSON.stringify(this.form.value, null, 2));
   }
   onReset(): void {
     this.submitted = false;
     this.form.reset();
+  }
+
+  verifyOtp() {
+    this.router.navigate(['/orders'])
   }
 
 }
