@@ -58,3 +58,9 @@ label {
 .was-validated .form-control:invalid {
   border-color: #ff9393;
 }
+
+@media screen and (width > 1000px) {
+  .form-div {
+    width: 500px;
+  }
+}
