@@ -6,3 +6,12 @@ export enum Nav {
     CompletedOrder,
     DeliveredOrder
 }
+
+export enum StarRating {
+    ZeroStar,
+    OneStar,
+    TwoStar,
+    ThreeStar,
+    FourStar,
+    FiveStar
+  };

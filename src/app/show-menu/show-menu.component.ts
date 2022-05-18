@@ -1,4 +1,7 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MenuItem } from '../interface/interface';
+import { MockResturantMenus, MockMenuGroups } from '../mock.menu'   // dummy data
 
 @Component({
   selector: 'app-show-menu',
@@ -6,216 +9,68 @@ import { Component, OnInit, ElementRef } from '@angular/core';
   styleUrls: ['./show-menu.component.css'],
 })
 export class ShowMenuComponent implements OnInit {
-  constructor(private element: ElementRef) {}
+  constructor(private formBuilder: FormBuilder) {}
 
-  public menu = [
-    {
-      category: 'chinese',
-      description: 'It is characterized by fine selection of ingredients, precise processing, particular care to the amount of fire, and substantial nourishment.',
-      image:
-        'https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-      items: [
-        {
-          itemName: 'Noodles',
-          itemDes:
-            ' From classic favorites like Penne Rosa, Pesto Cavatappi and our World-Famous Mac & Cheese to our Japanese Pan Noodles, Pad Thai, even our fresh and exciting Zoodles and Cauliflower Noodles dishes. ​',
-          price: 240,
-          isVeg: true,
-        },
-        {
-          itemName: 'egg roll',
-          itemDes:
-            ' From classic favorites like Penne Rosa, Pesto Cavatappi and our World-Famous Mac & Cheese to our Japanese Pan Noodles, Pad Thai, even our fresh and exciting Zoodles and Cauliflower Noodles dishes. ​',
-          price: 240,
-          isVeg: false,
-        },
-      ],
-    },
-    {
-      category: 'italian',
-      description: 'Italian cuisine has a great variety of different ingredients which are commonly used, ranging from fruits, vegetables, grains, cheeses, meats and fish. ',
-      image:
-        'https://images.pexels.com/photos/1527603/pexels-photo-1527603.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-      items: [
-        {
-          itemName: 'sk',
-          itemDes:
-            ' From classic favorites like Penne Rosa, Pesto Cavatappi and our World-Famous Mac & Cheese to our Japanese Pan Noodles, Pad Thai, even our fresh and exciting Zoodles and Cauliflower Noodles dishes. ​',
-          price: 240,
-          isVeg: true,
-        },
-        {
-          itemName: 'sk',
-          itemDes:
-            ' From classic favorites like Penne Rosa, Pesto Cavatappi and our World-Famous Mac & Cheese to our Japanese Pan Noodles, Pad Thai, even our fresh and exciting Zoodles and Cauliflower Noodles dishes. ​',
-          price: 240,
-          isVeg: true,
-        },
-        {
-          itemName: 'sk',
-          itemDes:
-            ' From classic favorites like Penne Rosa, Pesto Cavatappi and our World-Famous Mac & Cheese to our Japanese Pan Noodles, Pad Thai, even our fresh and exciting Zoodles and Cauliflower Noodles dishes. ​',
-          price: 240,
-          isVeg: false,
-        },
-      ],
-    },
-    {
-      category: 'soup',
-      description: 'Italian cuisine has a great variety of different ingredients which are commonly used, ranging from fruits, vegetables, grains, cheeses, meats and fish. ',
-      image:
-        'https://images.pexels.com/photos/1731535/pexels-photo-1731535.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+  public editForm: FormGroup
+  public submitted: boolean = false
 
-      items: [
-        {
-          itemName: 'sk',
-          itemDes:
-            ' From classic favorites like Penne Rosa, Pesto Cavatappi and our World-Famous Mac & Cheese to our Japanese Pan Noodles, Pad Thai, even our fresh and exciting Zoodles and Cauliflower Noodles dishes. ​',
-          price: 240,
-          isVeg: true,
-        },
-        {
-          itemName: 'sk',
-          itemDes:
-            ' From classic favorites like Penne Rosa, Pesto Cavatappi and our World-Famous Mac & Cheese to our Japanese Pan Noodles, Pad Thai, even our fresh and exciting Zoodles and Cauliflower Noodles dishes. ​',
-          price: 240,
-          isVeg: false,
-        },
-        {
-          itemName: 'sk',
-          itemDes:
-            ' From classic favorites like Penne Rosa, Pesto Cavatappi and our World-Famous Mac & Cheese to our Japanese Pan Noodles, Pad Thai, even our fresh and exciting Zoodles and Cauliflower Noodles dishes. ​',
-          price: 240,
-          isVeg: true,
-        },
-      ],
-    },
-    {
-      category: 'bevrages',
-      description: 'Italian cuisine has a great variety of different ingredients which are commonly used, ranging from fruits, vegetables, grains, cheeses, meats and fish. ',
-      image:
-        'https://images.pexels.com/photos/1292862/pexels-photo-1292862.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
-      items: [
-        {
-          itemName: 'sk',
-          itemDes:
-            ' From classic favorites like Penne Rosa, Pesto Cavatappi and our World-Famous Mac & Cheese to our Japanese Pan Noodles, Pad Thai, even our fresh and exciting Zoodles and Cauliflower Noodles dishes. ​',
-          price: 240,
-          isVeg: false,
-        },
-        {
-          itemName: 'sk',
-          itemDes:
-            ' From classic favorites like Penne Rosa, Pesto Cavatappi and our World-Famous Mac & Cheese to our Japanese Pan Noodles, Pad Thai, even our fresh and exciting Zoodles and Cauliflower Noodles dishes. ​',
-          price: 240,
-          isVeg: true,
-        },
-        {
-          itemName: 'sk',
-          itemDes:
-            ' From classic favorites like Penne Rosa, Pesto Cavatappi and our World-Famous Mac & Cheese to our Japanese Pan Noodles, Pad Thai, even our fresh and exciting Zoodles and Cauliflower Noodles dishes. ​',
-          price: 240,
-          isVeg: true,
-        },
-      ],
-    },
-    {
-      category: 'Biryani',
-      description: 'Italian cuisine has a great variety of different ingredients which are commonly used, ranging from fruits, vegetables, grains, cheeses, meats and fish. ',
-      image:
-        'https://images.pexels.com/photos/4224305/pexels-photo-4224305.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-      items: [
-        {
-          itemName: 'sk',
-          itemDes:
-            ' From classic favorites like Penne Rosa, Pesto Cavatappi and our World-Famous Mac & Cheese to our Japanese Pan Noodles, Pad Thai, even our fresh and exciting Zoodles and Cauliflower Noodles dishes. ​',
-          price: 240,
-          isVeg: true,
-        },
-        {
-          itemName: 'sk',
-          itemDes:
-            ' From classic favorites like Penne Rosa, Pesto Cavatappi and our World-Famous Mac & Cheese to our Japanese Pan Noodles, Pad Thai, even our fresh and exciting Zoodles and Cauliflower Noodles dishes. ​',
-          price: 240,
-          isVeg: true,
-        },
-        {
-          itemName: 'sk',
-          itemDes:
-            ' From classic favorites like Penne Rosa, Pesto Cavatappi and our World-Famous Mac & Cheese to our Japanese Pan Noodles, Pad Thai, even our fresh and exciting Zoodles and Cauliflower Noodles dishes. ​',
-          price: 240,
-          isVeg: true,
-        },
-      ],
-    },
-    {
-      category: 'Pizza',
-      description: 'Italian cuisine has a great variety of different ingredients which are commonly used, ranging from fruits, vegetables, grains, cheeses, meats and fish. ',
-      image:
-        'https://images.pexels.com/photos/315755/pexels-photo-315755.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-      items: [
-        {
-          itemName: 'sk',
-          itemDes:
-            ' From classic favorites like Penne Rosa, Pesto Cavatappi and our World-Famous Mac & Cheese to our Japanese Pan Noodles, Pad Thai, even our fresh and exciting Zoodles and Cauliflower Noodles dishes. ​',
-          price: 240,
-          isVeg: true,
-        },
-        {
-          itemName: 'sk',
-          itemDes:
-            ' From classic favorites like Penne Rosa, Pesto Cavatappi and our World-Famous Mac & Cheese to our Japanese Pan Noodles, Pad Thai, even our fresh and exciting Zoodles and Cauliflower Noodles dishes. ​',
-          price: 240,
-          isVeg: true,
-        },
-        {
-          itemName: 'sk',
-          itemDes:
-            ' From classic favorites like Penne Rosa, Pesto Cavatappi and our World-Famous Mac & Cheese to our Japanese Pan Noodles, Pad Thai, even our fresh and exciting Zoodles and Cauliflower Noodles dishes. ​',
-          price: 240,
-          isVeg: true,
-        },
-      ],
-    },
-    {
-      category: 'Pasta',
-      description: 'Italian cuisine has a great variety of different ingredients which are commonly used, ranging from fruits, vegetables, grains, cheeses, meats and fish. ',
-      image:
-        'https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-      items: [
-        {
-          itemName: 'sk',
-          itemDes:
-            ' From classic favorites like Penne Rosa, Pesto Cavatappi and our World-Famous Mac & Cheese to our Japanese Pan Noodles, Pad Thai, even our fresh and exciting Zoodles and Cauliflower Noodles dishes. ​',
-          price: 240,
-          isVeg: true,
-        },
-        {
-          itemName: 'sk',
-          itemDes:
-            ' From classic favorites like Penne Rosa, Pesto Cavatappi and our World-Famous Mac & Cheese to our Japanese Pan Noodles, Pad Thai, even our fresh and exciting Zoodles and Cauliflower Noodles dishes. ​',
-          price: 240,
-          isVeg: true,
-        },
-        {
-          itemName: 'sk',
-          itemDes:
-            ' From classic favorites like Penne Rosa, Pesto Cavatappi and our World-Famous Mac & Cheese to our Japanese Pan Noodles, Pad Thai, even our fresh and exciting Zoodles and Cauliflower Noodles dishes. ​',
-          price: 240,
-          isVeg: true,
-        },
-      ],
-    },
-  ];
-  public expand = [];
+  public menuGroups = MockMenuGroups[0]
+  public restaurantMenu = MockResturantMenus[0]
+
+  public expand = []
+
   ngOnInit(): void {
     // move it to api from where menu is coming
-    this.expand = this.menu.map((obj) => {
+    this.expand = this.menuGroups.map((obj) => {
       return true;
     });
+
+    this.editForm = this.formBuilder.group({
+      ItemName: ['', Validators.required],
+      ItemType: ['', Validators.required],
+      Price: [0, Validators.required],
+      Discount: [0],
+      AvailableNow: [false, Validators.required],
+      NextAvailableTime: [new Date(), Validators.required],
+      DisplayImagePath: ['']
+    })
+
+    this.restaurantMenu = this.mapRestaurantWithId(this.restaurantMenu)
   }
 
-  expandMenu(index: number) {
+  get f(): { [key: string]: AbstractControl } {
+    return this.editForm.controls
+  }
+
+  expandMenu(index: number): void {
     this.expand[index] = !this.expand[index];
+  }
+
+  editProduct(): void {
+    this.submitted = true
+    if (this.editForm.invalid) {
+      return
+    }
+    console.log(JSON.stringify(this.editForm.value, null, 2));
+  }
+
+  mapRestaurantWithId(restaurantMenu: typeof MockResturantMenus[0]): any {
+    let menu = {}
+    for (let obj of restaurantMenu) {
+      menu[obj.ItemID] = obj
+    }
+
+    return menu
+  }
+
+  openEditModal(editObject: MenuItem) {
+    console.log(editObject)
+    this.editForm.controls['ItemName'].setValue(editObject.ItemName)
+    this.editForm.controls['ItemType'].setValue(editObject.ItemType)
+    this.editForm.controls['Price'].setValue(editObject.Price)
+    this.editForm.controls['Discount'].setValue(editObject.Discount)
+    this.editForm.controls['AvailableNow'].setValue(editObject.AvailableNow)
+    this.editForm.controls['NextAvailableTime'].setValue(new Date(editObject.NextAvailableTime).toISOString().substring(0, 16))
+    this.editForm.controls['DisplayImagePath'].setValue(editObject.DisplayImagePath)
   }
 }
