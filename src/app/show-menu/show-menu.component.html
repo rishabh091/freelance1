@@ -11,9 +11,14 @@
       <div *ngFor="let item of menuGroups; let i = index">
         <div class="container-fluid pr-0 borderRight item-display mb-2 shadow">
           <div class="row" (click)="expandMenu(i)">
-            <div class="col-sm-6 p-4 ">
+            <div class="col-sm-6 p-4">
               <div class="category-name">{{ item.SubGroupName }}</div>
               <!-- <h6 class="text-muted mt-2 opacityText"><i>{{ item.description }}</i></h6> -->
+            </div>
+            <div class="col-sm-6 p-4 text-right">
+              <a class="btn btn-outline-info rounded-0 font-weight-bold" href="/addMenu">
+                +
+              </a>
             </div>
             <!-- <div class="col-sm-6 pl-0" >
               <img style="height: 20vh;"
@@ -44,7 +49,7 @@
                   <div><b>Next Availability Time: </b>{{ restaurantMenu[product].NextAvailableTime | date: 'short' }}</div>
                 </div>
                 <div class="col-sm-6">
-                  <img [src]="restaurantMenu[product].DisplayImagePath" class="img-fluid">
+                  <img [src]="restaurantMenu[product].DisplayImagePath" class="img-fluid" style="width: 100%; object-fit: cover; height: 23vh;">
                 </div>
                 <div class="mt-3 text-right">
                   <button class="btn btn-outline-warning" data-toggle="modal" data-target="#editModal" (click)="openEditModal(restaurantMenu[product])">Edit Product</button>
@@ -78,7 +83,7 @@
               <label>Item Name</label>
               <input type="text" formControlName="ItemName" class="form-control"/>
             </div>
-            <div *ngIf="submitted && f.ItemName.errors" class="invalid-feedback">
+            <div *ngIf="submitted && f.ItemName.errors" class="text-danger">
               <div *ngIf="f.ItemName.errors.required">
                 Item Name is required
               </div>
@@ -99,7 +104,7 @@
               <label>Price</label>
               <input type="number" formControlName="Price" class="form-control"/>
             </div>
-            <div *ngIf="submitted && f.Price.errors" class="invalid-feedback">
+            <div *ngIf="submitted && f.Price.errors" class="text-danger">
               <div *ngIf="f.Price.errors.required">
                 Price is required
               </div>
@@ -109,7 +114,7 @@
               <label>Discount</label>
               <input type="number" formControlName="Discount" class="form-control"/>
             </div>
-            <div *ngIf="submitted && f.Discount.errors" class="invalid-feedback">
+            <div *ngIf="submitted && f.Discount.errors" class="text-danger">
               Discount is required
             </div>
 
@@ -123,7 +128,7 @@
               <label>Next Available Time</label>
               <input type="datetime-local" formControlName="NextAvailableTime" class="form-control"/>
             </div>
-            <div *ngIf="submitted && f.NextAvailableTime.errors" class="invalid-feedback">
+            <div *ngIf="submitted && f.NextAvailableTime.errors" class="text-danger">
               <div *ngIf="f.NextAvailableTime.errors.required">
                 Next Available Time is required
               </div>
@@ -133,7 +138,7 @@
               <label>Display Image Path</label>
               <input type="text" formControlName="DisplayImagePath" class="form-control"/>
             </div>
-            <div *ngIf="submitted && f.DisplayImagePath.errors" class="invalid-feedback">
+            <div *ngIf="submitted && f.DisplayImagePath.errors" class="text-danger">
               Next Available Time is required
             </div>
 

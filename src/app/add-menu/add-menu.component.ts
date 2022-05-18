@@ -22,7 +22,7 @@ export class AddMenuComponent implements OnInit {
     this.form = this.formBuilder.group(
       {
         ItemName: ['', Validators.required],
-        ItemType : ['', Validators.required],
+        ItemType : ['', [Validators.required]],
         Price:['', Validators.required],
         Discount : ['', Validators.required],
         AvailableNow :['', Validators.required],

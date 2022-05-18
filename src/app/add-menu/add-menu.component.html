@@ -19,7 +19,7 @@
             />
             <div
               *ngIf="submitted && f.itemCategory.errors"
-              class="invalid-feedback"
+              class="text-danger"
             >
               <div *ngIf="f.itemCategory.errors.required">
                 Item Category is required
@@ -36,7 +36,7 @@
             />
             <div
               *ngIf="submitted && f.itemName.errors"
-              class="invalid-feedback"
+              class="text-danger"
             >
               <div *ngIf="f.itemName.errors.required">
                 Item Name is required
@@ -53,7 +53,7 @@
             />
             <div
               *ngIf="submitted && f.itemDesc.errors"
-              class="invalid-feedback"
+              class="text-danger"
             >
               <div *ngIf="f.itemDesc.errors.required">
                 Item Description is required
@@ -70,7 +70,7 @@
             />
             <div
               *ngIf="submitted && f.itemAmount.errors"
-              class="invalid-feedback"
+              class="text-danger"
             >
               <div *ngIf="f.itemAmount.errors.required">
                 Item Amount is required
@@ -87,7 +87,7 @@
             />
             <div
               *ngIf="submitted && f.itemisVeg.errors"
-              class="invalid-feedback"
+              class="text-danger"
             >
               <div *ngIf="f.itemisVeg.errors.required">Field is required</div>
             </div>
@@ -112,7 +112,7 @@
             <label>Item Name</label>
             <input type="text" formControlName="ItemName" class="form-control"/>
           </div>
-          <div *ngIf="submitted && f.ItemName.errors" class="invalid-feedback">
+          <div *ngIf="submitted && f.ItemName.errors" class="text-danger">
             <div *ngIf="f.ItemName.errors.required">
               Item Name is required
             </div>
@@ -121,6 +121,7 @@
           <div class="form-group">
             <label>ItemType</label>
             <select class="form-control" formControlName="ItemType">
+              <option value=''>--Select--</option>
               <option value="veg">Veg</option>
               <option value="nonveg">Non-Veg</option>
               <option value="alcholic">Alcholic</option>
@@ -128,12 +129,17 @@
 
             </select>
           </div>
+          <div *ngIf="submitted && f.ItemType.errors" class="text-danger">
+            <div *ngIf="f.ItemType.errors.required">
+              ItemType is required
+            </div>
+          </div>
 
           <div class="form-group">
             <label>Price</label>
             <input type="number" formControlName="Price" class="form-control"/>
           </div>
-          <div *ngIf="submitted && f.Price.errors" class="invalid-feedback">
+          <div *ngIf="submitted && f.Price.errors" class="text-danger">
             <div *ngIf="f.Price.errors.required">
               Price is required
             </div>
@@ -143,7 +149,7 @@
             <label>Discount</label>
             <input type="number" formControlName="Discount" class="form-control"/>
           </div>
-          <div *ngIf="submitted && f.Discount.errors" class="invalid-feedback">
+          <div *ngIf="submitted && f.Discount.errors" class="text-danger">
             Discount is required
           </div>
 
@@ -157,7 +163,7 @@
             <label>Next Available Time</label>
             <input type="datetime-local" formControlName="NextAvailableTime" class="form-control"/>
           </div>
-          <div *ngIf="submitted && f.NextAvailableTime.errors" class="invalid-feedback">
+          <div *ngIf="submitted && f.NextAvailableTime.errors" class="text-danger">
             <div *ngIf="f.NextAvailableTime.errors.required">
               Next Available Time is required
             </div>
@@ -167,7 +173,7 @@
             <label>Display Image Path</label>
             <input type="text" formControlName="DisplayImagePath" class="form-control"/>
           </div>
-          <div *ngIf="submitted && f.DisplayImagePath.errors" class="invalid-feedback">
+          <div *ngIf="submitted && f.DisplayImagePath.errors" class="text-danger">
             Next Available Time is required
           </div>
 
