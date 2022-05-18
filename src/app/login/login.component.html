@@ -1,43 +1,45 @@
 <div class="background-image">
-  <div class="center"><img src="https://img.icons8.com/clouds/344/restaurant.png" alt=""
-    class="img-fork"></div>
-  <div class="center heading m-2">Restaurant Login</div>
-  <div class="center">
-    <div class="container m-3 p-3 form-div" style="background-color: #4c5462" >
-      <div class="center"></div>
-      <div class="register-form mt-3">
-        <form [formGroup]="form" (ngSubmit)="onSubmit()">
-          <div class="form-group">
-            <label>Enter Mobile</label>
-            <input
-              type="number"
-              formControlName="phone"
-              class="form-control"
-              placeholder="Enter phone"
-              [ngClass]="{ 'is-invalid': submitted && f.phone.errors }"
-            />
-            <div *ngIf="submitted && f.phone.errors" class="invalid-feedback">
-              <div *ngIf="f.phone.errors.required"  class="error-color">
-                Phone Number is required
+  <div class="pt-5">
+    <div class="center"><img src="https://img.icons8.com/clouds/344/restaurant.png" alt=""
+      class="img-fork"></div>
+    <div class="center heading m-2">Restaurant Login</div>
+    <div class="center">
+      <div class="container m-3 p-3 form-div" style="background-color: #4c5462" >
+        <div class="center"></div>
+        <div class="register-form mt-3">
+          <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+              <label>Enter Mobile</label>
+              <input
+                type="number"
+                formControlName="phone"
+                class="form-control"
+                placeholder="Enter phone"
+                [ngClass]="{ 'is-invalid': submitted && f.phone.errors }"
+              />
+              <div *ngIf="submitted && f.phone.errors" class="invalid-feedback">
+                <div *ngIf="f.phone.errors.required"  class="error-color">
+                  Phone Number is required
+                </div>
+              </div>
+  
+              <div *ngIf="requestedOTP" class="mt-4">
+                <input type="number" class="form-control" [(ngModel)]="otp" placeholder="Enter OTP" [ngModelOptions]="{standalone: true}">
               </div>
             </div>
-
-            <div *ngIf="requestedOTP" class="mt-4">
-              <input type="number" class="form-control" [(ngModel)]="otp" placeholder="Enter OTP" [ngModelOptions]="{standalone: true}">
+  
+            <div class="form-group">
+              <div class="center">
+                <button *ngIf="!requestedOTP" type="submit" class="btn btn-login mt-3">SEND OTP</button>
+                <button *ngIf="requestedOTP" type="button" class="btn btn-login mt-3" (click)="verifyOtp()">VERIFY OTP</button>
+  
+              </div>
+              <a href="/signup" class="font-weight-bold p-2 center a-link mt-1">
+                Not have an account?
+              </a>
             </div>
-          </div>
-
-          <div class="form-group">
-            <div class="center">
-              <button *ngIf="!requestedOTP" type="submit" class="btn btn-login mt-3">SEND OTP</button>
-              <button *ngIf="requestedOTP" type="button" class="btn btn-login mt-3" (click)="verifyOtp()">VERIFY OTP</button>
-
-            </div>
-            <a href="/signup" class="font-weight-bold p-2 center a-link mt-1">
-              Not have an account?
-            </a>
-          </div>
-        </form>
+          </form>
+        </div>
       </div>
     </div>
   </div>

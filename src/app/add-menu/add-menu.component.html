@@ -8,7 +8,7 @@
         </div>
       </div>
       <div class="register-form">
-        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <!-- <form [formGroup]="form" (ngSubmit)="onSubmit()">
           <div class="form-group">
             <label>Item Category</label>
             <input
@@ -102,6 +102,77 @@
             >
               Reset
             </button>
+          </div>
+        </form> -->
+
+
+
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+          <div class="form-group">
+            <label>Item Name</label>
+            <input type="text" formControlName="ItemName" class="form-control"/>
+          </div>
+          <div *ngIf="submitted && f.ItemName.errors" class="invalid-feedback">
+            <div *ngIf="f.ItemName.errors.required">
+              Item Name is required
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>ItemType</label>
+            <select class="form-control" formControlName="ItemType">
+              <option value="veg">Veg</option>
+              <option value="nonveg">Non-Veg</option>
+              <option value="alcholic">Alcholic</option>
+              <option value="nonalcholic">Non-Alcholic</option>
+
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Price</label>
+            <input type="number" formControlName="Price" class="form-control"/>
+          </div>
+          <div *ngIf="submitted && f.Price.errors" class="invalid-feedback">
+            <div *ngIf="f.Price.errors.required">
+              Price is required
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Discount</label>
+            <input type="number" formControlName="Discount" class="form-control"/>
+          </div>
+          <div *ngIf="submitted && f.Discount.errors" class="invalid-feedback">
+            Discount is required
+          </div>
+
+          <div class="form-group form-switch">
+            <input class="form-check-input form-control" type="checkbox" role="switch" id="flexSwitchCheckDefault"
+            formControlName="AvailableNow">
+            <label class="form-check-label" for="flexSwitchCheckDefault">Make Available Now</label>
+          </div>
+
+          <div class="form-group">
+            <label>Next Available Time</label>
+            <input type="datetime-local" formControlName="NextAvailableTime" class="form-control"/>
+          </div>
+          <div *ngIf="submitted && f.NextAvailableTime.errors" class="invalid-feedback">
+            <div *ngIf="f.NextAvailableTime.errors.required">
+              Next Available Time is required
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Display Image Path</label>
+            <input type="text" formControlName="DisplayImagePath" class="form-control"/>
+          </div>
+          <div *ngIf="submitted && f.DisplayImagePath.errors" class="invalid-feedback">
+            Next Available Time is required
+          </div>
+
+          <div class="form-group text-right">
+            <button type="submit" class="btn btn-success rounded-0" style="width: 200px;">Save</button>
           </div>
         </form>
       </div>

@@ -5,7 +5,7 @@ import { MenuItem, MenuSubGroup, MenuGroup, ResturantMenuItems, ResturantMenuIte
 export const  MockResturantMenus : ResturantMenuItems = {};
 export const MockMenuGroups : ResturantMenuItemGroups = {};
 MockResturantMenus[0] = [	 
-	{ItemID:0,  Price : 250, ItemName: 'Kseri Bath',   	    ItemType: "veg", 	    Discount:0, 	AvailableNow:false, NextAvailableTime:  new Date(),  DisplayImagePath:"../assets/images/menuitem1.png", Rating:StarRating.ThreeStar},
+	{ItemID:0,  Price : 250, ItemName: 'Kseri Bath',   	    ItemType: "veg", 	    Discount:20, 	AvailableNow:false, NextAvailableTime:  new Date(),  DisplayImagePath:"../assets/images/menuitem1.png", Rating:StarRating.ThreeStar},
 	{ItemID:1,  Price : 250, ItemName: 'Chow chow bath',   	ItemType: "veg", 	    Discount:0, 	AvailableNow:true, NextAvailableTime:  new Date(),  DisplayImagePath:"../assets/images/menuitem1.png", Rating:StarRating.ThreeStar},
 	{ItemID:2,  Price : 250, ItemName: 'Lamb Soup',  		ItemType: "nonveg",   	Discount:10, 	AvailableNow:true, NextAvailableTime: new Date(),   DisplayImagePath:"../assets/images/menuitem1.png", Rating:StarRating.ThreeStar},
 	{ItemID:3,  Price : 250, ItemName: 'Tomato Soup', 		ItemType: "veg",      	Discount:0, 	AvailableNow:true, NextAvailableTime:  new Date() , DisplayImagePath:"../assets/images/menuitem1.png", Rating:StarRating.ThreeStar},

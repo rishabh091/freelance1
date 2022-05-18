@@ -21,11 +21,18 @@ export class AddMenuComponent implements OnInit {
   ngOnInit(): void {
     this.form = this.formBuilder.group(
       {
-        itemCategory: ['', Validators.required],
-        itemName: ['', Validators.required],
-        itemDesc: ['', Validators.required],
-        itemAmount: ['', Validators.required], 
-        itemisVeg: ['', Validators.required],
+        ItemName: ['', Validators.required],
+        ItemType : ['', Validators.required],
+        Price:['', Validators.required],
+        Discount : ['', Validators.required],
+        AvailableNow :['', Validators.required],
+        NextAvailableTime :['', Validators.required],
+        DisplayImagePath : ['', Validators.required]
+        // itemCategory: ['', Validators.required],
+        // itemName: ['', Validators.required],
+        // itemDesc: ['', Validators.required],
+        // itemAmount: ['', Validators.required], 
+        // itemisVeg: ['', Validators.required],
       }
      
     );
