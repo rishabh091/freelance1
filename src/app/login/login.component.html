@@ -21,7 +21,14 @@
                 <div *ngIf="f.phone.errors.required"  class="error-color">
                   Phone Number is required
                 </div>
+                <div *ngIf="submitted && (f.phone.errors.min || f.phone.errors.max)" class="error-color">
+                  Invalid Phone Number
+                </div>
               </div>
+
+              <mat-list-item *ngIf="!requestedOTP"> 
+                <div  class="captcha" id="recaptcha-container"></div>            
+              </mat-list-item> 
   
               <div *ngIf="requestedOTP" class="mt-4">
                 <input type="number" class="form-control" [(ngModel)]="otp" placeholder="Enter OTP" [ngModelOptions]="{standalone: true}">
@@ -43,4 +50,9 @@
       </div>
     </div>
   </div>
+</div>
+
+<div *ngIf="errorMessage" class="alert alert-danger alert-dismissible" [ngClass]="{ 'alert-danger': !requestedOTP && !otpRequestCountdown, 'alert-success': requestedOTP }" style="position: absolute; z-index: 10; top: 0vh; width: 100%;" id="otpError">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  {{ errorMessage }}
 </div>

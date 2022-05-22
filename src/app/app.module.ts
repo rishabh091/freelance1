@@ -12,6 +12,11 @@ import { AddMenuComponent } from './add-menu/add-menu.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
+import { environment } from '../environments/environment';
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireAuthModule} from '@angular/fire/compat/auth';
+import {MatListModule} from '@angular/material/list';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,6 +28,9 @@ import { SignupComponent } from './signup/signup.component';
     SignupComponent
   ],
   imports: [
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireAuthModule,
+    MatListModule,
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
