@@ -1,4 +1,5 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
+import { AuthService } from '../auth/auth.service';
 import { Nav } from '../enums/orders.enum'
 
 @Component({
@@ -225,11 +226,12 @@ export class OrdersComponent implements OnInit {
 
   public NavEnum = Nav
 
-  constructor(private element: ElementRef) {}
+  constructor(private element: ElementRef, private auth: AuthService) {}
 
   activeArray: any = []
 
   ngOnInit(): void {
+    this.auth.isLoggedIn()
     this.activeArray = this.newOrderArray
   }
 

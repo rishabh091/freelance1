@@ -5,11 +5,11 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { Router } from '@angular/router';
 
 import {MatListModule} from '@angular/material/list';
-import { getAuth, RecaptchaVerifier, GoogleAuthProvider, FacebookAuthProvider } from "firebase/auth";
+import { getAuth, RecaptchaVerifier, GoogleAuthProvider, FacebookAuthProvider, Auth } from "firebase/auth";
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -28,17 +28,16 @@ export class LoginComponent implements OnInit {
   windowRef: any
   otpCheckInterval: any
 
-  constructor(private formBuilder: FormBuilder, private router: Router,
-    public afAuth: AngularFireAuth) {
-      this.windowRef = window
-    }
+  constructor(private formBuilder: FormBuilder,
+    public afAuth: AngularFireAuth, private auth: AuthService) {
+      this.windowRef = window    }
  
   ngOnInit(): void {
-    this.form = this.formBuilder.group(
-      {
+    // check if user is logged in or not
+    this.auth.isLoggedIn()
+    this.form = this.formBuilder.group({
         phone: ['', [Validators.required, Validators.min(6000000000), Validators.max(9999999999)]]
       }
-     
     );
 
     this.otpCheckInterval = setInterval(() => {
@@ -113,8 +112,8 @@ export class LoginComponent implements OnInit {
     .then(result => {
       this.form.disable()
       clearInterval(this.otpCheckInterval)
-
-      this.router.navigate(['/orders'])
+      
+      this.auth.login(this.afAuth)
     }).catch(error => {
       this.form.enable()
       this.requestedOTP = false

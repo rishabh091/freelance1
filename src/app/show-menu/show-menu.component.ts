@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from '../auth/auth.service';
 import { MenuItem } from '../interface/interface';
 import { MockResturantMenus, MockMenuGroups } from '../mock.menu'   // dummy data
 
@@ -9,7 +10,7 @@ import { MockResturantMenus, MockMenuGroups } from '../mock.menu'   // dummy dat
   styleUrls: ['./show-menu.component.css'],
 })
 export class ShowMenuComponent implements OnInit {
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(private formBuilder: FormBuilder, private auth: AuthService) {}
 
   public editForm: FormGroup
   public submitted: boolean = false
@@ -20,6 +21,7 @@ export class ShowMenuComponent implements OnInit {
   public expand = []
 
   ngOnInit(): void {
+    this.auth.isLoggedIn()
     // move it to api from where menu is coming
     this.expand = this.menuGroups.map((obj) => {
       return true;

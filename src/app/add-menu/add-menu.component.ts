@@ -5,6 +5,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-add-menu',
@@ -16,9 +17,10 @@ export class AddMenuComponent implements OnInit {
   form: FormGroup;
   submitted = false;
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(private formBuilder: FormBuilder, private auth: AuthService) {}
  
   ngOnInit(): void {
+    this.auth.isLoggedIn()
     this.form = this.formBuilder.group(
       {
         ItemName: ['', Validators.required],

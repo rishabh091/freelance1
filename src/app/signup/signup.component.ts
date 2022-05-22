@@ -6,6 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-signup',
@@ -16,9 +17,10 @@ export class SignupComponent implements OnInit {
   form: FormGroup;
   submitted = false;
 
-  constructor(private formBuilder: FormBuilder, private router: Router) {}
+  constructor(private formBuilder: FormBuilder, private router: Router, private auth: AuthService) {}
 
   ngOnInit(): void {
+    this.auth.isLoggedIn()
     this.form = this.formBuilder.group({
       phone: ['', Validators.required],
       resturantName: ['', Validators.required],
