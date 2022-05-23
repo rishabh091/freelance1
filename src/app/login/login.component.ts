@@ -112,7 +112,7 @@ export class LoginComponent implements OnInit {
       this.form.disable()
       clearInterval(this.otpCheckInterval)
       
-      this.auth.login(this.afAuth)
+      this.auth.login()
     }).catch(error => {
       this.form.enable()
       this.requestedOTP = false
