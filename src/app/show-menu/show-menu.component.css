@@ -58,7 +58,7 @@
 }
 .borderBox {
   background-color: white;
-  border: 1px solid grey;
+  border: 1px solid #d5d0d0;
   border-radius: 5px;
 }
 .opacityText {
