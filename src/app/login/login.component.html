@@ -26,10 +26,12 @@
                 </div>
               </div>
 
-              <mat-list-item *ngIf="!requestedOTP"> 
-                <div  class="captcha" id="recaptcha-container"></div>            
-              </mat-list-item> 
-  
+<div class="center mtgit a-3">
+  <mat-list-item *ngIf="!requestedOTP"> 
+    <div  class="captcha" id="recaptcha-container"></div>            
+  </mat-list-item> 
+
+</div>
               <div *ngIf="requestedOTP" class="mt-4">
                 <input type="number" class="form-control" [(ngModel)]="otp" placeholder="Enter OTP" [ngModelOptions]="{standalone: true}">
               </div>
