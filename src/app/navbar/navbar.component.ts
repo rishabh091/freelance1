@@ -1,4 +1,5 @@
 import { AfterContentChecked, Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -9,7 +10,7 @@ export class NavbarComponent implements OnInit, AfterContentChecked {
 
   public showNav: boolean = true
 
-  constructor() { }
+  constructor(private auth: AuthService) { }
   ngAfterContentChecked(): void {
     let url = location.href.split('/').pop()
     if (!url || url.toLowerCase() == 'signup') this.showNav = false
@@ -17,6 +18,10 @@ export class NavbarComponent implements OnInit, AfterContentChecked {
   }
 
   ngOnInit(): void {
+  }
+
+  logout() {
+    this.auth.logout()
   }
 
 }

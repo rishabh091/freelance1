@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { getAuth, signOut } from "firebase/auth";
+import { first } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +14,7 @@ export class AuthService {
   /**
    * Will save a secret into localstorage which can be used to detect authentication
    */
-  login(afAuth: any) {
-    this.afAuth = afAuth
+  login() {
     this.isLoggedIn()
   }
   /**
@@ -21,30 +22,30 @@ export class AuthService {
    */
   logout() {
     if (!this.afAuth) { this.router.navigate(['']); return }
-    this.afAuth.signOut().then(() => {
-      this.router.navigate([''])
-    })
+    const auth = getAuth()
+    signOut(auth).then(() => { this.isLoggedIn() })
+    .catch(err => { console.log(err) })
   }
   /**
    * Check if user is logged in or not
    */
   isLoggedIn() {
-    console.log('afauth: ', this.afAuth)
-    if (!this.afAuth) {
-      this.router.navigate([''])
-      return
-    }
-
+    const authPromise = this.afAuth.authState.pipe(first()).toPromise()
     let url = location.href.split('/').pop()
-    if (this.afAuth.authState) {
-      if (!url || url.toLowerCase() == 'signup') {
-        this.router.navigate(['/orders'])
+
+    authPromise.then((user) => {
+      console.log('User: ', user)
+
+      if (user) {
+        if (!url || url.toLowerCase() == 'signup') this.router.navigate(['/orders'])
       }
-    }
-    else {
-      if (url && url.toLowerCase() != 'signup') {
-        this.router.navigate(['/'])
+      else {
+        if (url && url.toLowerCase() != 'signup') this.router.navigate(['/'])
       }
-    }
+    }).catch(err => {
+      console.log(err)
+
+      this.router.navigate(['/'])
+    })
   }
 }
