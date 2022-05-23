@@ -43,7 +43,6 @@ export class LoginComponent implements OnInit {
     this.otpCheckInterval = setInterval(() => {
       if (this.otpRequestCountdown > 0) {
         this.otpRequestCountdown--
-        console.log(this.otpRequestCountdown)
       }
     }, 1000)
   }
