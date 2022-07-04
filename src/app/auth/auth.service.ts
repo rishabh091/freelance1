@@ -34,7 +34,7 @@ export class AuthService {
     let url = location.href.split('/').pop()
 
     authPromise.then((user) => {
-      console.log('User: ', user)
+      user.getIdToken(true).then(token => { localStorage.setItem('token', token) })
 
       if (user) {
         if (!url || url.toLowerCase() == 'signup') this.router.navigate(['/orders'])
