@@ -18,6 +18,7 @@ import { AngularFireAuthModule} from '@angular/fire/compat/auth';
 import {MatListModule} from '@angular/material/list';
 import { ZonesComponent } from './zones/zones.component';
 import { TableComponent } from './table/table.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { TableComponent } from './table/table.component';
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
