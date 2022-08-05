@@ -1,0 +1,64 @@
+<div class="background-image">
+  <div class="center">
+    <div class="container bg-light m-3 p-3" style="border-radius: 1vh">
+      <div class="center heading m-2">Tables</div>
+
+      <div class="zones">
+        <div *ngFor="let i of table">
+          <div
+            class="zone font-weight-bold"
+            data-toggle="modal"
+            data-target="#exampleModalCenter"
+          >
+            <div class="zoneName">Table</div>
+            <div class="number">{{ i }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="exampleModalCenter"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Table Number</h5>
+
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+       
+<div class="d-flex justify-content-around mt-3 mb-3">
+  <h4 class="font-weight-bold">Availability</h4>
+  <label class="switch">
+    <input type="checkbox">
+    <span class="slider round"></span>
+  </label>
+</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          Close
+        </button>
+        <button type="button" class="btn submit_button-color">
+          Save changes
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

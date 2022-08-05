@@ -1,0 +1,23 @@
+<div class="background-image">
+  <div class="center">
+    <div class="container bg-light m-3 p-3" style="border-radius: 1vh">
+      <div class="center heading m-2">ZONES</div>
+
+      <div class="addButton">
+        <button type="button" class="btn btn-warning float-right"
+        (click)="addZone()">
+          ADD ZONE
+        </button>
+      </div>
+
+      <div class="zones">
+        <div *ngFor="let i of zone">
+          <div class="zone font-weight-bold" [routerLink]="['/table/', i]">
+            <div class="zoneName">ZONE</div>
+            <div class="number">{{ i }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

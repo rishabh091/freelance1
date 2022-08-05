@@ -16,6 +16,8 @@ import { environment } from '../environments/environment';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireAuthModule} from '@angular/fire/compat/auth';
 import {MatListModule} from '@angular/material/list';
+import { ZonesComponent } from './zones/zones.component';
+import { TableComponent } from './table/table.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,9 @@ import {MatListModule} from '@angular/material/list';
     ShowMenuComponent,
     AddMenuComponent,
     LoginComponent,
-    SignupComponent
+    SignupComponent,
+    ZonesComponent,
+    TableComponent
   ],
   imports: [
     AngularFireModule.initializeApp(environment.firebaseConfig),
