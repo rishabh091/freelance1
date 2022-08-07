@@ -55,7 +55,7 @@ label {
 }
 .zones {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: start;
   flex-wrap: wrap;
   background-color: white;
 }

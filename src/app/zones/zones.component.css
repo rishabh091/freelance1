@@ -56,9 +56,12 @@ label {
 }
 .zones {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: start;
   flex-wrap: wrap;
   background-color: white;
+}
+.zone:hover {
+  box-shadow: 0px 0px 20px gray;
 }
 .addButton {
   margin-bottom: 8vh;
