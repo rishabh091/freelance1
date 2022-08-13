@@ -15,7 +15,11 @@ export class AuthService {
    * Will save a secret into localstorage which can be used to detect authentication
    */
   login() {
-    this.isLoggedIn()
+    const authPromise = this.afAuth.authState.pipe(first()).toPromise()
+    authPromise.then(user => {
+      user.getIdToken(true).then(token => { localStorage.setItem('token', token) })
+      this.router.navigate(['/orders'])
+    })
   }
   /**
    * Will delete authentication
@@ -30,22 +34,7 @@ export class AuthService {
    * Check if user is logged in or not
    */
   isLoggedIn() {
-    const authPromise = this.afAuth.authState.pipe(first()).toPromise()
-    let url = location.href.split('/').pop()
-
-    authPromise.then((user) => {
-      user.getIdToken(true).then(token => { localStorage.setItem('token', token) })
-
-      if (user) {
-        if (!url || url.toLowerCase() == 'signup') this.router.navigate(['/orders'])
-      }
-      else {
-        if (url && url.toLowerCase() != 'signup') this.router.navigate(['/'])
-      }
-    }).catch(err => {
-      console.log(err)
-
-      this.router.navigate(['/'])
-    })
+    const token = localStorage.getItem('token')
+    return token
   }
 }

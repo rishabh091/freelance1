@@ -21,7 +21,6 @@ export class ShowMenuComponent implements OnInit {
   public expand = []
 
   ngOnInit(): void {
-    this.auth.isLoggedIn()
     // move it to api from where menu is coming
     this.expand = this.menuGroups.map((obj) => {
       return true;

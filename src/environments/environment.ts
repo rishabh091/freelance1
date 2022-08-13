@@ -12,7 +12,8 @@ export const environment = {
     storageBucket: "hiveezycustomerui-853fc.appspot.com",
     messagingSenderId: "1008267974994",
     appId: "1:1008267974994:web:23c81090ec62886ca5428b"
-  }
+  },
+  apiUrl: 'https://api-v0.hiveezy.com/api/v1/restaurant/'
 };
 firebase.initializeApp(environment.firebaseConfig);
 

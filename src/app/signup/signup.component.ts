@@ -6,7 +6,8 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from '../auth/auth.service';
+import { RegisterModule, UserInfo } from '../modules/auth-module.service';
+import { AuthService as ApiAuthService} from '../api/auth.service'
 
 @Component({
   selector: 'app-signup',
@@ -17,23 +18,16 @@ export class SignupComponent implements OnInit {
   form: FormGroup;
   submitted = false;
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private auth: AuthService) {}
+  constructor(private formBuilder: FormBuilder, 
+    private router: Router, 
+    private apiAuthService: ApiAuthService) {}
 
   ngOnInit(): void {
-    this.auth.isLoggedIn()
     this.form = this.formBuilder.group({
-      phone: ['', Validators.required],
-      resturantName: ['', Validators.required],
-      about: ['', Validators.required],
-      email: ['', Validators.required],
-
-      buildingNumber: ['', Validators.required],
-      streetNumber: ['', Validators.required],
-      city: ['', Validators.required],
-      state: ['', Validators.required],
-      pincode: ['', Validators.required],
-      resturantCatogory: ['', Validators.required],
-      ifscCode: ['', Validators.required],
+      userName: ['', Validators.required],
+      phoneNumber: ['', Validators.required],
+      storeName: ['', Validators.required],
+      emailAddress: ['', Validators.required]
     });
   }
 
@@ -45,8 +39,14 @@ export class SignupComponent implements OnInit {
     if (this.form.invalid) {
       return;
     }
-    this.router.navigate(['/orders']);
-    console.log(JSON.stringify(this.form.value, null, 2));
+
+    const payload = new RegisterModule(this.form.value.userName, this.form.value.storeName,
+      this.form.value.emailAddress, new UserInfo(this.form.value.phoneNumber + ''))
+
+    this.apiAuthService.register(payload).then(res => {
+      this.router.navigate([''])
+    }).catch(error => { console.log(error) })
+
   }
   onReset(): void {
     this.submitted = false;

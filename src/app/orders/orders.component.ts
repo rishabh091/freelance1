@@ -233,7 +233,6 @@ export class OrdersComponent implements OnInit {
   activeArray: any = []
 
   ngOnInit(): void {
-    this.auth.isLoggedIn()
     this.activeArray = this.newOrderArray
   }
 
@@ -259,21 +258,5 @@ export class OrdersComponent implements OnInit {
 
     expandables[index].style.height = '100%'
     downIcons[index].style.animation = 'rotate-animation 1s forwards'
-  }
-
-  sendDemoApi() {
-    // temp function to test api
-    const url = 'https://api-v0.hiveezy.com/api/v1/auth/check-customer'
-    const token = localStorage.getItem('token')
-
-    let headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
-    })
-    console.log(headers)
-    console.log(token)
-    this.http.post(url, {headers}).subscribe(res => {
-      console.log(res)
-    })
   }
 }

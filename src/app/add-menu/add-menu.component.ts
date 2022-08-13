@@ -20,7 +20,6 @@ export class AddMenuComponent implements OnInit {
   constructor(private formBuilder: FormBuilder, private auth: AuthService) {}
  
   ngOnInit(): void {
-    this.auth.isLoggedIn()
     this.form = this.formBuilder.group(
       {
         ItemName: ['', Validators.required],

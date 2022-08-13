@@ -33,8 +33,6 @@ export class LoginComponent implements OnInit {
       this.windowRef = window    }
  
   ngOnInit(): void {
-    // check if user is logged in or not
-    this.auth.isLoggedIn()
     this.form = this.formBuilder.group({
         phone: ['', [Validators.required, Validators.min(6000000000), Validators.max(9999999999)]]
       }
