@@ -12,8 +12,10 @@ export class NavbarComponent implements OnInit, AfterContentChecked {
 
   constructor(private auth: AuthService) { }
   ngAfterContentChecked(): void {
-    let url = location.href.split('/').pop()
-    if (!url || url.toLowerCase() == 'signup') this.showNav = false
+    const urls = location.href.split('/')
+    const url = urls.pop()
+
+    if (!url || url.toLowerCase() == 'signup' || urls.includes('signup')) this.showNav = false
     else this.showNav = true
   }
 

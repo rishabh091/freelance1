@@ -1,0 +1,146 @@
+<div class="background-image">
+    <div class="center">
+      <img
+        src="https://img.icons8.com/clouds/344/restaurant.png"
+        alt=""
+        class="img-fork"
+      />
+    </div>
+    <div class="center heading m-2">Restaurant Address</div>
+    <div class="center">
+      <div class="container m-3 p-3" style="background-color: #4c5462">
+        <div class="center"></div>
+        <div class="register-form mt-3">
+            <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                <div class="row">
+                  <div class="form-group col-sm-6">
+                    <label>Building Address</label>
+                    <input
+                      type="text"
+                      formControlName="storeaddressBuilding"
+                      class="form-control"
+                      [ngClass]="{ 'is-invalid': submitted && f.storeaddressBuilding.errors }"
+                    />
+                    <div *ngIf="submitted && f.storeaddressBuilding.errors" class="invalid-feedback">
+                      <div *ngIf="f.storeaddressBuilding.errors.required" class="error-color">
+                        Building Address is required is required
+                      </div>
+                    </div>
+                  </div>
+      
+                  <div class="form-group col-sm-6">
+                    <label>Address Street</label>
+                    <input
+                      type="text"
+                      formControlName="storeaddressStreet"
+                      class="form-control"
+                      [ngClass]="{
+                        'is-invalid': submitted && f.storeaddressStreet.errors
+                      }"
+                    />
+                    <div
+                      *ngIf="submitted && f.storeaddressStreet.errors"
+                      class="invalid-feedback"
+                    >
+                      <div
+                        *ngIf="f.storeaddressStreet.errors.required"
+                        class="error-color"
+                      >
+                        Store Address is required
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-sm-6">
+                        <label>Country</label>
+                        <select 
+                        class="form-control" 
+                        id="storeaddressCountry" 
+                        formControlName="storeaddressCountry" 
+                        (change)="onCountryChange()"
+                        [ngClass]="{ 'is-invalid': submitted && f.storeaddressCountry.errors }"
+                        >
+                            <option value="">--Select a country--</option>
+                            <option *ngFor="let c of countries" [ngValue]=c>{{c.name}}</option>
+                        </select>
+                        <div *ngIf="submitted && f.storeaddressCountry.errors" class="invalid-feedback">
+                          <div *ngIf="f.storeaddressCountry.errors.required" class="error-color">
+                            Country is required
+                          </div>
+                        </div>
+                      </div>
+
+                    <div *ngIf="form.value.storeaddressCountry" class="form-group col-sm-6">
+                      <label>State</label>
+                      <select 
+                      class="form-control" 
+                      id="storeaddressState" 
+                      formControlName="storeaddressState" 
+                      (change)="onStateChange()"
+                      [ngClass]="{ 'is-invalid': submitted && f.storeaddressState.errors }"
+                      >
+                        <option value="">--Select a state--</option>
+                        <option *ngFor="let s of states" [ngValue]=s>{{s.name}}</option>
+                      </select>
+                      <div *ngIf="submitted && f.storeaddressState.errors" class="invalid-feedback">
+                        <div *ngIf="f.storeaddressState.errors.required" class="error-color">
+                          State is required
+                        </div>
+                      </div>
+                    </div>
+                </div>
+      
+                <div class="row">
+                  <div *ngIf="form.value.storeaddressState" class="form-group col-sm-6">
+                    <label>City</label>
+                    <select 
+                    class="form-control" 
+                    id="storeaddressCity" 
+                    formControlName="storeaddressCity"
+                    [ngClass]="{ 'is-invalid': submitted && f.storeaddressCity.errors }"
+                    >
+                        <option value="">--Select a City--</option>
+                        <option *ngFor="let c of cities" [ngValue]=c>{{c.name}}</option>
+                      </select>
+                    <div *ngIf="submitted && f.storeaddressCity.errors" class="invalid-feedback">
+                      <div *ngIf="f.storeaddressCity.errors.required" class="error-color">
+                        City is required
+                      </div>
+                    </div>
+                  </div>
+      
+      
+                  <div class="form-group col-sm-6">
+                    <label>Pincode</label>
+                    <input
+                      type="number"
+                      formControlName="storeaddressPinCode"
+                      class="form-control"
+                      [ngClass]="{ 'is-invalid': submitted && f.storeaddressPinCode.errors }"
+                    />
+                    <div *ngIf="submitted && f.storeaddressPinCode.errors" class="invalid-feedback">
+                      <div *ngIf="f.storeaddressPinCode.errors.required" class="error-color">
+                        Pincode is required
+                      </div>
+                    </div>
+                  </div>
+                </div>
+      
+                <div class="form-group">
+                  <div class="center">
+                    <button type="submit" class="btn btn-login mt-4">SAVE ADDRESS</button>
+                  </div>
+                </div>
+              </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- <div *ngIf="errorMessage" class="alert alert-danger alert-dismissible" [ngClass]="{ 'alert-danger': !requestedOTP && !otpRequestCountdown, 'alert-success': requestedOTP }" style="position: absolute; z-index: 10; top: 0vh; width: 100%;" id="otpError">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    {{ errorMessage }}
+  </div> -->
+  

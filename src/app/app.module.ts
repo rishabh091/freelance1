@@ -19,6 +19,7 @@ import {MatListModule} from '@angular/material/list';
 import { ZonesComponent } from './zones/zones.component';
 import { TableComponent } from './table/table.component';
 import { HttpClientModule } from '@angular/common/http';
+import { AddressComponent } from './signup/address/address.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { HttpClientModule } from '@angular/common/http';
     LoginComponent,
     SignupComponent,
     ZonesComponent,
-    TableComponent
+    TableComponent,
+    AddressComponent
   ],
   imports: [
     AngularFireModule.initializeApp(environment.firebaseConfig),

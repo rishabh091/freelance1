@@ -27,7 +27,10 @@ export class AuthService {
   logout() {
     if (!this.afAuth) { this.router.navigate(['']); return }
     const auth = getAuth()
-    signOut(auth).then(() => { this.isLoggedIn() })
+    signOut(auth).then(() => {
+      localStorage.clear()
+      if (!this.isLoggedIn()) this.router.navigate([""])
+    })
     .catch(err => { console.log(err) })
   }
   /**
