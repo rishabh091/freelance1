@@ -1,0 +1,314 @@
+<div class="container-fluid pt-5 pb-5">
+    <div class="container bg-light p-4">
+        <!--user info-->
+        <div class="mb-5">
+            <h4 class="border-bottom pb-2 text-uppercase heading">User Info</h4>
+
+            <form [formGroup]="userInfoForm" (submit)="userFormSubmit()">
+                <div class="row">
+                <div class="form-group col-sm-6">
+                    <label>Name</label>
+                    <input
+                    type="text"
+                    formControlName="userName"
+                    class="form-control"
+                    [ngClass]="{ 'is-invalid': userInfoSubmitted && userInfo.userName.errors }"
+                    />
+                    <div *ngIf="userInfoSubmitted && userInfo.userName.errors" class="invalid-feedback">
+                    <div *ngIf="userInfo.userName.errors.required" class="error-color">
+                        User Name is required
+                    </div>
+                    </div>
+                </div>
+    
+                <div class="form-group col-sm-6">
+                    <label>Resturant Name</label>
+                    <input
+                    type="text"
+                    formControlName="storeName"
+                    class="form-control"
+                    [ngClass]="{
+                        'is-invalid': userInfoSubmitted && userInfo.storeName.errors
+                    }"
+                    />
+                    <div
+                    *ngIf="userInfoSubmitted && userInfo.storeName.errors"
+                    class="invalid-feedback"
+                    >
+                    <div
+                        *ngIf="userInfo.storeName.errors.required"
+                        class="error-color"
+                    >
+                        Resturant Name is required
+                    </div>
+                    </div>
+                </div>
+                </div>
+    
+                <div class="row">
+                <div class="form-group col-sm-6">
+                    <label>Enter Email</label>
+                    <input
+                    type="email"
+                    formControlName="emailAddress"
+                    class="form-control"
+                    [ngClass]="{ 'is-invalid': userInfoSubmitted && userInfo.emailAddress.errors }"
+                    />
+                    <div *ngIf="userInfoSubmitted && userInfo.emailAddress.errors" class="invalid-feedback">
+                    <div *ngIf="userInfo.emailAddress.errors.required" class="error-color">
+                        Email is required
+                    </div>
+                    </div>
+                </div>
+    
+    
+                <div class="form-group col-sm-6">
+                    <label>Enter Mobile</label>
+                    <input
+                    type="number"
+                    formControlName="phoneNumber"
+                    class="form-control"
+                    [ngClass]="{ 'is-invalid': userInfoSubmitted && userInfo.phoneNumber.errors }"
+                    />
+                    <div *ngIf="userInfoSubmitted && userInfo.phoneNumber.errors" class="invalid-feedback">
+                    <div *ngIf="userInfo.phoneNumber.errors.required" class="error-color">
+                        Phone Number is required
+                    </div>
+                    </div>
+                </div>
+
+                <div class="form-group mt-4">
+                    <button type="submit" class="btn btn-success" style="width: 40vh;">Submit</button>
+                </div>
+                </div>
+            </form>
+        </div>
+
+        <!--store address-->
+        <div class="mt-5 mb-5">
+            <h4 class="border-bottom pb-2 text-uppercase heading">store address</h4>
+
+            <form [formGroup]="addressForm" (submit)="addressFormSubmit()">
+                <div class="row">
+                  <div class="form-group col-sm-6">
+                    <label>Building Address</label>
+                    <input
+                      type="text"
+                      formControlName="storeaddressBuilding"
+                      class="form-control"
+                      [ngClass]="{ 'is-invalid': addressFormSubmitted && addressInfo.storeaddressBuilding.errors }"
+                    />
+                    <div *ngIf="addressFormSubmitted && addressInfo.storeaddressBuilding.errors" class="invalid-feedback">
+                      <div *ngIf="addressInfo.storeaddressBuilding.errors.required" class="error-color">
+                        Building Address is required is required
+                      </div>
+                    </div>
+                  </div>
+      
+                  <div class="form-group col-sm-6">
+                    <label>Address Street</label>
+                    <input
+                      type="text"
+                      formControlName="storeaddressStreet"
+                      class="form-control"
+                      [ngClass]="{
+                        'is-invalid': addressFormSubmitted && addressInfo.storeaddressStreet.errors
+                      }"
+                    />
+                    <div
+                      *ngIf="addressFormSubmitted && addressInfo.storeaddressStreet.errors"
+                      class="invalid-feedback"
+                    >
+                      <div
+                        *ngIf="addressInfo.storeaddressStreet.errors.required"
+                        class="error-color"
+                      >
+                        Store Address is required
+                      </div>
+                    </div>
+                  </div>
+                </div>
+    
+                <div class="row">
+                    <div class="form-group col-sm-6">
+                        <label>Country</label>
+                        <select 
+                        class="form-control" 
+                        id="storeaddressCountry" 
+                        formControlName="storeaddressCountry" 
+                        [ngClass]="{ 'is-invalid': addressFormSubmitted && addressInfo.storeaddressCountry.errors }"
+                        >
+                            <option value="">--Select a country--</option>
+                            <option *ngFor="let c of countries" [ngValue]=c>{{c.name}}</option>
+                        </select>
+                        <div *ngIf="addressFormSubmitted && addressInfo.storeaddressCountry.errors" class="invalid-feedback">
+                          <div *ngIf="addressInfo.storeaddressCountry.errors.required" class="error-color">
+                            Country is required
+                          </div>
+                        </div>
+                      </div>
+    
+                    <div class="form-group col-sm-6">
+                      <label>State</label>
+                      <select 
+                      class="form-control" 
+                      id="storeaddressState" 
+                      formControlName="storeaddressState" 
+                      [ngClass]="{ 'is-invalid': addressFormSubmitted && addressInfo.storeaddressState.errors }"
+                      >
+                        <option value="">--Select a state--</option>
+                        <option *ngFor="let s of states" [ngValue]=s>{{s.name}}</option>
+                      </select>
+                      <div *ngIf="addressFormSubmitted && addressInfo.storeaddressState.errors" class="invalid-feedback">
+                        <div *ngIf="addressInfo.storeaddressState.errors.required" class="error-color">
+                          State is required
+                        </div>
+                      </div>
+                    </div>
+                </div>
+      
+                <div class="row">
+                  <div class="form-group col-sm-6">
+                    <label>City</label>
+                    <select 
+                    class="form-control" 
+                    id="storeaddressCity" 
+                    formControlName="storeaddressCity"
+                    [ngClass]="{ 'is-invalid': addressFormSubmitted && addressInfo.storeaddressCity.errors }"
+                    >
+                        <option value="">--Select a City--</option>
+                        <option *ngFor="let c of cities" [ngValue]=c>{{c.name}}</option>
+                      </select>
+                    <div *ngIf="addressFormSubmitted && addressInfo.storeaddressCity.errors" class="invalid-feedback">
+                      <div *ngIf="addressInfo.storeaddressCity.errors.required" class="error-color">
+                        City is required
+                      </div>
+                    </div>
+                  </div>
+      
+      
+                  <div class="form-group col-sm-6">
+                    <label>Pincode</label>
+                    <input
+                      type="number"
+                      formControlName="storeaddressPinCode"
+                      class="form-control"
+                      [ngClass]="{ 'is-invalid': addressFormSubmitted && addressInfo.storeaddressPinCode.errors }"
+                    />
+                    <div *ngIf="addressFormSubmitted && addressInfo.storeaddressPinCode.errors" class="invalid-feedback">
+                      <div *ngIf="addressInfo.storeaddressPinCode.errors.required" class="error-color">
+                        Pincode is required
+                      </div>
+                    </div>
+                  </div>
+                </div>
+      
+                <div class="form-group mt-4">
+                    <button type="submit" class="btn btn-success" style="width: 40vh;">Submit</button>
+                </div>
+            </form>
+        </div>
+
+        <!--payment info-->
+        <div class="mt-5">
+            <h4 class="border-bottom pb-2 text-uppercase heading">payment info</h4>
+
+            <form [formGroup]="paymentForm" (submit)="paymentFormSubmit()">
+                <div class="row">
+                  <div class="form-group col-sm-6">
+                    <label>Building Address</label>
+                    <input
+                      type="text"
+                      formControlName="acceptedCurrency"
+                      class="form-control"
+                      [ngClass]="{
+                        'is-invalid': paymentInfoSubmitted && paymentInfo.acceptedCurrency.errors
+                      }"
+                    />
+                    <div
+                      *ngIf="paymentInfoSubmitted && paymentInfo.acceptedCurrency.errors"
+                      class="invalid-feedback"
+                    >
+                      <div
+                        *ngIf="paymentInfo.acceptedCurrency.errors.required"
+                        class="error-color"
+                      >
+                        Accepted Currency is required
+                      </div>
+                    </div>
+                  </div>
+      
+                  <div class="form-group col-sm-6">
+                    <label>Account Number</label>
+                    <input
+                      type="text"
+                      formControlName="accountNumber"
+                      class="form-control"
+                      [ngClass]="{
+                        'is-invalid': paymentInfoSubmitted && paymentInfo.accountNumber.errors
+                      }"
+                    />
+                    <div
+                      *ngIf="paymentInfoSubmitted && paymentInfo.accountNumber.errors"
+                      class="invalid-feedback"
+                    >
+                      <div
+                        *ngIf="paymentInfo.accountNumber.errors.required"
+                        class="error-color"
+                      >
+                        Account Number is required
+                      </div>
+                    </div>
+                  </div>
+                </div>
+      
+                <div class="row">
+                  <div class="form-group col-sm-6">
+                    <label>IFSC Code</label>
+                    <input
+                      type="text"
+                      formControlName="ifcsCode"
+                      class="form-control"
+                      minlength="11"
+                      [ngClass]="{ 'is-invalid': paymentInfoSubmitted && paymentInfo.ifcsCode.errors }"
+                    />
+                    <div
+                      *ngIf="paymentInfoSubmitted && paymentInfo.ifcsCode.errors"
+                      class="invalid-feedback"
+                    >
+                      <div *ngIf="paymentInfo.ifcsCode.errors.required" class="error-color">
+                        IFSC Code is required
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group col-sm-6">
+                    <label>Account Holder Name</label>
+                    <input
+                      type="text"
+                      formControlName="accountHolderName"
+                      class="form-control"
+                      [ngClass]="{
+                        'is-invalid': paymentInfoSubmitted && paymentInfo.accountHolderName.errors
+                      }"
+                    />
+                    <div
+                      *ngIf="paymentInfoSubmitted && paymentInfo.accountHolderName.errors"
+                      class="invalid-feedback"
+                    >
+                      <div
+                        *ngIf="paymentInfo.accountHolderName.errors.required"
+                        class="error-color"
+                      >
+                        Account Holder Name is required
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group mt-4">
+                    <button type="submit" class="btn btn-success" style="width: 40vh;">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -11,6 +11,7 @@ import { AuthGuard } from './auth/auth.guard';
 import { AuthLoginGuard } from './auth/auth-login.guard';
 import { AddressComponent } from './signup/address/address.component';
 import { PaymentComponent } from './signup/payment/payment.component';
+import { ProfileComponent } from './profile/profile.component';
 
 const routes: Routes = [
   { path: 'orders', component: OrdersComponent, canActivate: [AuthGuard] },
@@ -18,19 +19,11 @@ const routes: Routes = [
   { path: 'addMenu', component: AddMenuComponent, canActivate: [AuthGuard] },
   { path: '', component: LoginComponent, canActivate: [AuthLoginGuard] },
   { path: 'signup', component: SignupComponent, canActivate: [AuthLoginGuard] },
-  {
-    path: 'signup/address/:phoneNumber',
-    component: AddressComponent,
-    canActivate: [AuthLoginGuard],
-  },
-  {
-    path: 'signup/payment/:phoneNumber',
-    component: PaymentComponent,
-    canActivate: [AuthLoginGuard],
-  },
-
+  { path: 'signup/address/:phoneNumber', component: AddressComponent, canActivate: [AuthLoginGuard] },
+  { path: 'signup/payment/:phoneNumber', component: PaymentComponent, canActivate: [AuthLoginGuard] },
   { path: 'zones', component: ZonesComponent, canActivate: [AuthGuard] },
   { path: 'table/:zone', component: TableComponent, canActivate: [AuthGuard] },
+  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] }
 ];
 
 @NgModule({
