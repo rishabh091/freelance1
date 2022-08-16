@@ -10,6 +10,7 @@ import { ActivatedRoute } from '@angular/router';
 import { UpdateAddressModule, UserInfo, StoreAddress } from 'src/app/interface/auth.interface'
 import { AuthService as ApiAuthService } from 'src/app/api/auth.service';
 import { AuthService } from 'src/app/auth/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-address',
@@ -27,7 +28,9 @@ export class AddressComponent implements OnInit {
   constructor(private formBuilder: FormBuilder, 
     private route: ActivatedRoute,
     private apiAuthService: ApiAuthService,
-    private auth: AuthService) { }
+    private auth: AuthService,
+    private router: Router, 
+    ) { }
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
@@ -64,7 +67,7 @@ export class AddressComponent implements OnInit {
     )
 
     this.apiAuthService.updateAddress(payload).then(res => {
-      this.auth.login()
+      this.router.navigate(['/signup/payment/' + this.form.value.phoneNumber])
     }).catch(error => {
       console.log(error)
     })

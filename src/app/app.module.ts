@@ -20,6 +20,7 @@ import { ZonesComponent } from './zones/zones.component';
 import { TableComponent } from './table/table.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AddressComponent } from './signup/address/address.component';
+import { PaymentComponent } from './signup/payment/payment.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { AddressComponent } from './signup/address/address.component';
     SignupComponent,
     ZonesComponent,
     TableComponent,
-    AddressComponent
+    AddressComponent,
+    PaymentComponent
   ],
   imports: [
     AngularFireModule.initializeApp(environment.firebaseConfig),
