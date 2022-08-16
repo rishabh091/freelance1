@@ -21,7 +21,7 @@ export class AuthService {
   }
 
   updatePayment(payload: UpdatePaymentModule) {
-    let url = environment.apiUrl + 'updateaddress'
+    let url = environment.apiUrl + 'updatepaymentinfo'
     return this.httpClient.post(url, payload).toPromise()
   }
 }

@@ -82,10 +82,10 @@ export class StorePayment {
 
 export class UpdatePaymentModule {
     userInfo: UserInfo;
-    storePayment: StorePayment;
+    storeinfo: StorePayment;
   
     constructor(userInfo: UserInfo, storePayment: StorePayment) {
       this.userInfo = userInfo;
-      this.storePayment = storePayment;
+      this.storeinfo = storePayment;
     }
   }

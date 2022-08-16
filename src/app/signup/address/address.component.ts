@@ -67,7 +67,7 @@ export class AddressComponent implements OnInit {
     )
 
     this.apiAuthService.updateAddress(payload).then(res => {
-      this.router.navigate(['/signup/payment/' + this.form.value.phoneNumber])
+      this.router.navigate(['/signup/payment/' + this.phoneNumber])
     }).catch(error => {
       console.log(error)
     })
