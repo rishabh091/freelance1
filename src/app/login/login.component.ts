@@ -73,9 +73,7 @@ export class LoginComponent implements OnInit {
       },
     }, auth)
 
-    this.windowRef.recaptchaVerifier.render()
-    
-    console.log(phoneNumber)
+    this.windowRef.recaptchaVerifier.render()    
   }
 
   requestOTP() {
@@ -109,6 +107,7 @@ export class LoginComponent implements OnInit {
     .then(result => {
       this.form.disable()
       clearInterval(this.otpCheckInterval)
+      localStorage.setItem('phone', this.form.value.phone)
       
       this.auth.login()
     }).catch(error => {

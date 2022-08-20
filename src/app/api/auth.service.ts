@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { RegisterModule, UpdateAddressModule, UpdatePaymentModule } from 'src/app/interface/auth.interface'
+import { AddCategory, AddSubCategory } from '../interface/category.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +23,16 @@ export class AuthService {
 
   updatePayment(payload: UpdatePaymentModule) {
     let url = environment.apiUrl + 'updatepaymentinfo'
+    return this.httpClient.post(url, payload).toPromise()
+  }
+
+  addCategory(payload: AddCategory) {
+    let url = environment.apiUrl + 'addmenucategory'
+    return this.httpClient.post(url, payload).toPromise()
+  }
+
+  addSubCategory(payload: AddSubCategory) {
+    let url = environment.apiUrl + 'addmenusubcategory'
     return this.httpClient.post(url, payload).toPromise()
   }
 }

@@ -22,6 +22,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AddressComponent } from './signup/address/address.component';
 import { PaymentComponent } from './signup/payment/payment.component';
 import { ProfileComponent } from './profile/profile.component';
+import { AddCategoryComponent } from './add-category/add-category.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { ProfileComponent } from './profile/profile.component';
     TableComponent,
     AddressComponent,
     PaymentComponent,
-    ProfileComponent
+    ProfileComponent,
+    AddCategoryComponent
   ],
   imports: [
     AngularFireModule.initializeApp(environment.firebaseConfig),

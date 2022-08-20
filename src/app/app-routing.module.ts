@@ -12,11 +12,13 @@ import { AuthLoginGuard } from './auth/auth-login.guard';
 import { AddressComponent } from './signup/address/address.component';
 import { PaymentComponent } from './signup/payment/payment.component';
 import { ProfileComponent } from './profile/profile.component';
+import { AddCategoryComponent } from './add-category/add-category.component';
 
 const routes: Routes = [
   { path: 'orders', component: OrdersComponent, canActivate: [AuthGuard] },
   { path: 'showMenu', component: ShowMenuComponent, canActivate: [AuthGuard] },
   { path: 'addMenu', component: AddMenuComponent, canActivate: [AuthGuard] },
+  { path: 'addCategory', component: AddCategoryComponent, canActivate: [AuthGuard] },
   { path: '', component: LoginComponent, canActivate: [AuthLoginGuard] },
   { path: 'signup', component: SignupComponent, canActivate: [AuthLoginGuard] },
   { path: 'signup/address/:phoneNumber', component: AddressComponent, canActivate: [AuthLoginGuard] },
