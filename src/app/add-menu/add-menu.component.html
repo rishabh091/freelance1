@@ -8,119 +8,46 @@
         </div>
       </div>
       <div class="register-form">
-        <!-- <form [formGroup]="form" (ngSubmit)="onSubmit()">
-          <div class="form-group">
-            <label>Item Category</label>
-            <input
-              type="text"
-              formControlName="itemCategory"
-              class="form-control"
-              [ngClass]="{ 'is-invalid': submitted && f.itemCategory.errors }"
-            />
-            <div
-              *ngIf="submitted && f.itemCategory.errors"
-              class="text-danger"
-            >
-              <div *ngIf="f.itemCategory.errors.required">
-                Item Category is required
-              </div>
-            </div>
-          </div>
-          <div class="form-group">
-            <label>Item Name</label>
-            <input
-              type="text"
-              formControlName="itemName"
-              class="form-control"
-              [ngClass]="{ 'is-invalid': submitted && f.itemName.errors }"
-            />
-            <div
-              *ngIf="submitted && f.itemName.errors"
-              class="text-danger"
-            >
-              <div *ngIf="f.itemName.errors.required">
-                Item Name is required
-              </div>
-            </div>
-          </div>
-          <div class="form-group">
-            <label>Item Description</label>
-            <input
-              type="text"
-              formControlName="itemDesc"
-              class="form-control"
-              [ngClass]="{ 'is-invalid': submitted && f.itemDesc.errors }"
-            />
-            <div
-              *ngIf="submitted && f.itemDesc.errors"
-              class="text-danger"
-            >
-              <div *ngIf="f.itemDesc.errors.required">
-                Item Description is required
-              </div>
-            </div>
-          </div>
-          <div class="form-group">
-            <label>Item Price</label>
-            <input
-              type="number"
-              formControlName="itemAmount"
-              class="form-control"
-              [ngClass]="{ 'is-invalid': submitted && f.itemAmount.errors }"
-            />
-            <div
-              *ngIf="submitted && f.itemAmount.errors"
-              class="text-danger"
-            >
-              <div *ngIf="f.itemAmount.errors.required">
-                Item Amount is required
-              </div>
-            </div>
-          </div>
-          <div class="form-group">
-            <label>Is item veg?</label>
-            <input
-              type="text"
-              formControlName="itemisVeg"
-              class="form-control"
-              [ngClass]="{ 'is-invalid': submitted && f.itemisVeg.errors }"
-            />
-            <div
-              *ngIf="submitted && f.itemisVeg.errors"
-              class="text-danger"
-            >
-              <div *ngIf="f.itemisVeg.errors.required">Field is required</div>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <button type="submit" class="btn btn-primary">Register</button>
-            <button
-              type="button"
-              (click)="onReset()"
-              class="btn btn-warning float-right"
-            >
-              Reset
-            </button>
-          </div>
-        </form> -->
-
-
-
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
           <div class="form-group">
-            <label>Item Name</label>
-            <input type="text" formControlName="ItemName" class="form-control"/>
+            <label>Category</label>
+            <select class="form-control" formControlName="menuCategory">
+              <option value=''>--Select--</option>
+              <option value='cat 1'>Cat1</option>
+            </select>
           </div>
-          <div *ngIf="submitted && f.ItemName.errors" class="text-danger">
-            <div *ngIf="f.ItemName.errors.required">
+          <div *ngIf="submitted && f.menuCategory.errors" class="text-danger mb-5">
+            <div *ngIf="f.menuCategory.errors.required">
+              Category is required
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Sub-Category</label>
+            <select class="form-control" formControlName="menuSubCategory">
+              <option value=''>--Select--</option>
+              <option value='subcat 1'>Sub Cat1</option>
+            </select>
+          </div>
+          <div *ngIf="submitted && f.menuSubCategory.errors" class="text-danger mb-5">
+            <div *ngIf="f.menuSubCategory.errors.required">
+              Sub-Category is required
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Item Name</label>
+            <input type="text" formControlName="menuItem" class="form-control"/>
+          </div>
+          <div *ngIf="submitted && f.menuItem.errors" class="text-danger mb-5">
+            <div *ngIf="f.menuItem.errors.required">
               Item Name is required
             </div>
           </div>
 
           <div class="form-group">
-            <label>ItemType</label>
-            <select class="form-control" formControlName="ItemType">
+            <label>Item Type</label>
+            <select class="form-control" formControlName="itemType">
               <option value=''>--Select--</option>
               <option value="veg">Veg</option>
               <option value="nonveg">Non-Veg</option>
@@ -129,52 +56,58 @@
 
             </select>
           </div>
-          <div *ngIf="submitted && f.ItemType.errors" class="text-danger">
-            <div *ngIf="f.ItemType.errors.required">
-              ItemType is required
+          <div *ngIf="submitted && f.itemType.errors" class="text-danger mb-5">
+            <div *ngIf="f.itemType.errors.required">
+              Item type is required
             </div>
           </div>
 
           <div class="form-group">
             <label>Price</label>
-            <input type="number" formControlName="Price" class="form-control"/>
+            <input type="number" formControlName="itemPrice" class="form-control"/>
           </div>
-          <div *ngIf="submitted && f.Price.errors" class="text-danger">
-            <div *ngIf="f.Price.errors.required">
+          <div *ngIf="submitted && f.itemPrice.errors" class="text-danger mb-5">
+            <div *ngIf="f.itemPrice.errors.required">
               Price is required
             </div>
           </div>
 
           <div class="form-group">
-            <label>Discount</label>
-            <input type="number" formControlName="Discount" class="form-control"/>
+            <label>Display Image</label>
+            <input type="file" formControlName="itemURL" class="form-control"/>
           </div>
-          <div *ngIf="submitted && f.Discount.errors" class="text-danger">
-            Discount is required
-          </div>
-
-          <div class="form-group form-switch">
-            <input class="form-check-input form-control" type="checkbox" role="switch" id="flexSwitchCheckDefault"
-            formControlName="AvailableNow">
-            <label class="form-check-label" for="flexSwitchCheckDefault">Make Available Now</label>
+          <div *ngIf="submitted && f.itemURL.errors" class="text-danger mb-5">
+            Image is required
           </div>
 
           <div class="form-group">
-            <label>Next Available Time</label>
-            <input type="datetime-local" formControlName="NextAvailableTime" class="form-control"/>
+            <label>Available From</label>
+            <input type="time" formControlName="availableFrom" class="form-control"/>
           </div>
-          <div *ngIf="submitted && f.NextAvailableTime.errors" class="text-danger">
-            <div *ngIf="f.NextAvailableTime.errors.required">
-              Next Available Time is required
-            </div>
+          <div *ngIf="submitted && f.availableFrom.errors" class="text-danger mb-5">
+            Available From is required
           </div>
 
           <div class="form-group">
-            <label>Display Image Path</label>
-            <input type="text" formControlName="DisplayImagePath" class="form-control"/>
+            <label>Available Till</label>
+            <input type="time" formControlName="availableTill" class="form-control"/>
           </div>
-          <div *ngIf="submitted && f.DisplayImagePath.errors" class="text-danger">
-            Next Available Time is required
+          <div *ngIf="submitted && f.availableTill.errors" class="text-danger mb-5">
+            Available Till is required
+          </div>
+
+          <div class="form-group">
+            <label>Week Day Availablitiy</label>
+            <div><input type="checkbox" [(ngModel)]="weekDayAvailability[0]" [ngModelOptions]="{standalone: true}"> Sunday</div>
+            <div><input type="checkbox" [(ngModel)]="weekDayAvailability[1]" [ngModelOptions]="{standalone: true}"> Monday</div>
+            <div><input type="checkbox" [(ngModel)]="weekDayAvailability[2]" [ngModelOptions]="{standalone: true}"> Tuesday</div>
+            <div><input type="checkbox" [(ngModel)]="weekDayAvailability[3]" [ngModelOptions]="{standalone: true}"> Wednesday</div>
+            <div><input type="checkbox" [(ngModel)]="weekDayAvailability[4]" [ngModelOptions]="{standalone: true}"> Thrusday</div>
+            <div><input type="checkbox" [(ngModel)]="weekDayAvailability[5]" [ngModelOptions]="{standalone: true}"> Friday</div>
+            <div><input type="checkbox" [(ngModel)]="weekDayAvailability[6]" [ngModelOptions]="{standalone: true}"> Satday</div>
+          </div>
+          <div *ngIf="submitted && weekDayAvailabilityError" class="text-danger mb-5">
+            You need to select atleast 1 day
           </div>
 
           <div class="form-group text-right">

@@ -5,7 +5,9 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { AuthService } from '../auth/auth.service';
+import { AuthService as AuthApiService } from '../api/auth.service';
+import { UserInfo } from '../interface/auth.interface';
+import { AddMenuItem, MenuInfo } from '../interface/item.interface';
 
 @Component({
   selector: 'app-add-menu',
@@ -17,26 +19,22 @@ export class AddMenuComponent implements OnInit {
   form: FormGroup;
   submitted = false;
 
-  constructor(private formBuilder: FormBuilder, private auth: AuthService) {}
+  weekDayAvailability: boolean[] = [false, false, false, false, false, false, false]
+  weekDayAvailabilityError = true
+
+  constructor(private formBuilder: FormBuilder, private api: AuthApiService) {}
  
   ngOnInit(): void {
-    this.form = this.formBuilder.group(
-      {
-        ItemName: ['', Validators.required],
-        ItemType : ['', [Validators.required]],
-        Price:['', Validators.required],
-        Discount : ['', Validators.required],
-        AvailableNow :['', Validators.required],
-        NextAvailableTime :['', Validators.required],
-        DisplayImagePath : ['', Validators.required]
-        // itemCategory: ['', Validators.required],
-        // itemName: ['', Validators.required],
-        // itemDesc: ['', Validators.required],
-        // itemAmount: ['', Validators.required], 
-        // itemisVeg: ['', Validators.required],
-      }
-     
-    );
+    this.form = this.formBuilder.group({
+        menuCategory: ['', Validators.required],
+        menuSubCategory: ['', [Validators.required]],
+        menuItem: ['', Validators.required],
+        itemType: ['', Validators.required],
+        itemURL :['', Validators.required],
+        itemPrice :['', Validators.required],
+        availableFrom: ['', Validators.required],
+        availableTill: ['', Validators.required]
+      })
   }
 
   get f(): { [key: string]: AbstractControl } {
@@ -47,8 +45,37 @@ export class AddMenuComponent implements OnInit {
     if (this.form.invalid) {
       return;
     }
+    this.weekDayAvailability.map(available => { if(available) this.weekDayAvailabilityError = false })
+    this.form.value.availableFrom = this.convertToSeconds(this.form.value.availableFrom)
+    this.form.value.availableTill = this.convertToSeconds(this.form.value.availableTill)
+
+    console.log(this.weekDayAvailability)
     console.log(JSON.stringify(this.form.value, null, 2));
+
+    const phoneNumber = localStorage.getItem('phone')
+    const payload = new AddMenuItem(new UserInfo(phoneNumber),
+    new MenuInfo(this.form.value.menuCategory,
+      this.form.value.menuSubCategory,
+      this.form.value.menuItem,
+      this.form.value.itemType,
+      this.form.value.itemURL,
+      this.form.value.itemPrice,
+      this.form.value.availableFrom,
+      this.form.value.availableTill,
+      this.weekDayAvailability))
+
+      this.api.addMenuItem(payload).then(res => {console.log('success')}).catch(error => {console.log(error)})
   }
+
+  convertToSeconds(time: string): number {
+    const hoursAndMin = time.split(":")
+    if (hoursAndMin.length < 2) return parseInt(time)
+
+    const hoursInSec = parseInt(hoursAndMin[0]) * 60 * 60
+    const minutesInSec = parseInt(hoursAndMin[1]) * 60
+    return hoursInSec + minutesInSec
+  }
+
   onReset(): void {
     this.submitted = false;
     this.form.reset();

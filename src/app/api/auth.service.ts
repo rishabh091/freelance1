@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { RegisterModule, UpdateAddressModule, UpdatePaymentModule } from 'src/app/interface/auth.interface'
 import { AddCategory, AddSubCategory } from '../interface/category.interface';
+import { AddMenuItem } from '../interface/item.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -33,6 +34,11 @@ export class AuthService {
 
   addSubCategory(payload: AddSubCategory) {
     let url = environment.apiUrl + 'addmenusubcategory'
+    return this.httpClient.post(url, payload).toPromise()
+  }
+
+  addMenuItem(payload: AddMenuItem) {
+    let url = environment.apiUrl + 'addmenuitem'
     return this.httpClient.post(url, payload).toPromise()
   }
 }
