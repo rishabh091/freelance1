@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { AddStaff, RemoveStaff, StoreStaff, UpdateStaff } from '../interface/staff.interface';
+import {
+  AddStaff,
+  RemoveStaff,
+  StoreStaff,
+  UpdateStaff,
+} from '../interface/staff.interface';
 import {
   AbstractControl,
   FormBuilder,
@@ -8,38 +13,48 @@ import {
 } from '@angular/forms';
 import { AuthService as AuthApiService } from '../api/auth.service';
 import { UserInfo } from '../interface/auth.interface';
-
+import { ServiceToasterService } from '../service-toaster.service';
 @Component({
   selector: 'app-staff',
   templateUrl: './staff.component.html',
-  styleUrls: ['./staff.component.css']
+  styleUrls: ['./staff.component.css'],
 })
 export class StaffComponent implements OnInit {
+  staff: StoreStaff[] = [
+    {
+      name: 'abc',
+      role: 'manager',
+      phoneNumber: '987654425',
+      emailAddress: 'abc@yopmail.com',
+    },
+  ];
 
-  staff: StoreStaff[] = [{name: 'abc', role: 'manager', phoneNumber: '987654425', emailAddress: 'abc@yopmail.com'}]
+  addStaffForm: FormGroup;
+  addStaffSubmitted = false;
 
-  addStaffForm: FormGroup
-  addStaffSubmitted = false
+  updateStaffForm: FormGroup;
+  updateStaffSubmitted = false;
 
-  updateStaffForm: FormGroup
-  updateStaffSubmitted = false
-
-  constructor(private formBuilder: FormBuilder, private api: AuthApiService) { }
+  constructor(
+    private formBuilder: FormBuilder,
+    private api: AuthApiService,
+    public toasterService: ServiceToasterService
+  ) {}
 
   ngOnInit(): void {
     this.addStaffForm = this.formBuilder.group({
       name: ['', Validators.required],
       role: ['', Validators.required],
       emailAddress: ['', Validators.required],
-      phoneNumber: ['', Validators.required]
-    })
+      phoneNumber: ['', Validators.required],
+    });
 
     this.updateStaffForm = this.formBuilder.group({
       name: ['', Validators.required],
       role: ['', Validators.required],
       emailAddress: ['', Validators.required],
-      phoneNumber: ['', Validators.required]
-    })
+      phoneNumber: ['', Validators.required],
+    });
   }
 
   get addStaffFunction(): { [key: string]: AbstractControl } {
@@ -50,35 +65,83 @@ export class StaffComponent implements OnInit {
   }
 
   addStaff(): void {
-    this.addStaffSubmitted = true
-    if (this.addStaffForm.invalid) return
+    this.addStaffSubmitted = true;
+    if (this.addStaffForm.invalid) return;
 
-    const phoneNumber = localStorage.getItem('phone')
-    const payload = new AddStaff(new UserInfo(phoneNumber),
-    new StoreStaff(this.addStaffForm.value.name, this.addStaffForm.value.role,
-      this.addStaffForm.value.phoneNumber, this.addStaffForm.value.emailAddress))
-    
-    this.api.addStaff(payload).then(res => { console.log(res) }).catch(error => { console.log(error) })
+    const phoneNumber = localStorage.getItem('phone');
+    const payload = new AddStaff(
+      new UserInfo(phoneNumber),
+      new StoreStaff(
+        this.addStaffForm.value.name,
+        this.addStaffForm.value.role,
+        this.addStaffForm.value.phoneNumber + '',
+        this.addStaffForm.value.emailAddress
+      )
+    );
+
+    this.api
+      .addStaff(payload)
+      .then((res: any) => {
+        if (res.status == 'success') {
+          this.toasterService.success('You have added the staff successfully!');
+        } else {
+          this.toasterService.failure(res.status);
+        }
+      })
+      .catch((error) => {
+        this.toasterService.failure('Error in adding the staff!');
+      });
   }
 
   updateStaff(): void {
-    this.updateStaffSubmitted = true
-    if (this.updateStaffForm.invalid) return
+    this.updateStaffSubmitted = true;
+    if (this.updateStaffForm.invalid) return;
 
-    const phoneNumber = localStorage.getItem('phone')
-    const payload = new UpdateStaff(new UserInfo(phoneNumber),
-    new StoreStaff(this.updateStaffForm.value.name, this.updateStaffForm.value.role,
-      this.updateStaffForm.value.phoneNumber, this.updateStaffForm.value.emailAddress))
-    
-    this.api.updateStaff(payload).then(res => { console.log(res) }).catch(error => { console.log(error) })
+    const phoneNumber = localStorage.getItem('phone');
+    const payload = new UpdateStaff(
+      new UserInfo(phoneNumber),
+      new StoreStaff(
+        this.updateStaffForm.value.name,
+        this.updateStaffForm.value.role,
+        this.updateStaffForm.value.phoneNumber,
+        this.updateStaffForm.value.emailAddress
+      )
+    );
+
+    this.api
+      .updateStaff(payload)
+      .then((res: any) => {
+        if (res.status == 'success') {
+          this.toasterService.success(
+            'You have updated the staff successfully!'
+          );
+        } else {
+          this.toasterService.failure(res.status);
+        }
+      })
+      .catch((error) => {
+        this.toasterService.failure('Error in updating the staff!');
+      });
   }
 
   removeStaff(index: number): void {
-    const staff = this.staff[index]
-    const phoneNumber = localStorage.getItem('phone')
-    const payload = new RemoveStaff(new UserInfo(phoneNumber), staff)
+    const staff = this.staff[index];
+    const phoneNumber = localStorage.getItem('phone');
+    const payload = new RemoveStaff(new UserInfo(phoneNumber), staff);
 
-    this.api.removeStaff(payload).then(res => { console.log(res) }).catch(error => { console.log(error) })
+    this.api
+      .removeStaff(payload)
+      .then((res: any) => {
+        if (res.status) {
+          this.toasterService.success(
+            'You have removed the staff successfully!'
+          );
+        } else {
+          this.toasterService.failure(res.status);
+        }
+      })
+      .catch((error) => {
+        this.toasterService.failure('Error in removing the staff!');
+      });
   }
-
 }

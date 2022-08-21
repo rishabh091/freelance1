@@ -19,22 +19,22 @@ export class AddCategoryMenuInfo {
 
 export class AddSubCategory {
     userInfo: UserInfo
-    menuinfo: AddSubCategoryMenuInfo
+    menuInfo: AddSubCategoryMenuInfo
 
     constructor(userInfo: UserInfo, menuinfo: AddSubCategoryMenuInfo) {
         this.userInfo = userInfo
-        this.menuinfo = menuinfo
+        this.menuInfo = menuinfo
     }
 }
 
 export class AddSubCategoryMenuInfo {
     menuCategory: string
     menuSubCategory: string
-    imageUrl: string
+    imageURL: string
 
     constructor(menuCategory: string, menuSubCategory: string, imageUrl: string) {
         this.menuCategory = menuCategory
         this.menuSubCategory = menuSubCategory
-        this.imageUrl = imageUrl
+        this.imageURL = imageUrl
     }
 }

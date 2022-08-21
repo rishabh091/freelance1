@@ -1,67 +1,135 @@
 <div class="background-image">
-    <div class="center">
-      <div class="container bg-light m-3 p-3" style="border-radius: 1vh">
-        <div class="center heading m-2">ADD CATEGORY TO THE MENU</div>
-        <div class="register-form mt-5">  
-          <form [formGroup]="form" (ngSubmit)="onSubmit()">
-            <div class="form-group">
-              <label>Category Name</label>
-              <input type="text" formControlName="menuCategory" class="form-control"/>
+  <div class="center">
+    <div class="container bg-light m-3 p-3" style="border-radius: 1vh">
+      <div class="center heading m-2">ADD CATEGORY TO THE MENU</div>
+      <div class="register-form mt-5">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+          <div class="form-group">
+            <label>Category Name</label>
+            <input
+              type="text"
+              formControlName="menuCategory"
+              class="form-control"
+            />
+          </div>
+          <div *ngIf="submitted && f.menuCategory.errors" class="text-danger">
+            <div *ngIf="f.menuCategory.errors.required">
+              Category Name is required
             </div>
-            <div *ngIf="submitted && f.menuCategory.errors" class="text-danger">
-              <div *ngIf="f.menuCategory.errors.required">
-                Category Name is required
-              </div>
-            </div>
+          </div>
 
-            <div class="form-group text-right">
-              <button type="submit" class="btn btn-success rounded-0" style="width: 200px;">Save</button>
-            </div>
-          </form>
-        </div>
+          <div class="form-group text-right">
+            <button
+              type="submit"
+              class="btn btn-success rounded-0"
+              style="width: 200px"
+            >
+              ADD CATEGORY
+            </button>
+          </div>
+        </form>
       </div>
+    </div>
 
-      <div class="container bg-light m-3 p-3" style="border-radius: 1vh">
-        <div class="center heading m-2">ADD SUB-CATEGORY TO CATEGORY</div>
-        <div class="register-form mt-5">  
-          <form [formGroup]="subCategoryForm" (ngSubmit)="addSubCategory" class="mt-5">
-            <div class="form-group">
-                <label>Menu Category</label>
-                <select 
-                class="form-control" 
-                id="menuCategory" 
-                formControlName="menuCategory" 
-                [ngClass]="{ 'is-invalid': subCategorySubmitted && subCategory.menuCategory.errors }"
-                >
-                    <option value="">--Select a category--</option>
-                </select>
+    <div class="container bg-light m-3 p-3" style="border-radius: 1vh">
+      <div class="center heading m-2">ADD SUB-CATEGORY TO CATEGORY</div>
+      <div class="register-form mt-5">
+        <form
+          [formGroup]="subCategoryForm"
+          (ngSubmit)="addSubCategory()"
+          class="mt-5"
+        >
+          <div class="form-group">
+            <label>Menu Category</label>
+            <select class="form-control" formControlName="menuCategory">
+              <option value="">--Select a category--</option>
+              <option value="iooio">akdbs</option>
+            </select>
+          </div>
+          <div
+            *ngIf="subCategorySubmitted && subCategory.menuCategory.errors"
+            class="text-danger"
+          >
+            <div *ngIf="subCategory.menuCategory.errors.required">
+              Category Name is required
             </div>
-            <div class="form-group">
-              <label>Sub-Category Name</label>
-              <input type="text" formControlName="menuSubCategory" class="form-control"/>
-            </div>
-            <div *ngIf="subCategorySubmitted && f.menuSubCategory.errors" class="text-danger">
-              <div *ngIf="f.menuSubCategory.errors.required">
-                Category Name is required
-              </div>
-            </div>
+          </div>
 
-            <div class="form-group">
-                <label>Image</label>
-                <input type="file" formControlName="imageURL" class="form-control"/>
-              </div>
-              <div *ngIf="subCategorySubmitted && f.imageURL.errors" class="text-danger">
-                <div *ngIf="f.imageURL.errors.required">
-                  Image is required
-                </div>
-              </div>
-
-            <div class="form-group text-right">
-              <button type="submit" class="btn btn-success rounded-0" style="width: 200px;">Save</button>
+          <div class="form-group">
+            <label>Sub-Category Name</label>
+            <input
+              type="text"
+              formControlName="menuSubCategory"
+              class="form-control"
+            />
+          </div>
+          <div
+            *ngIf="subCategorySubmitted && subCategory.menuSubCategory.errors"
+            class="text-danger"
+          >
+            <div *ngIf="subCategory.menuSubCategory.errors.required">
+              Sub Category Name is required
             </div>
-          </form>
-        </div>
+          </div>
+
+          <div class="form-group">
+            <label>Image</label>
+            <input
+              type="file"
+              formControlName="imageURL"
+              class="form-control"
+            />
+          </div>
+          <div
+            *ngIf="subCategorySubmitted && subCategory.imageURL.errors"
+            class="text-danger"
+          >
+            <div *ngIf="subCategory.imageURL.errors.required">
+              Image is required
+            </div>
+          </div>
+
+          <div class="form-group text-right">
+            <button
+              type="submit"
+              class="btn btn-success rounded-0"
+              style="width: 200px"
+            >
+              ADD SUB-CATEGORY
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   </div>
-  
+
+  <div
+    *ngIf="successNote"
+    class="bg-success m-5 p-2 success-note"
+    style="bottom: 0; right: 0; position: fixed"
+  >
+    <img
+      class="img-siz"
+      src="https://cdn-icons-png.flaticon.com/512/190/190411.png"
+      alt=""
+    />
+    <span class="text-light font-weight-bold">
+      {{ text }}
+    </span>
+  </div>
+
+  <div
+    *ngIf="errorNote"
+    class="bg-danger m-5 p-2 success-note"
+    style="bottom: 0; right: 0; position: fixed"
+  >
+    <img
+      class="img-siz"
+      src="https://cdn-icons-png.flaticon.com/512/190/190406.png"
+      alt=""
+    />
+    <span class="text-light font-weight-bold">
+      {{ text }}
+    </span>
+  </div>
+</div>

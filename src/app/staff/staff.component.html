@@ -1,51 +1,316 @@
-<div class="container-fluid bg-light p-5">
-    <div class="text-right">
-        <button class="btn btn-success rounded-0" data-toggle="modal" data-target="#addStaff">Add Staff</button>
-    </div>
+<div class="background-image">
+  <div class="center">
+    <div class="container bg-light m-3 p-3" style="border-radius: 1vh">
+      <div class="center heading m-2">STAFF</div>
+      <div class="center">
+        <div class="sub-heading m-2 pb-4 mb-5">
+          khf shfdd iurddrig dg rdihgi df kfsjf h fufgur ug rugu gfd
+        </div>
+      </div>
 
-    <div class="table-responsive mt-3">
+      <div class="text-right">
+        <button
+          class="btn btn-success rounded-0"
+          data-toggle="modal"
+          data-target="#addStaff"
+        >
+          Add Staff
+        </button>
+      </div>
+
+      <div class="table-responsive mt-3">
         <table class="table">
-            <thead class="thead-dark">
-                <tr>
-                    <th>Name</th>
-                    <th>Role</th>
-                    <th>Phone</th>
-                    <th>Email</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let st of staff">
-                    <td class="text-uppercase">{{ st.name }}</td>
-                    <td class="text-capitalize">{{ st.role }}</td>
-                    <td>{{ st.phoneNumber }}</td>
-                    <td>{{ st.emailAddress }}</td>
-                </tr>
-            </tbody>
+          <thead class="thead-dark">
+            <tr class="text-center">
+              <th>S.No</th>
+              <th>Name</th>
+              <th>Role</th>
+              <th>Phone</th>
+              <th>Email</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let st of staff; let i = index" class="text-center">
+              <td class="text-uppercase">{{ i + 1 }}</td>
+              <td class="text-uppercase">{{ st.name }}</td>
+              <td class="text-uppercase">{{ st.role }}</td>
+              <td class="">{{ st.phoneNumber }}</td>
+              <td class="">{{ st.emailAddress }}</td>
+              <td>
+                <img
+                  class="img-size"
+                  src="https://cdn-icons-png.flaticon.com/512/2946/2946209.png"
+                  alt=""
+                  data-toggle="modal"
+                  data-target="#editStaff"
+                />
+                <img
+                  class="img-size"
+                  src="https://cdn-icons.flaticon.com/png/512/3178/premium/3178384.png?token=exp=1661083029~hmac=556dc881e003ea83c157fe41e1bb2543"
+                  alt=""
+                  data-toggle="modal"
+                  data-target="#removeStaff"
+                />
+              </td>
+            </tr>
+          </tbody>
         </table>
-    </div>
-</div>
-
-<!--Add Staff Modal-->
-<div class="modal fade" id="addStaff">
-    <div class="modal-dialog">
-      <div class="modal-content">
-  
-        <!-- Modal Header -->
-        <div class="modal-header">
-          <h4 class="modal-title">Add Staff</h4>
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-        </div>
-  
-        <!-- Modal body -->
-        <div class="modal-body">
-          Modal body..
-        </div>
-  
-        <!-- Modal footer -->
-        <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-        </div>
-  
       </div>
     </div>
   </div>
+
+  <div *ngIf="successNote"
+    class="bg-success m-5 p-2 success-note"
+    style="bottom: 0; right: 0; position: fixed"
+  >
+    <img
+      class="img-siz"
+      src="https://cdn-icons-png.flaticon.com/512/190/190411.png"
+      alt=""
+    />
+    <span class="text-light font-weight-bold ">
+      {{ text }}
+    </span>
+  </div>
+
+  <div *ngIf="errorNote"
+  class="bg-danger m-5 p-2 success-note"
+  style="bottom: 0; right: 0; position: fixed"
+>
+  <img
+    class="img-siz"
+    src="https://cdn-icons-png.flaticon.com/512/190/190406.png"
+    alt=""
+  />
+  <span class="text-light font-weight-bold">
+    {{ text }}
+  </span>
+</div>
+</div>
+
+<!--Add Staff Modal-->
+
+<div class="modal" id="addStaff">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">ADD <span class="text-warning">STAFF</span></h4>
+        <button type="button" class="close" data-dismiss="modal">
+          &times;
+        </button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <div class="edit-form">
+          <form [formGroup]="addStaffForm" (ngSubmit)="addStaff()">
+            <div class="form-group">
+              <label>Staff Name</label>
+              <input type="text" formControlName="name" class="form-control" />
+            </div>
+            <div
+              *ngIf="addStaffSubmitted && addStaffFunction.name.errors"
+              class="text-danger"
+            >
+              <div *ngIf="addStaffFunction.name.errors.required">
+                Name is required
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Role</label>
+              <select class="form-control" formControlName="role">
+                <option value="manager">Manager</option>
+                <option value="staff">Staff</option>
+              </select>
+            </div>
+            <div
+              *ngIf="addStaffSubmitted && addStaffFunction.role.errors"
+              class="text-danger"
+            >
+              <div *ngIf="addStaffFunction.role.errors.required">
+                Role is required
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Email</label>
+              <input
+                type="email"
+                formControlName="emailAddress"
+                class="form-control"
+              />
+            </div>
+            <div
+              *ngIf="addStaffSubmitted && addStaffFunction.emailAddress.errors"
+              class="text-danger"
+            >
+              <div *ngIf="addStaffFunction.emailAddress.errors.required">
+                Email is required
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Phone Number</label>
+              <input
+                type="number"
+                formControlName="phoneNumber"
+                class="form-control"
+              />
+            </div>
+            <div
+              *ngIf="addStaffSubmitted && addStaffFunction.phoneNumber.errors"
+              class="text-danger"
+            >
+              <div *ngIf="addStaffFunction.phoneNumber.errors.required">
+                Phone Number is required
+              </div>
+            </div>
+
+            <div class="form-group text-right">
+              <button
+                type="submit"
+                class="btn btn-warning rounded-0"
+                style="width: 200px; margin-bottom: 20px; margin-top: 20px"
+              >
+                ADD
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Edit Staff Modal-->
+
+<div class="modal" id="editStaff">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">
+          UPDATE <span class="text-warning">STAFF</span>
+        </h4>
+        <button type="button" class="close" data-dismiss="modal">
+          &times;
+        </button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <div class="edit-form">
+          <form [formGroup]="updateStaffForm" (ngSubmit)="updateStaff()">
+            <div class="form-group">
+              <label>Staff Name</label>
+              <input type="text" formControlName="name" class="form-control" />
+            </div>
+            <div
+              *ngIf="updateStaffSubmitted && updateStaffFunction.name.errors"
+              class="text-danger"
+            >
+              <div *ngIf="updateStaffFunction.name.errors.required">
+                Name is required
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Role</label>
+              <select class="form-control" formControlName="role">
+                <option value="manager">Manager</option>
+                <option value="staff">Staff</option>
+              </select>
+            </div>
+            <div
+              *ngIf="updateStaffSubmitted && updateStaffFunction.role.errors"
+              class="text-danger"
+            >
+              <div *ngIf="updateStaffFunction.role.errors.required">
+                Role is required
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Email</label>
+              <input
+                type="email"
+                formControlName="emailAddress"
+                class="form-control"
+              />
+            </div>
+            <div
+              *ngIf="
+                updateStaffSubmitted && updateStaffFunction.emailAddress.errors
+              "
+              class="text-danger"
+            >
+              <div *ngIf="updateStaffFunction.emailAddress.errors.required">
+                Email is required
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Phone Number</label>
+              <input
+                type="number"
+                formControlName="phoneNumber"
+                class="form-control"
+              />
+            </div>
+            <div
+              *ngIf="
+                updateStaffSubmitted && updateStaffFunction.phoneNumber.errors
+              "
+              class="text-danger"
+            >
+              <div *ngIf="updateStaffFunction.phoneNumber.errors.required">
+                Phone Number is required
+              </div>
+            </div>
+
+            <div class="form-group text-right">
+              <button
+                type="submit"
+                class="btn btn-warning rounded-0"
+                style="width: 200px; margin-bottom: 20px; margin-top: 20px"
+              >
+                UPDATE
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Edit Staff Modal-->
+
+<div class="modal" id="removeStaff">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">
+          REMOVE <span class="text-warning">STAFF</span>
+        </h4>
+        <button type="button" class="close" data-dismiss="modal">
+          &times;
+        </button>
+      </div>
+      <div class="modal-body">
+        <div>Are you sure you want to remove staff ?</div>
+        <button
+          class="btn btn-warning rounded-0"
+          (click)="removeStaff(1)"
+          style="width: 200px; margin-bottom: 20px; margin-top: 20px"
+        >
+          REMOVE
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
