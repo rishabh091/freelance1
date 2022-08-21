@@ -13,6 +13,7 @@ import { AddressComponent } from './signup/address/address.component';
 import { PaymentComponent } from './signup/payment/payment.component';
 import { ProfileComponent } from './profile/profile.component';
 import { AddCategoryComponent } from './add-category/add-category.component';
+import { StaffComponent } from './staff/staff.component';
 
 const routes: Routes = [
   { path: 'orders', component: OrdersComponent, canActivate: [AuthGuard] },
@@ -25,7 +26,8 @@ const routes: Routes = [
   { path: 'signup/payment/:phoneNumber', component: PaymentComponent, canActivate: [AuthLoginGuard] },
   { path: 'zones', component: ZonesComponent, canActivate: [AuthGuard] },
   { path: 'table/:zone', component: TableComponent, canActivate: [AuthGuard] },
-  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] }
+  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
+  { path: 'staff', component: StaffComponent, canActivate: [AuthGuard] }
 ];
 
 @NgModule({

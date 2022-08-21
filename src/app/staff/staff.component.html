@@ -1,0 +1,51 @@
+<div class="container-fluid bg-light p-5">
+    <div class="text-right">
+        <button class="btn btn-success rounded-0" data-toggle="modal" data-target="#addStaff">Add Staff</button>
+    </div>
+
+    <div class="table-responsive mt-3">
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Name</th>
+                    <th>Role</th>
+                    <th>Phone</th>
+                    <th>Email</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let st of staff">
+                    <td class="text-uppercase">{{ st.name }}</td>
+                    <td class="text-capitalize">{{ st.role }}</td>
+                    <td>{{ st.phoneNumber }}</td>
+                    <td>{{ st.emailAddress }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!--Add Staff Modal-->
+<div class="modal fade" id="addStaff">
+    <div class="modal-dialog">
+      <div class="modal-content">
+  
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Add Staff</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+  
+        <!-- Modal body -->
+        <div class="modal-body">
+          Modal body..
+        </div>
+  
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+  
+      </div>
+    </div>
+  </div>

@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import { RegisterModule, UpdateAddressModule, UpdatePaymentModule } from 'src/app/interface/auth.interface'
 import { AddCategory, AddSubCategory } from '../interface/category.interface';
 import { AddMenuItem } from '../interface/item.interface';
+import { AddStaff, RemoveStaff, UpdateStaff } from '../interface/staff.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -39,6 +40,21 @@ export class AuthService {
 
   addMenuItem(payload: AddMenuItem) {
     let url = environment.apiUrl + 'addmenuitem'
+    return this.httpClient.post(url, payload).toPromise()
+  }
+
+  addStaff(payload: AddStaff) {
+    let url = environment.apiUrl + 'addstaff'
+    return this.httpClient.post(url, payload).toPromise()
+  }
+
+  updateStaff(payload: UpdateStaff) {
+    let url = environment.apiUrl + 'updatestaff'
+    return this.httpClient.post(url, payload).toPromise()
+  }
+
+  removeStaff(payload: RemoveStaff) {
+    let url = environment.apiUrl + 'removestaff'
     return this.httpClient.post(url, payload).toPromise()
   }
 }
