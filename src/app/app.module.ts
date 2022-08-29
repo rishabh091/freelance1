@@ -24,6 +24,7 @@ import { PaymentComponent } from './signup/payment/payment.component';
 import { ProfileComponent } from './profile/profile.component';
 import { AddCategoryComponent } from './add-category/add-category.component';
 import { StaffComponent } from './staff/staff.component';
+import { ToasterComponent } from './toaster/toaster.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { StaffComponent } from './staff/staff.component';
     PaymentComponent,
     ProfileComponent,
     AddCategoryComponent,
-    StaffComponent
+    StaffComponent,
+    ToasterComponent
   ],
   imports: [
     AngularFireModule.initializeApp(environment.firebaseConfig),

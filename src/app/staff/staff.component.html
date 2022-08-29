@@ -59,34 +59,6 @@
       </div>
     </div>
   </div>
-
-  <div *ngIf="successNote"
-    class="bg-success m-5 p-2 success-note"
-    style="bottom: 0; right: 0; position: fixed"
-  >
-    <img
-      class="img-siz"
-      src="https://cdn-icons-png.flaticon.com/512/190/190411.png"
-      alt=""
-    />
-    <span class="text-light font-weight-bold ">
-      {{ text }}
-    </span>
-  </div>
-
-  <div *ngIf="errorNote"
-  class="bg-danger m-5 p-2 success-note"
-  style="bottom: 0; right: 0; position: fixed"
->
-  <img
-    class="img-siz"
-    src="https://cdn-icons-png.flaticon.com/512/190/190406.png"
-    alt=""
-  />
-  <span class="text-light font-weight-bold">
-    {{ text }}
-  </span>
-</div>
 </div>
 
 <!--Add Staff Modal-->
@@ -314,3 +286,5 @@
     </div>
   </div>
 </div>
+
+<app-toaster></app-toaster>

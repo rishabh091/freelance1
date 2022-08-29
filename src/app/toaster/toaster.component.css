@@ -1,0 +1,9 @@
+.success-note {
+    width: fit-content;
+    border-radius: 5px;
+}
+.img-siz {
+    height: 5vh;
+    width: 5vh;
+    margin: 0.5vh;
+}  
