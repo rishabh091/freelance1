@@ -127,7 +127,16 @@ export class StaffComponent implements OnInit {
   removeStaff(index: number): void {
     const staff = this.staff[index];
     const phoneNumber = localStorage.getItem('phone');
-    const payload = new RemoveStaff(new UserInfo(phoneNumber), staff);
+
+    const payload = new RemoveStaff(
+      new UserInfo(phoneNumber),
+      new StoreStaff(
+        staff.name,
+        staff.role,
+        staff.phoneNumber,
+        staff.emailAddress
+      )
+    );
 
     this.api
       .removeStaff(payload)

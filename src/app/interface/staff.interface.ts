@@ -2,10 +2,10 @@ import { UserInfo } from "./auth.interface"
 
 
 export class StoreStaff {
-    name: string
-    role: string
-    phoneNumber: string
-    emailAddress: string
+    public name: string
+    public role: string
+    public phoneNumber: string
+    public emailAddress: string
 
     constructor(name: string, role: string, phoneNumber: string, emailAddress: string) {
         this.name = name
