@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CreateZone, CreateTableInfo, RemoveZone, RemoveTableInfo } from '../interface/zone.interface';
+import { UserInfo } from '../interface/auth.interface';
+import { AuthService as ApiAuthService } from '../api/auth.service';
 
 @Component({
   selector: 'app-zones',
@@ -7,14 +11,45 @@ import { Router } from '@angular/router';
   styleUrls: ['./zones.component.css'],
 })
 export class ZonesComponent implements OnInit {
-  constructor(public router: Router) {}
+
+  public zone: CreateTableInfo[] = [new CreateTableInfo('abc', 1, 4)];
+
+  public addZoneForm: FormGroup
+  public addZoneSubmitted = false
+
+  constructor(public router: Router, private formBuilder: FormBuilder, private api: ApiAuthService) {
+    this.addZoneForm = this.formBuilder.group({
+      zone: ['', Validators.required],
+      startTableNumber: [0, Validators.required],
+      endTableNumber: [0, Validators.required]
+    })
+  }
+
+  get addZoneControls(): { [key: string]: AbstractControl } {
+    return this.addZoneForm.controls;
+  }
 
   ngOnInit(): void {}
 
-  addZone()
-  {
-    this.zone.push(this.zone.length+1)
+  addZone() {
+    this.addZoneSubmitted = true;
+    if (this.addZoneForm.invalid) {
+      return;
+    }
+
+    const phoneNumber = localStorage.getItem('phone')
+    const payload = new CreateZone(new UserInfo(phoneNumber),
+    new CreateTableInfo(this.addZoneForm.value.zone, this.addZoneForm.value.startTableNumber, this.addZoneForm.value.endTableNumber))
+
+    this.api.addZone(payload).then(res => { console.log(res) }).catch(error => { console.log(error) })
   }
-  zone = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+  removeZone(index: number) {
+    const zone = this.zone[index]
+    const phoneNumber = localStorage.getItem('phone')
+
+    const payload = new RemoveZone(new UserInfo(phoneNumber), new RemoveTableInfo(zone.zone))
+    this.api.removeZone(payload).then(res => { console.log(res) }).catch(error => { console.log(error) })
+  }
 
 }

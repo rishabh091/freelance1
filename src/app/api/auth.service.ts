@@ -5,6 +5,7 @@ import { RegisterModule, UpdateAddressModule, UpdatePaymentModule } from 'src/ap
 import { AddCategory, AddSubCategory } from '../interface/category.interface';
 import { AddMenuItem } from '../interface/item.interface';
 import { AddStaff, RemoveStaff, UpdateStaff } from '../interface/staff.interface';
+import { CreateZone, RemoveZone } from '../interface/zone.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -55,6 +56,16 @@ export class AuthService {
 
   removeStaff(payload: RemoveStaff) {
     let url = environment.apiUrl + 'removestaff'
+    return this.httpClient.post(url, payload).toPromise()
+  }
+
+  addZone(payload: CreateZone) {
+    let url = environment.apiUrl + 'createzone'
+    return this.httpClient.post(url, payload).toPromise()
+  }
+  
+  removeZone(payload: RemoveZone) {
+    let url = environment.apiUrl + 'removezone'
     return this.httpClient.post(url, payload).toPromise()
   }
 }
