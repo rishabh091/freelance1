@@ -38,6 +38,7 @@ export class AuthService {
    */
   isLoggedIn() {
     const token = localStorage.getItem('token')
-    return token
+    const storeId = localStorage.getItem('storeId')
+    return token && storeId
   }
 }

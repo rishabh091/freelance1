@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { RegisterModule, UpdateAddressModule, UpdatePaymentModule } from 'src/app/interface/auth.interface'
-import { AddCategory, AddSubCategory } from '../interface/category.interface';
+import { RegisterModule, UpdateAddressModule, UpdatePaymentModule, UserInfo } from 'src/app/interface/auth.interface'
+import { AddCategory, AddSubCategory, UpdateCategory } from '../interface/category.interface';
 import { AddMenuItem } from '../interface/item.interface';
 import { AddStaff, RemoveStaff, UpdateStaff } from '../interface/staff.interface';
 import { CreateZone, RemoveZone } from '../interface/zone.interface';
@@ -78,5 +78,16 @@ export class AuthService {
   getTableState(payload: GetTableState) {
     let url = environment.apiUrl + 'gettablestate'
     return this.httpClient.post(url, payload).toPromise()
+  }
+
+  updateCategory(payload: UpdateCategory) {
+    let url = environment.apiUrl + '/updatecategory'
+    return this.httpClient.post(url, payload).toPromise()
+  }
+
+  isUserRegisterd(payload: UserInfo) {
+    const temp = { 'userInfo': payload }
+    let url = environment.apiUrl + '/isregistereduser'
+    return this.httpClient.post(url, temp).toPromise()
   }
 }

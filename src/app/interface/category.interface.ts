@@ -38,3 +38,25 @@ export class AddSubCategoryMenuInfo {
         this.imageURL = imageUrl
     }
 }
+
+export class UpdateCategory {
+    userInfo: UserInfo
+    storeinfo: UpdateCategoryModule
+
+    constructor(userInfo: UserInfo, storeInfo: UpdateCategoryModule) {
+        this.userInfo = userInfo
+        this.storeinfo = storeInfo
+    }
+}
+
+export class UpdateCategoryModule {
+    storeSubCatagory: string
+    isPrePaid: boolean
+    isFoodServedToTable: boolean
+
+    constructor(storeSubCategory: string, isPrePaid: boolean, isFoodServedToTable: boolean) {
+        this.storeSubCatagory = storeSubCategory
+        this.isPrePaid = isPrePaid
+        this.isFoodServedToTable = isFoodServedToTable
+    }
+}

@@ -34,9 +34,7 @@ export class PaymentComponent implements OnInit {
   ngOnInit(): void {
     this.form = this.formBuilder.group({
       acceptedCurrency: ['', Validators.required],
-      accountNumber: ['', Validators.required],
-      ifcsCode: ['', Validators.required],
-      accountHolderName: ['', Validators.required],
+      paymentGatewayID: ['', Validators.required]
     });
 
     this.phoneNumber = this.route.snapshot.paramMap.get('phoneNumber');
@@ -56,9 +54,7 @@ export class PaymentComponent implements OnInit {
       new UserInfo(this.phoneNumber),
       new StorePayment(
         this.form.value.acceptedCurrency,
-        this.form.value.accountNumber,
-        this.form.value.ifcsCode,
-        this.form.value.accountHolderName
+        this.form.value.paymentGatewayID
       )
     );
 

@@ -10,6 +10,9 @@ import {MatListModule} from '@angular/material/list';
 import { getAuth, RecaptchaVerifier, GoogleAuthProvider, FacebookAuthProvider, Auth } from "firebase/auth";
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AuthService } from '../auth/auth.service';
+import { UserInfo } from '../interface/auth.interface';
+import { AuthService as Api } from '../api/auth.service';
+import { ServiceToasterService } from '../service-toaster.service';
 
 @Component({
   selector: 'app-login',
@@ -24,12 +27,14 @@ export class LoginComponent implements OnInit {
   public requestedOTP: boolean = false
   public otpRequestCountdown = 0
   public errorMessage: string = ''
+  public storeId: string
 
   windowRef: any
   otpCheckInterval: any
 
   constructor(private formBuilder: FormBuilder,
-    public afAuth: AngularFireAuth, private auth: AuthService) {
+    public afAuth: AngularFireAuth, private auth: AuthService,
+    private api: Api, public toasterService: ServiceToasterService) {
       this.windowRef = window    }
  
   ngOnInit(): void {
@@ -68,7 +73,20 @@ export class LoginComponent implements OnInit {
       callback : (response: any) => {
         if (!this.otpRequestCountdown) {
           this.requestedOTP = true
-          this.requestOTP()
+
+          const payload = new UserInfo(String(this.form.value.phone))
+          this.api.isUserRegisterd(payload).then(res => {
+            if (res['value']['isprivilegedUser']) {
+              this.storeId = res['value']['restaurantId']
+              localStorage.setItem('storeId', res['value']['restaurantId'])
+              this.requestOTP()  
+            }
+            else {
+              this.otpRequestCountdown = 0
+              this.requestedOTP = false
+              this.toasterService.failure('User not registered with us.')
+            }
+          })
         }
       },
     }, auth)
@@ -84,14 +102,14 @@ export class LoginComponent implements OnInit {
       this.errorMessage = ''
       this.otpRequestCountdown = 60
       this.form.disable()
-      this.errorMessage = 'OTP sent !!'
+      this.toasterService.success('OTP sent !!')
       this.windowRef.confirmationResult = confirmationResult
     }).catch(error => {
       this.form.enable()
       this.otpRequestCountdown = 0
       this.requestedOTP = false
 
-      this.errorMessage = 'Failed to get OTP, too many attempts'
+      this.toasterService.failure('Failed to get OTP, too many attempts')
     })
   }
 
@@ -108,6 +126,7 @@ export class LoginComponent implements OnInit {
       this.form.disable()
       clearInterval(this.otpCheckInterval)
       localStorage.setItem('phone', this.form.value.phone)
+      localStorage.setItem('storeId', this.storeId)
       
       this.auth.login()
     }).catch(error => {
@@ -115,7 +134,7 @@ export class LoginComponent implements OnInit {
       this.requestedOTP = false
       this.otpRequestCountdown = 0
       
-      this.errorMessage = 'Invalid OTP'
+      this.toasterService.failure('Invalid OTP')
     })
   }
 

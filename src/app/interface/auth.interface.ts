@@ -61,31 +61,22 @@ export class StoreAddress {
 }
 
 export class StorePayment {
-  acceptedCurrency: string;
-  accountNumber: string;
-  ifcsCode: string;
-  accountHolderName: string;
+	acceptedCurrency: string
+	paymentGatewayID: string
 
-  constructor(
-    acceptedCurrency: string,
-    accountNumber: string,
-    ifcsCode: string,
-    accountHolderName: string
-  ) {
-    this.acceptedCurrency = acceptedCurrency;
-    this.accountNumber = accountNumber;
-    this.ifcsCode = ifcsCode;
-    this.accountHolderName = accountHolderName;
-  }
+	constructor(acceptedCurrency: string, paymentGatewayId: string) {
+		this.acceptedCurrency = acceptedCurrency
+		this.paymentGatewayID = paymentGatewayId
+	}
 }
 
 
 export class UpdatePaymentModule {
     userInfo: UserInfo;
-    storeinfo: StorePayment;
+    storepaymentinfo: StorePayment;
   
     constructor(userInfo: UserInfo, storePayment: StorePayment) {
       this.userInfo = userInfo;
-      this.storeinfo = storePayment;
+      this.storepaymentinfo = storePayment;
     }
   }
