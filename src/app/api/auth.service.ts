@@ -6,6 +6,7 @@ import { AddCategory, AddSubCategory } from '../interface/category.interface';
 import { AddMenuItem } from '../interface/item.interface';
 import { AddStaff, RemoveStaff, UpdateStaff } from '../interface/staff.interface';
 import { CreateZone, RemoveZone } from '../interface/zone.interface';
+import { GetTableState, UpdateTableState } from '../interface/table.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -66,6 +67,16 @@ export class AuthService {
   
   removeZone(payload: RemoveZone) {
     let url = environment.apiUrl + 'removezone'
+    return this.httpClient.post(url, payload).toPromise()
+  }
+
+  updateTableState(payload: UpdateTableState) {
+    let url = environment.apiUrl + 'updatetablestate'
+    return this.httpClient.post(url, payload).toPromise()
+  }
+
+  getTableState(payload: GetTableState) {
+    let url = environment.apiUrl + 'gettablestate'
     return this.httpClient.post(url, payload).toPromise()
   }
 }
