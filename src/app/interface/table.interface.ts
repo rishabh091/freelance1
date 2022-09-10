@@ -43,3 +43,25 @@ export class GetTableState {
         this.tableInfo = tableInfo
     }
 }
+
+export class TableTransactions {
+    userInfo: UserInfo
+    tableNumber: number
+
+    constructor(userInfo: UserInfo, tableNumber: number) {
+        this.userInfo = userInfo
+        this.tableNumber = tableNumber
+    }
+}
+
+export class TableOrderMove {
+    userInfo: UserInfo
+    fromTableNumber: number
+    toTableNumber: number
+
+    constructor(userInfo: UserInfo, fromTableNumber: number, toTableNumber: number) {
+        this.userInfo = userInfo
+        this.fromTableNumber = fromTableNumber
+        this.toTableNumber = toTableNumber
+    }
+}

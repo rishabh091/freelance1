@@ -60,3 +60,22 @@ export class UpdateCategoryModule {
         this.isFoodServedToTable = isFoodServedToTable
     }
 }
+
+
+export class RemoveMenuCategory {
+	userInfo: UserInfo
+	menuinfo: MenuInfo
+
+	constructor(userInfo: UserInfo, menuinfo: MenuInfo) {
+		this.userInfo = userInfo
+		this.menuinfo = menuinfo
+	}
+ }
+
+ export class MenuInfo {
+	menuCategory: string
+
+	constructor(menuCategory: string) {
+		this.menuCategory = menuCategory
+	}
+ }
