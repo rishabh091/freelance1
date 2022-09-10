@@ -143,10 +143,6 @@ export class ProfileComponent implements OnInit {
     return this.userInfoForm.controls;
   }
 
-  get contactInfo(): { [key: string]: AbstractControl } {
-    return this.contactInfoForm.controls;
-  }
-
   get addressInfo(): { [key: string]: AbstractControl } {
     return this.addressForm.controls;
   }
@@ -155,11 +151,15 @@ export class ProfileComponent implements OnInit {
     return this.paymentForm.controls;
   }
 
+  get contactInfo(): { [key: string]: AbstractControl } {
+    return this.contactInfoForm.controls;
+  }
+
   get storeTimings(): { [key: string]: AbstractControl } {
     return this.storeTimingsForm.controls;
   }
 
-  get aboutStore(): { [key: string]: AbstractControl } {
+  get aboutStoreInfo(): { [key: string]: AbstractControl } {
     return this.aboutStoreForm.controls
   }
 

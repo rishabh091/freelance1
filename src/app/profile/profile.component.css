@@ -1,4 +1,45 @@
+.sub-btn {
+  width: auto;
+  max-width: 50%;
+  min-width: fit-content;
+  word-spacing: 3px;
+  letter-spacing: 1px;
+}
+
+.background-image {
+  background: linear-gradient(
+      rgba(255, 255, 255, 0.8),
+      rgba(255, 255, 255, 0.8)
+    ),
+    url("../../assets/backgroundImage/bg.png");
+
+  background-repeat: repeat;
+  background-attachment: fixed;
+  /* background-size: cover; */
+  /* background-size: 100% 100%; */
+  min-height: 100vh;
+}
+.center {
+  display: flex;
+  justify-content: center;
+}
+.space-around {
+  display: flex;
+  /* justify-content: space-around; */
+  flex-wrap: wrap;
+}
 .heading {
-    word-spacing: 5px;
-    letter-spacing: 2px;
+  font-size: xx-large;
+  font-weight: bold;
+  word-spacing: 5px;
+  letter-spacing: 2px;
+}
+.sub-heading {
+  font-size: large;
+  color: grey;
+  border-bottom: 2px dashed grey;
+  text-align: center;
+}
+label {
+  font-weight: bold;
 }
