@@ -6,7 +6,7 @@
 
             <form [formGroup]="userInfoForm" (submit)="userFormSubmit()">
                 <div class="row">
-                <div class="form-group col-sm-6">
+                <!-- <div class="form-group col-sm-6">
                     <label>Name</label>
                     <input
                     type="text"
@@ -19,7 +19,7 @@
                         User Name is required
                     </div>
                     </div>
-                </div>
+                </div> -->
     
                 <div class="form-group col-sm-6">
                     <label>Resturant Name</label>
@@ -46,7 +46,7 @@
                 </div>
     
                 <div class="row">
-                <div class="form-group col-sm-6">
+                <!-- <div class="form-group col-sm-6">
                     <label>Enter Email</label>
                     <input
                     type="email"
@@ -59,10 +59,10 @@
                         Email is required
                     </div>
                     </div>
-                </div>
+                </div> -->
     
     
-                <div class="form-group col-sm-6">
+                <!-- <div class="form-group col-sm-6">
                     <label>Enter Mobile</label>
                     <input
                     type="number"
@@ -75,7 +75,7 @@
                         Phone Number is required
                     </div>
                     </div>
-                </div>
+                </div> -->
 
                 <div class="form-group mt-4">
                     <button type="submit" class="btn btn-success" style="width: 40vh;">Submit</button>
@@ -136,6 +136,7 @@
                         class="form-control" 
                         id="storeaddressCountry" 
                         formControlName="storeaddressCountry" 
+                        (change)="onCountryChange()"
                         [ngClass]="{ 'is-invalid': addressFormSubmitted && addressInfo.storeaddressCountry.errors }"
                         >
                             <option value="">--Select a country--</option>
@@ -154,6 +155,7 @@
                       class="form-control" 
                       id="storeaddressState" 
                       formControlName="storeaddressState" 
+                      (change)="onStateChange()"
                       [ngClass]="{ 'is-invalid': addressFormSubmitted && addressInfo.storeaddressState.errors }"
                       >
                         <option value="">--Select a state--</option>
@@ -216,7 +218,7 @@
             <form [formGroup]="paymentForm" (submit)="paymentFormSubmit()">
                 <div class="row">
                   <div class="form-group col-sm-6">
-                    <label>Building Address</label>
+                    <label>Accepted Currency</label>
                     <input
                       type="text"
                       formControlName="acceptedCurrency"
@@ -239,30 +241,30 @@
                   </div>
       
                   <div class="form-group col-sm-6">
-                    <label>Account Number</label>
+                    <label>Payment Gateway ID</label>
                     <input
                       type="text"
-                      formControlName="accountNumber"
+                      formControlName="paymentGatewayId"
                       class="form-control"
                       [ngClass]="{
-                        'is-invalid': paymentInfoSubmitted && paymentInfo.accountNumber.errors
+                        'is-invalid': paymentInfoSubmitted && paymentInfo.paymentGatewayId.errors
                       }"
                     />
                     <div
-                      *ngIf="paymentInfoSubmitted && paymentInfo.accountNumber.errors"
+                      *ngIf="paymentInfoSubmitted && paymentInfo.paymentGatewayId.errors"
                       class="invalid-feedback"
                     >
                       <div
-                        *ngIf="paymentInfo.accountNumber.errors.required"
+                        *ngIf="paymentInfo.paymentGatewayId.errors.required"
                         class="error-color"
                       >
-                        Account Number is required
+                        Payment Gateway ID is required
                       </div>
                     </div>
                   </div>
                 </div>
       
-                <div class="row">
+                <!-- <div class="row">
                   <div class="form-group col-sm-6">
                     <label>IFSC Code</label>
                     <input
@@ -303,7 +305,7 @@
                       </div>
                     </div>
                   </div>
-                </div>
+                </div> -->
 
                 <div class="form-group mt-4">
                     <button type="submit" class="btn btn-success" style="width: 40vh;">Submit</button>

@@ -106,4 +106,9 @@ export class ShowMenuComponent implements OnInit {
 
     this.api.updateCategory(payload).then(res => { console.log(res) }).catch(error => { console.log(error) })
   }
+
+  getCategories() {
+    const storeId = localStorage.getItem('storeId')
+    this.api.getCategory(storeId).then(res => { console.log(res) }).catch(error => { console.log(error) })
+  }
 }

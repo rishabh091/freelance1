@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { RegisterModule, UpdateAddressModule, UpdatePaymentModule, UserInfo } from 'src/app/interface/auth.interface'
+import { RegisterModule, UpdateAboutStore, UpdateAddressModule, UpdateContactInfoModule, UpdateName, UpdatePaymentModule, UpdateStoreTimings, UserInfo } from 'src/app/interface/auth.interface'
 import { AddCategory, AddSubCategory, UpdateCategory } from '../interface/category.interface';
 import { AddMenuItem } from '../interface/item.interface';
 import { AddStaff, RemoveStaff, UpdateStaff } from '../interface/staff.interface';
@@ -89,5 +89,60 @@ export class AuthService {
     const temp = { 'userInfo': payload }
     let url = environment.apiUrl + '/isregistereduser'
     return this.httpClient.post(url, temp).toPromise()
+  }
+
+  getStore(storeId: string) {
+    let url = environment.apiUrl + `/name?storeid=${storeId}`
+    return this.httpClient.get(url).toPromise()
+  }
+
+  updateName(payload: UpdateName) {
+    let url = environment.apiUrl + '/updateName'
+    return this.httpClient.post(url, payload).toPromise()
+  }
+
+  getCategory(storeId: string) {
+    let url = environment.apiUrl + '/category?storeid=' + storeId
+    return this.httpClient.get(url).toPromise()
+  }
+
+  getAddress(storeId: string) {
+    let url = environment.apiUrl + '/address?storeid=' + storeId
+    return this.httpClient.get(url).toPromise()
+  }
+
+  updateContactInfo(payload: UpdateContactInfoModule) {
+    let url = environment.apiUrl + '/updatecontactinfo'
+    return this.httpClient.post(url, payload).toPromise()
+  }
+
+  getContactInfo(storeId: string) {
+    let url = environment.apiUrl + '/contactinfo?storeid=' + storeId
+    return this.httpClient.get(url).toPromise()
+  }
+
+  getPaymentInfo(storeId: string) {
+    let url = environment.apiUrl + '/paymentinfo?storeid=' + storeId
+    return this.httpClient.get(url).toPromise()
+  }
+
+  updateStoreTimings(payload: UpdateStoreTimings) {
+    let url = environment.apiUrl + '/updatestoretimings'
+    return this.httpClient.post(url, payload).toPromise()
+  }
+
+  getStoreTimings(storeId: string) {
+    let url = environment.apiUrl + '/storetimings?storeid=' + storeId
+    return this.httpClient.get(url).toPromise()
+  }
+
+  updateStoreAbout(payload: UpdateAboutStore) {
+    let url = environment.apiUrl + '/updateaboutinfo'
+    return this.httpClient.post(url, payload).toPromise()
+  }
+
+  getStoreAbout(storeId: string) {
+    let url = environment.apiUrl + '/aboutstore?storeid=' + storeId
+    return this.httpClient.get(url).toPromise()
   }
 }

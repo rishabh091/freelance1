@@ -73,20 +73,7 @@ export class LoginComponent implements OnInit {
       callback : (response: any) => {
         if (!this.otpRequestCountdown) {
           this.requestedOTP = true
-
-          const payload = new UserInfo(String(this.form.value.phone))
-          this.api.isUserRegisterd(payload).then(res => {
-            if (res['value']['isprivilegedUser']) {
-              this.storeId = res['value']['restaurantId']
-              localStorage.setItem('storeId', res['value']['restaurantId'])
-              this.requestOTP()  
-            }
-            else {
-              this.otpRequestCountdown = 0
-              this.requestedOTP = false
-              this.toasterService.failure('User not registered with us.')
-            }
-          })
+          this.requestOTP();
         }
       },
     }, auth)
@@ -126,7 +113,12 @@ export class LoginComponent implements OnInit {
       this.form.disable()
       clearInterval(this.otpCheckInterval)
       localStorage.setItem('phone', this.form.value.phone)
-      localStorage.setItem('storeId', this.storeId)
+      
+      const payload = new UserInfo(String(this.form.value.phone))
+      this.api.isUserRegisterd(payload).then(res => {
+        localStorage.setItem('privilege', res['value']['isprivilegedUser'])
+        localStorage.setItem('storeId', res['value']['restaurantId'])
+      })
       
       this.auth.login()
     }).catch(error => {

@@ -27,6 +27,26 @@ export class UpdateAddressModule {
   }
 }
 
+export class UpdateContactInfoModule {
+	userInfo: UserInfo
+	storeinfo: UpdateContactInfo
+
+	constructor(userInfo: UserInfo, storeinfo: UpdateContactInfo) {
+		this.userInfo = userInfo
+		this.storeinfo = storeinfo
+	}
+}
+
+export class UpdateContactInfo {
+	storePhoneNumber: string
+	storeEmailAddress: string
+
+	constructor(storePhoneNumber: string, storeEmailAddress: string) {
+		this.storePhoneNumber = storePhoneNumber
+		this.storeEmailAddress = storeEmailAddress
+	}
+}
+
 export class UserInfo {
   phoneNumber: string;
 
@@ -79,4 +99,52 @@ export class UpdatePaymentModule {
       this.userInfo = userInfo;
       this.storepaymentinfo = storePayment;
     }
-  }
+}
+
+export class UpdateName {
+	storeName: string
+	userInfo: UserInfo
+
+	constructor(storeName: string, userInfo: UserInfo) {
+		this.storeName = storeName
+		this.userInfo = userInfo
+	}
+}
+
+export class UpdateStoreTimings {
+	userInfo: UserInfo
+	storeinfo: StoreTimings
+
+	constructor(userInfo: UserInfo, storeinfo: StoreTimings) {
+		this.userInfo = userInfo
+		this.storeinfo = storeinfo
+	}
+}
+
+export class StoreTimings {
+	opensAt: string
+	closesAt: string
+
+	constructor(opensAt: string, closesAt: string) {
+		this.opensAt = opensAt
+		this.closesAt = closesAt
+	}
+}
+
+export class UpdateAboutStore {
+	userInfo: UserInfo
+	storeinfo: AboutStore
+
+	constructor(userInfo: UserInfo, storeinfo: AboutStore) {
+		this.userInfo = userInfo
+		this.storeinfo = storeinfo
+	}
+}
+
+export class AboutStore {
+	aboutStore: string
+
+	constructor(aboutStore: string) {
+		this.aboutStore = aboutStore
+	}
+}

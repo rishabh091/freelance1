@@ -44,6 +44,11 @@ export class AddCategoryComponent implements OnInit {
     });
   }
 
+  getCategory() {
+    const storeId = localStorage.getItem('storeId')
+    this.api.getCategory(storeId).then(res => { console.log(res) }).catch(error => { console.log(error) })
+  }
+
   get f(): { [key: string]: AbstractControl } {
     return this.form.controls;
   }

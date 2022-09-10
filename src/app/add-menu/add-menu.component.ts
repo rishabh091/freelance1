@@ -40,6 +40,12 @@ export class AddMenuComponent implements OnInit {
   get f(): { [key: string]: AbstractControl } {
     return this.form.controls;
   }
+
+  getCategory() {
+    const storeId = localStorage.getItem('storeId')
+    this.api.getCategory(storeId).then(res => { console.log(res) }).catch(error => { console.log(error) })
+  }
+
   onSubmit(): void {
     this.submitted = true;
     if (this.form.invalid) {
