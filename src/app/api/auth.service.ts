@@ -82,113 +82,113 @@ export class AuthService {
   }
 
   updateCategory(payload: UpdateCategory) {
-    let url = environment.apiUrl + '/updatecategory'
+    let url = environment.apiUrl + 'updatecategory'
     return this.httpClient.post(url, payload).toPromise()
   }
 
   isUserRegisterd(payload: UserInfo) {
     const temp = { 'userInfo': payload }
-    let url = environment.apiUrl + '/isregistereduser'
+    let url = environment.apiUrl + 'isregistereduser'
     return this.httpClient.post(url, temp).toPromise()
   }
 
   getStore(storeId: string) {
-    let url = environment.apiUrl + `/name?storeid=${storeId}`
+    let url = environment.apiUrl + `name?storeid=${storeId}`
     return this.httpClient.get(url).toPromise()
   }
 
   updateName(payload: UpdateName) {
-    let url = environment.apiUrl + '/updateName'
+    let url = environment.apiUrl + 'updateName'
     return this.httpClient.post(url, payload).toPromise()
   }
 
   getCategory(storeId: string) {
-    let url = environment.apiUrl + '/category?storeid=' + storeId
+    let url = environment.apiUrl + 'category?storeid=' + storeId
     return this.httpClient.get(url).toPromise()
   }
 
   getAddress(storeId: string) {
-    let url = environment.apiUrl + '/address?storeid=' + storeId
+    let url = environment.apiUrl + 'address?storeid=' + storeId
     return this.httpClient.get(url).toPromise()
   }
 
   updateContactInfo(payload: UpdateContactInfoModule) {
-    let url = environment.apiUrl + '/updatecontactinfo'
+    let url = environment.apiUrl + 'updatecontactinfo'
     return this.httpClient.post(url, payload).toPromise()
   }
 
   getContactInfo(storeId: string) {
-    let url = environment.apiUrl + '/contactinfo?storeid=' + storeId
+    let url = environment.apiUrl + 'contactinfo?storeid=' + storeId
     return this.httpClient.get(url).toPromise()
   }
 
   getPaymentInfo(storeId: string) {
-    let url = environment.apiUrl + '/paymentinfo?storeid=' + storeId
+    let url = environment.apiUrl + 'paymentinfo?storeid=' + storeId
     return this.httpClient.get(url).toPromise()
   }
 
   updateStoreTimings(payload: UpdateStoreTimings) {
-    let url = environment.apiUrl + '/updatestoretimings'
+    let url = environment.apiUrl + 'updatestoretimings'
     return this.httpClient.post(url, payload).toPromise()
   }
 
   getStoreTimings(storeId: string) {
-    let url = environment.apiUrl + '/storetimings?storeid=' + storeId
+    let url = environment.apiUrl + 'storetimings?storeid=' + storeId
     return this.httpClient.get(url).toPromise()
   }
 
   updateStoreAbout(payload: UpdateAboutStore) {
-    let url = environment.apiUrl + '/updateaboutinfo'
+    let url = environment.apiUrl + 'updateaboutinfo'
     return this.httpClient.post(url, payload).toPromise()
   }
 
   getStoreAbout(storeId: string) {
-    let url = environment.apiUrl + '/aboutstore?storeid=' + storeId
+    let url = environment.apiUrl + 'aboutstore?storeid=' + storeId
     return this.httpClient.get(url).toPromise()
   }
 
   removeMenuCategory(payload: RemoveMenuCategory) {
-    let url = environment.apiUrl + '/removemenucategory'
+    let url = environment.apiUrl + 'removemenucategory'
     return this.httpClient.post(url, payload).toPromise()
   }
 
   removeMenuSubCategory(payload: AddSubCategory) {
-    let url = environment.apiUrl + '/removesubmenucategory'
+    let url = environment.apiUrl + 'removesubmenucategory'
     return this.httpClient.post(url, payload).toPromise()
   }
 
   updateMenuSubCategory(payload: AddSubCategory) {
-    let url = environment.apiUrl + '/updatesubmenucategoryimage'
+    let url = environment.apiUrl + 'updatesubmenucategoryimage'
     return this.httpClient.post(url, payload).toPromise()
   }
 
   removeMenuItem(payload: RemoveMenuItemModule) {
-    let url = environment.apiUrl + '/removemenuitem'
+    let url = environment.apiUrl + 'removemenuitem'
     return this.httpClient.post(url, payload).toPromise()
   }
 
   getMenuCategory(storeId: string) {
-    let url = environment.apiUrl + '/menucategories?storeid=' + storeId
+    let url = environment.apiUrl + 'menucategories?storeid=' + storeId
     return this.httpClient.get(url).toPromise()
   }
 
   getTableTransaction(payload: TableTransactions) {
-    let url = environment.apiUrl + '/gettabletransactions'
+    let url = environment.apiUrl + 'gettabletransactions'
     return this.httpClient.post(url, payload).toPromise()
   }
 
   moveTableTransactions(payload: TableOrderMove) {
-    let url = environment.apiUrl + '/movetabletransactions'
+    let url = environment.apiUrl + 'movetabletransactions'
     return this.httpClient.post(url, payload).toPromise()
   }
 
   getOrdersByType(payload: GetOrders) {
-    let url = environment.apiUrl + '/getorders'
+    let url = environment.apiUrl + 'getorders'
     return this.httpClient.post(url, payload).toPromise()
   }
 
   updateOrderStatus(payload: UpdateOrderStatus) {
-    let url = environment.apiUrl + '/updateorder'
+    let url = environment.apiUrl + 'updateorder'
     return this.httpClient.post(url, payload).toPromise()
   }
 }
