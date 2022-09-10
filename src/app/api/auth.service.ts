@@ -2,11 +2,12 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { RegisterModule, UpdateAboutStore, UpdateAddressModule, UpdateContactInfoModule, UpdateName, UpdatePaymentModule, UpdateStoreTimings, UserInfo } from 'src/app/interface/auth.interface'
-import { AddCategory, AddSubCategory, UpdateCategory } from '../interface/category.interface';
-import { AddMenuItem } from '../interface/item.interface';
+import { AddCategory, AddSubCategory, RemoveMenuCategory, UpdateCategory } from '../interface/category.interface';
+import { AddMenuItem, RemoveMenuItemModule } from '../interface/item.interface';
 import { AddStaff, RemoveStaff, UpdateStaff } from '../interface/staff.interface';
 import { CreateZone, RemoveZone } from '../interface/zone.interface';
-import { GetTableState, UpdateTableState } from '../interface/table.interface';
+import { GetTableState, TableOrderMove, TableTransactions, UpdateTableState } from '../interface/table.interface';
+import { GetOrders, UpdateOrderStatus } from '../interface/orders.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -144,5 +145,50 @@ export class AuthService {
   getStoreAbout(storeId: string) {
     let url = environment.apiUrl + '/aboutstore?storeid=' + storeId
     return this.httpClient.get(url).toPromise()
+  }
+
+  removeMenuCategory(payload: RemoveMenuCategory) {
+    let url = environment.apiUrl + '/removemenucategory'
+    return this.httpClient.post(url, payload).toPromise()
+  }
+
+  removeMenuSubCategory(payload: AddSubCategory) {
+    let url = environment.apiUrl + '/removesubmenucategory'
+    return this.httpClient.post(url, payload).toPromise()
+  }
+
+  updateMenuSubCategory(payload: AddSubCategory) {
+    let url = environment.apiUrl + '/updatesubmenucategoryimage'
+    return this.httpClient.post(url, payload).toPromise()
+  }
+
+  removeMenuItem(payload: RemoveMenuItemModule) {
+    let url = environment.apiUrl + '/removemenuitem'
+    return this.httpClient.post(url, payload).toPromise()
+  }
+
+  getMenuCategory(storeId: string) {
+    let url = environment.apiUrl + '/menucategories?storeid=' + storeId
+    return this.httpClient.get(url).toPromise()
+  }
+
+  getTableTransaction(payload: TableTransactions) {
+    let url = environment.apiUrl + '/gettabletransactions'
+    return this.httpClient.post(url, payload).toPromise()
+  }
+
+  moveTableTransactions(payload: TableOrderMove) {
+    let url = environment.apiUrl + '/movetabletransactions'
+    return this.httpClient.post(url, payload).toPromise()
+  }
+
+  getOrdersByType(payload: GetOrders) {
+    let url = environment.apiUrl + '/getorders'
+    return this.httpClient.post(url, payload).toPromise()
+  }
+
+  updateOrderStatus(payload: UpdateOrderStatus) {
+    let url = environment.apiUrl + '/updateorder'
+    return this.httpClient.post(url, payload).toPromise()
   }
 }

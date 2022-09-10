@@ -3,7 +3,7 @@ import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/fo
 import { ActivatedRoute } from '@angular/router';
 import { AuthService as ApiAuthService } from '../api/auth.service';
 import { UserInfo } from '../interface/auth.interface';
-import { GetTableInfo, GetTableState, UpdateTableInfo, UpdateTableState } from '../interface/table.interface';
+import { GetTableInfo, GetTableState, TableOrderMove, TableTransactions, UpdateTableInfo, UpdateTableState } from '../interface/table.interface';
 
 @Component({
   selector: 'app-table',
@@ -36,6 +36,12 @@ export class TableComponent implements OnInit {
     this.selectedZone = this.route.snapshot.paramMap.get('zone')
   }
 
+  getTableTransaction(tableNumber: number) {
+    const phoneNumber = localStorage.getItem('phone')
+    const payload = new TableTransactions(new UserInfo(phoneNumber), tableNumber)
+    this.api.getTableTransaction(payload).then(res => { console.log(res) }).catch(error => { console.log(error) })
+  }
+
   getTableState(tableNumber: number) {
     const phoneNumber = localStorage.getItem('phone')
     const payload = new GetTableState(new UserInfo(phoneNumber), new GetTableInfo(this.selectedZone, tableNumber))
@@ -60,6 +66,13 @@ export class TableComponent implements OnInit {
     ))
 
     this.api.updateTableState(payload).then(res => { console.log(res) }).catch(error => { console.log(error) })
+  }
+
+  moveTableTransaction(fromTableNumber: number, toTableNumber: number) {
+    const phoneNumber = localStorage.getItem('phone')
+    const payload = new TableOrderMove(new UserInfo(phoneNumber), fromTableNumber, toTableNumber)
+
+    this.api.moveTableTransactions(payload).then(res => { console.log(res) }).catch(error => { console.log(error) })
   }
 
 }

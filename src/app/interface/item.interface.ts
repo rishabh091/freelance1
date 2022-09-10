@@ -35,3 +35,25 @@ export class MenuInfo {
             this.weekDayAvailblity = weekDayAvailability
         }
 }
+
+export class RemoveMenuItemModule {
+    userInfo: UserInfo
+    menuInfo: RemoveMenuItem
+
+    constructor(userInfo: UserInfo, menuInfo: RemoveMenuItem) {
+        this.userInfo = userInfo
+        this.menuInfo = menuInfo
+    }
+}
+
+export class RemoveMenuItem {
+    menuCategory: string
+    menuSubCategory: string
+    menuItem: string
+
+    constructor(menuCategory: string, menuSubCategory: string, menuItem: string) {
+        this.menuCategory = menuCategory
+        this.menuSubCategory = menuSubCategory
+        this.menuItem = menuItem
+    }
+}
