@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { RegisterModule, UpdateAboutStore, UpdateAddressModule, UpdateContactInfoModule, UpdateName, UpdatePaymentModule, UpdateStoreTimings, UserInfo } from 'src/app/interface/auth.interface'
-import { AddCategory, AddSubCategory, RemoveMenuCategory, UpdateCategory } from '../interface/category.interface';
+import { AddCategory, AddSubCategory, RemoveMenuCategory, UpdateCategory, UpdateItemCurrentAvailability, UpdateMenuItemDailyAvailability, UpdateMenuItemPrice } from '../interface/category.interface';
 import { AddMenuItem, RemoveMenuItemModule } from '../interface/item.interface';
 import { AddStaff, RemoveStaff, UpdateStaff } from '../interface/staff.interface';
 import { CreateZone, RemoveZone } from '../interface/zone.interface';
@@ -190,5 +190,25 @@ export class AuthService {
   updateOrderStatus(payload: UpdateOrderStatus) {
     let url = environment.apiUrl + 'updateorder'
     return this.httpClient.post(url, payload).toPromise()
+  }
+
+  updateMenuItemPrice(payload: UpdateMenuItemPrice) {
+    let url = environment.apiUrl + 'updatemenuitemprice'
+    return this.httpClient.post(url, payload).toPromise()
+  }
+
+  updateMenuItemCurrentAvailability(payload: UpdateItemCurrentAvailability) {
+    let url = environment.apiUrl + 'menuitemcurrentavilaiblity'
+    return this.httpClient.post(url, payload).toPromise()
+  }
+
+  updateMenuItemDailyAvailability(payload: UpdateMenuItemDailyAvailability) {
+    let url = environment.apiUrl + 'menuitemdailyavailablity'
+    return this.httpClient.post(url, payload).toPromise()
+  }
+
+  getZone(phoneNumber: string) {
+    let url = environment.apiUrl + 'tablezones?phonenumber=' + phoneNumber
+    return this.httpClient.get(url).toPromise()
   }
 }

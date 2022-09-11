@@ -29,7 +29,16 @@ export class ZonesComponent implements OnInit {
     return this.addZoneForm.controls;
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.getZone()
+  }
+
+  getZone() {
+    const phoneNumber = localStorage.getItem('phone')
+    this.api.getZone(phoneNumber).then((res: CreateTableInfo[]) => {
+      this.zone = res
+    }).catch(error => { console.log(error) })
+  }
 
   addZone() {
     this.addZoneSubmitted = true;

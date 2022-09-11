@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../auth/auth.service';
 import { UserInfo } from '../interface/auth.interface';
-import { AddSubCategory, AddSubCategoryMenuInfo, MenuInfo, RemoveMenuCategory, UpdateCategory, UpdateCategoryModule } from '../interface/category.interface';
+import { AddSubCategory, AddSubCategoryMenuInfo, ItemDailyAvailability, MenuInfo, MenuItemCurrentAvailability, MenuItemPrice, RemoveMenuCategory, UpdateCategory, UpdateCategoryModule, UpdateItemCurrentAvailability, UpdateMenuItemDailyAvailability, UpdateMenuItemPrice } from '../interface/category.interface';
 import { MenuItem } from '../interface/interface';
 import { MockResturantMenus, MockMenuGroups } from '../mock.menu'   // dummy data
 import { AuthService as Api } from '../api/auth.service';
@@ -27,6 +27,12 @@ export class ShowMenuComponent implements OnInit {
 
   public subMenuCategoryForm: FormGroup
   public subMenuSubmitted = false
+
+  public category: string = ''
+  public subCategory: string = ''
+
+  weekDayAvailability: boolean[] = [false, false, false, false, false, false, false]
+  weekDayAvailabilityError = true
 
   public expand = []
 
@@ -89,7 +95,48 @@ export class ShowMenuComponent implements OnInit {
     if (this.menuItemForm.invalid) {
       return
     }
-    console.log(JSON.stringify(this.menuItemForm.value, null, 2));
+
+    this.weekDayAvailability.map(available => { if(available) this.weekDayAvailabilityError = false })
+    this.menuItemForm.value.availableFrom = this.convertToSeconds(this.menuItemForm.value.availableFrom)
+    this.menuItemForm.value.availableTill = this.convertToSeconds(this.menuItemForm.value.availableTill)
+    
+    const phoneNumber = localStorage.getItem('phone')
+    const pricePayload = new UpdateMenuItemPrice(new UserInfo(phoneNumber), new MenuItemPrice(
+      this.category,
+      this.subCategory,
+      this.menuItemForm.value.ItemName,
+      this.menuItemForm.value.Price
+    ))
+
+    const currentAvailabilityPayload = new UpdateItemCurrentAvailability(new UserInfo(phoneNumber), new MenuItemCurrentAvailability(
+      this.category,
+      this.subCategory,
+      this.menuItemForm.value.ItemName,
+      this.menuItemForm.value.AvailableNow
+    ))
+
+    const dailyAvailabilityPayload = new UpdateMenuItemDailyAvailability(new UserInfo(phoneNumber), new ItemDailyAvailability(
+      this.category,
+      this.subCategory,
+      this.menuItemForm.value.ItemName,
+      this.menuItemForm.value.availableFrom,
+      this.menuItemForm.value.availableTill,
+      this.weekDayAvailability
+    ))
+
+    this.api.updateMenuItemPrice(pricePayload).then(res => { console.log(res) }).catch(error => { console.log(error) })
+    this.api.updateMenuItemCurrentAvailability(currentAvailabilityPayload).then(res => { console.log(res) }).catch(error => { console.log(error) })
+    this.api.updateMenuItemDailyAvailability(dailyAvailabilityPayload).then(res => { console.log(res) }).catch(error => { console.log(error) })
+
+  }
+
+  convertToSeconds(time: string): number {
+    const hoursAndMin = time.split(":")
+    if (hoursAndMin.length < 2) return parseInt(time)
+
+    const hoursInSec = parseInt(hoursAndMin[0]) * 60 * 60
+    const minutesInSec = parseInt(hoursAndMin[1]) * 60
+    return hoursInSec + minutesInSec
   }
 
   mapRestaurantWithId(restaurantMenu: typeof MockResturantMenus[0]): any {

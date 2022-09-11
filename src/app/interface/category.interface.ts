@@ -79,3 +79,78 @@ export class RemoveMenuCategory {
 		this.menuCategory = menuCategory
 	}
  }
+
+ export class UpdateMenuItemPrice {
+    userInfo: UserInfo
+    menuInfo: MenuItemPrice
+
+    constructor(userInfo: UserInfo, menuInfo: MenuItemPrice) {
+        this.userInfo = userInfo
+        this.menuInfo = menuInfo
+    }
+ }
+ export class MenuItemPrice {
+    menuCategory: string
+    menuSubCategory: string
+    menuItem: string
+    itemPrice: number
+
+    constructor(menuCategory: string, menuSubCategory: string, menuItem: string, itemPrice: number) {
+        this.menuCategory = menuCategory
+        this.menuSubCategory = menuSubCategory
+        this.menuItem = menuItem
+        this.itemPrice = itemPrice
+    }
+ }
+
+ export class MenuItemCurrentAvailability {
+    menuCategory: string
+    menuSubCategory: string
+    menuItem: string
+    currentAvailiblity: boolean
+
+    constructor(menuCategory: string, menuSubCategory: string, menuItem: string, currentAvailability: boolean) {
+        this.menuCategory = menuCategory
+        this.menuSubCategory = menuSubCategory
+        this.menuItem = menuItem
+        this.currentAvailiblity = currentAvailability
+    }
+ }
+
+ export class UpdateItemCurrentAvailability {
+    userInfo: UserInfo
+    menuInfo: MenuItemCurrentAvailability
+
+    constructor(userInfo: UserInfo, menuInfo: MenuItemCurrentAvailability) {
+        this.userInfo = userInfo
+        this.menuInfo = menuInfo
+    }
+ }
+
+export class ItemDailyAvailability {
+    menuCategory: string
+    menuSubCategory: string
+    menuItem: string
+    availableFrom: number
+    availableTill: number
+    weekDayAvailblity: boolean[]
+
+    constructor(menuCategory: string, menuSubCategory: string, menuItem: string, availableFrom: number, availableTill: number, weekDayAvailblity: boolean[]) {
+        this.menuCategory = menuCategory
+        this.menuSubCategory = menuSubCategory
+        this.menuItem = menuItem
+        this.availableFrom = availableFrom
+        this.availableTill = availableTill
+        this.weekDayAvailblity = weekDayAvailblity
+    }
+}
+
+export class UpdateMenuItemDailyAvailability {
+    userInfo: UserInfo
+    menuInfo: ItemDailyAvailability
+
+    constructor(userInfo: UserInfo, menuInfo: ItemDailyAvailability) {
+        this.userInfo = userInfo
+        this.menuInfo = menuInfo
+    }
+}
