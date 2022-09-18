@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {
   AddStaff,
+  GetStaff,
   RemoveStaff,
   StoreStaff,
   UpdateStaff,
@@ -55,6 +56,8 @@ export class StaffComponent implements OnInit {
       emailAddress: ['', Validators.required],
       phoneNumber: ['', Validators.required],
     });
+
+    this.getStaff()
   }
 
   get addStaffFunction(): { [key: string]: AbstractControl } {
@@ -62,6 +65,17 @@ export class StaffComponent implements OnInit {
   }
   get updateStaffFunction(): { [key: string]: AbstractControl } {
     return this.updateStaffForm.controls;
+  }
+
+  getStaff(): void {
+    const phoneNumber = localStorage.getItem('phone')
+    const payload = new GetStaff(new UserInfo(phoneNumber))
+
+    this.api.getStaff(payload).then(res => {
+      console.log(res)
+    }).catch(error => {
+      console.log(error)
+    })
   }
 
   addStaff(): void {

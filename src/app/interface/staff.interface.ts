@@ -44,3 +44,11 @@ export class RemoveStaff {
         this.storestaff = storestaff
     }
 }
+
+export class GetStaff {
+    userInfo: UserInfo
+
+    constructor(userInfo: UserInfo) {
+        this.userInfo = userInfo
+    }
+}

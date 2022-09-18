@@ -4,7 +4,7 @@ import { environment } from 'src/environments/environment';
 import { RegisterModule, UpdateAboutStore, UpdateAddressModule, UpdateContactInfoModule, UpdateName, UpdatePaymentModule, UpdateStoreTimings, UserInfo } from 'src/app/interface/auth.interface'
 import { AddCategory, AddSubCategory, RemoveMenuCategory, SubMenuCategories, UpdateCategory, UpdateItemCurrentAvailability, UpdateMenuItemDailyAvailability, UpdateMenuItemPrice } from '../interface/category.interface';
 import { AddMenuItem, RemoveMenuItemModule } from '../interface/item.interface';
-import { AddStaff, RemoveStaff, UpdateStaff } from '../interface/staff.interface';
+import { AddStaff, GetStaff, RemoveStaff, UpdateStaff } from '../interface/staff.interface';
 import { CreateZone, RemoveZone, ZoneSchema } from '../interface/zone.interface';
 import { GetTableState, TableOrderMove, TableTransactions, UpdateTableState } from '../interface/table.interface';
 import { GetOrders, UpdateOrderStatus } from '../interface/orders.interface';
@@ -215,6 +215,11 @@ export class AuthService {
 
   getZone(payload: ZoneSchema) {
     let url = environment.apiUrl + 'gettablezones'
+    return this.httpClient.post(url, payload).toPromise()
+  }
+
+  getStaff(payload: GetStaff) {
+    let url = environment.apiUrl + 'getrestaurantstaff'
     return this.httpClient.post(url, payload).toPromise()
   }
 }
