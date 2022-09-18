@@ -12,24 +12,16 @@
         <div class="container-fluid pr-0 borderRight item-display mb-2 shadow">
           <div class="row" (click)="expandMenu(i)">
             <div class="col-sm-6 p-4">
-              <div class="category-name">{{ item.SubGroupName }}</div>
-              <!-- <h6 class="text-muted mt-2 opacityText"><i>{{ item.description }}</i></h6> -->
+              <div class="category-name">{{ item }}</div>
             </div>
             <div class="col-sm-6 p-4 text-right">
               <a class="btn btn-outline-info rounded-0 font-weight-bold" href="/addMenu">
                 +
               </a>
             </div>
-            <!-- <div class="col-sm-6 pl-0" >
-              <img style="height: 20vh;"
-                class="category-image"
-                src="{{item.image}}"
-                alt=""
-              />
-            </div> -->
           </div>
 
-          <div [ngClass]="{'expandable-hide': expand[i]}" class="bg-light p-3">
+          <!-- <div [ngClass]="{'expandable-hide': expand[i]}" class="bg-light p-3">
             <div *ngFor="let product of item.FoodItemsIDs" class="shadow p-4 mb-3 borderBox">
               <div class="row">
                 <div class="col-sm-6">
@@ -40,7 +32,6 @@
                     <img *ngIf="restaurantMenu[product].ItemType != 'veg'" src="https://img.icons8.com/fluency/48/000000/non-vegetarian-food-symbol.png" class="img-fluid ml-2 mt-1" style="height: 20px;"/>
                     <img *ngIf="restaurantMenu[product].ItemType == 'veg'" src="https://img.icons8.com/fluency/48/000000/vegetarian-food-symbol.png" class="img-fluid ml-2 mt-1" style="height: 20px;"/>
                   </div>
-                  <!-- <div class="text-muted mt-2"><i>{{ product.itemDes }}</i></div> -->
                   <h4 class="font-weight-bold text-success mt-3 "><i>₹ {{ restaurantMenu[product].Price }}</i></h4>
                   <div class="mt-3">Discount: {{ restaurantMenu[product].Discount }} %</div>
 
@@ -52,100 +43,11 @@
                   <img [src]="restaurantMenu[product].DisplayImagePath" class="img-fluid" style="width: 100%; object-fit: cover; height: 23vh;">
                 </div>
                 <div class="mt-3 text-right">
-                  <button class="btn btn-outline-warning" data-toggle="modal" data-target="#editModal" (click)="openEditModal(restaurantMenu[product])">Edit Product</button>
+                  <button class="btn btn-outline-warning">Edit Product</button>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-
-<div class="modal" id="editModal">
-  <div class="modal-dialog">
-    <div class="modal-content">
-
-      <!-- Modal Header -->
-      <div class="modal-header">
-        <h4 class="modal-title">EDIT <span class="text-warning">PRODUCT</span></h4>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-      </div>
-
-      <!-- Modal body -->
-      <div class="modal-body">
-        <div class="edit-form">
-          <form [formGroup]="menuItemForm" (ngSubmit)="editProduct()">
-            <div class="form-group">
-              <label>Item Name</label>
-              <input type="text" formControlName="ItemName" class="form-control"/>
-            </div>
-            <div *ngIf="submitted && f.ItemName.errors" class="text-danger">
-              <div *ngIf="f.ItemName.errors.required">
-                Item Name is required
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label>ItemType</label>
-              <select class="form-control" formControlName="ItemType">
-                <option value="veg">Veg</option>
-                <option value="nonveg">Non-Veg</option>
-                <option value="alcholic">Alcholic</option>
-                <option value="nonalcholic">Non-Alcholic</option>
-
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label>Price</label>
-              <input type="number" formControlName="Price" class="form-control"/>
-            </div>
-            <div *ngIf="submitted && f.Price.errors" class="text-danger">
-              <div *ngIf="f.Price.errors.required">
-                Price is required
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label>Discount</label>
-              <input type="number" formControlName="Discount" class="form-control"/>
-            </div>
-            <div *ngIf="submitted && f.Discount.errors" class="text-danger">
-              Discount is required
-            </div>
-
-            <div class="form-group form-switch">
-              <input class="form-check-input form-control" type="checkbox" role="switch" id="flexSwitchCheckDefault"
-              formControlName="AvailableNow">
-              <label class="form-check-label" for="flexSwitchCheckDefault">Make Available Now</label>
-            </div>
-
-            <div class="form-group">
-              <label>Next Available Time</label>
-              <input type="datetime-local" formControlName="NextAvailableTime" class="form-control"/>
-            </div>
-            <div *ngIf="submitted && f.NextAvailableTime.errors" class="text-danger">
-              <div *ngIf="f.NextAvailableTime.errors.required">
-                Next Available Time is required
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label>Display Image Path</label>
-              <input type="text" formControlName="DisplayImagePath" class="form-control"/>
-            </div>
-            <div *ngIf="submitted && f.DisplayImagePath.errors" class="text-danger">
-              Next Available Time is required
-            </div>
-
-            <div class="form-group text-right">
-              <button type="submit" class="btn btn-success rounded-0" style="width: 200px;">Save</button>
-            </div>
-          </form>
+          </div> -->
         </div>
       </div>
     </div>

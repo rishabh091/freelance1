@@ -20,6 +20,12 @@ export class RemoveTableInfo {
     }
 }
 
+export class ZoneSchema {
+    userInfo: UserInfo
+    
+    constructor(userInfo: UserInfo) { this.userInfo = userInfo }
+}
+
 export class CreateZone {
     userInfo: UserInfo
     tableInfo: CreateTableInfo

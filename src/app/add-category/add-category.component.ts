@@ -13,6 +13,7 @@ import {
   AddSubCategory,
   AddSubCategoryMenuInfo,
 } from '../interface/category.interface';
+import { StoreIdSchema } from '../interface/interface';
 
 @Component({
   selector: 'app-add-category',
@@ -30,6 +31,8 @@ export class AddCategoryComponent implements OnInit {
   successNote: boolean = false;
   errorNote: boolean = false;
 
+  categories: string[]
+
   constructor(private formBuilder: FormBuilder, private api: ApiAuthService) {}
 
   ngOnInit(): void {
@@ -42,11 +45,15 @@ export class AddCategoryComponent implements OnInit {
       menuSubCategory: ['', Validators.required],
       imageURL: ['', Validators.required],
     });
+
+    this.getCategory()
   }
 
   getCategory() {
     const storeId = localStorage.getItem('storeId')
-    this.api.getCategory(storeId).then(res => { console.log(res) }).catch(error => { console.log(error) })
+    this.api.getCategory(new StoreIdSchema(storeId)).then(res => {
+      this.categories = res['menuCategories']
+    }).catch(error => { console.log(error) })
   }
 
   get f(): { [key: string]: AbstractControl } {

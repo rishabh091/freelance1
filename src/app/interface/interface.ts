@@ -37,3 +37,11 @@ export interface MenuSubGroup  {
  export interface ResturantMenuItemGroups {
    [key : number] : MenuSubGroup[];
  };
+
+export class StoreIdSchema {
+	storeID: string
+
+	constructor(storeID: string) {
+		this.storeID = storeID
+	}
+}

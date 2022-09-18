@@ -7,6 +7,8 @@ import {
 } from '@angular/forms';
 import { AuthService as AuthApiService } from '../api/auth.service';
 import { UserInfo } from '../interface/auth.interface';
+import { SubMenuCategories } from '../interface/category.interface';
+import { StoreIdSchema } from '../interface/interface';
 import { AddMenuItem, MenuInfo } from '../interface/item.interface';
 
 @Component({
@@ -22,6 +24,9 @@ export class AddMenuComponent implements OnInit {
   weekDayAvailability: boolean[] = [false, false, false, false, false, false, false]
   weekDayAvailabilityError = true
 
+  categories: string[]
+  subCategories: string[]
+
   constructor(private formBuilder: FormBuilder, private api: AuthApiService) {}
  
   ngOnInit(): void {
@@ -35,6 +40,9 @@ export class AddMenuComponent implements OnInit {
         availableFrom: ['', Validators.required],
         availableTill: ['', Validators.required]
       })
+
+      this.getCategory()
+      this.getSubCategory()
   }
 
   get f(): { [key: string]: AbstractControl } {
@@ -43,7 +51,19 @@ export class AddMenuComponent implements OnInit {
 
   getCategory() {
     const storeId = localStorage.getItem('storeId')
-    this.api.getCategory(storeId).then(res => { console.log(res) }).catch(error => { console.log(error) })
+    this.api.getCategory(new StoreIdSchema(storeId)).then((res: {}) => {
+      this.categories = res['menuCategories']
+    }).catch(error => { console.log(error) })
+  }
+
+  getSubCategory() {
+    const storeId = localStorage.getItem('storeId')
+    const category = this.form.value.menuCategory
+
+    const payload = new SubMenuCategories(storeId, category)
+    this.api.getSubCategory(payload).then(res => {
+      this.subCategories = res['menuSubCategories']
+    }).catch(error => { console.log(error) })
   }
 
   onSubmit(): void {

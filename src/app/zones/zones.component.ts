@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { CreateZone, CreateTableInfo, RemoveZone, RemoveTableInfo } from '../interface/zone.interface';
+import { CreateZone, CreateTableInfo, RemoveZone, RemoveTableInfo, ZoneSchema } from '../interface/zone.interface';
 import { UserInfo } from '../interface/auth.interface';
 import { AuthService as ApiAuthService } from '../api/auth.service';
 
@@ -35,7 +35,8 @@ export class ZonesComponent implements OnInit {
 
   getZone() {
     const phoneNumber = localStorage.getItem('phone')
-    this.api.getZone(phoneNumber).then((res: CreateTableInfo[]) => {
+    const payload = new ZoneSchema(new UserInfo(phoneNumber))
+    this.api.getZone(payload).then((res: CreateTableInfo[]) => {
       this.zone = res
     }).catch(error => { console.log(error) })
   }

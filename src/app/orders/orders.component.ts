@@ -236,6 +236,7 @@ export class OrdersComponent implements OnInit {
 
   ngOnInit(): void {
     this.activeArray = this.newOrderArray
+    this.getOrderByType('new')
   }
 
   getOrderByType(type: string) {

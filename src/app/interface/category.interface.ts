@@ -154,3 +154,13 @@ export class UpdateMenuItemDailyAvailability {
         this.menuInfo = menuInfo
     }
 }
+
+export class SubMenuCategories {
+    storeID: string
+    menu: string
+
+    constructor(storeID: string, menu: string) {
+        this.storeID = storeID
+        this.menu = menu
+    }
+}

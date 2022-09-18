@@ -11,9 +11,9 @@
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
           <div class="form-group">
             <label>Category</label>
-            <select class="form-control" formControlName="menuCategory">
+            <select class="form-control" formControlName="menuCategory" (change)="getSubCategory()">
               <option value=''>--Select--</option>
-              <option value='cat 1'>Cat1</option>
+              <option *ngFor="let category of categories" [value]='category'>{{ category }}</option>
             </select>
           </div>
           <div *ngIf="submitted && f.menuCategory.errors" class="text-danger mb-5">
@@ -26,7 +26,7 @@
             <label>Sub-Category</label>
             <select class="form-control" formControlName="menuSubCategory">
               <option value=''>--Select--</option>
-              <option value='subcat 1'>Sub Cat1</option>
+              <option *ngFor="let sub of subCategories" [value]="sub">{{ sub }}</option>
             </select>
           </div>
           <div *ngIf="submitted && f.menuSubCategory.errors" class="text-danger mb-5">
@@ -51,8 +51,10 @@
               <option value=''>--Select--</option>
               <option value="veg">Veg</option>
               <option value="nonveg">Non-Veg</option>
-              <option value="alcholic">Alcholic</option>
-              <option value="nonalcholic">Non-Alcholic</option>
+              <option value="egg">Egg</option>
+              <option value="vegan">Vegan</option>
+              <option value="alchoholic">Alcholic</option>
+              <option value="nonalchoholic">Non-Alcholic</option>
 
             </select>
           </div>

@@ -3,7 +3,7 @@ import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/fo
 import { AuthService } from '../auth/auth.service';
 import { UserInfo } from '../interface/auth.interface';
 import { AddSubCategory, AddSubCategoryMenuInfo, ItemDailyAvailability, MenuInfo, MenuItemCurrentAvailability, MenuItemPrice, RemoveMenuCategory, UpdateCategory, UpdateCategoryModule, UpdateItemCurrentAvailability, UpdateMenuItemDailyAvailability, UpdateMenuItemPrice } from '../interface/category.interface';
-import { MenuItem } from '../interface/interface';
+import { MenuItem, StoreIdSchema } from '../interface/interface';
 import { MockResturantMenus, MockMenuGroups } from '../mock.menu'   // dummy data
 import { AuthService as Api } from '../api/auth.service';
 import { RemoveMenuItem, RemoveMenuItemModule } from '../interface/item.interface';
@@ -19,8 +19,9 @@ export class ShowMenuComponent implements OnInit {
   public menuItemForm: FormGroup
   public submitted: boolean = false
 
-  public menuGroups = MockMenuGroups[0]
-  public restaurantMenu = MockResturantMenus[0]
+  public menuGroups = []
+  public subMenuGroups = {}
+  public menuItems = {}
 
   public updateCategoryForm: FormGroup
   public updateCategorySubmitted = false
@@ -52,8 +53,6 @@ export class ShowMenuComponent implements OnInit {
       DisplayImagePath: ['']
     })
 
-    this.restaurantMenu = this.mapRestaurantWithId(this.restaurantMenu)
-
     this.updateCategoryForm = this.formBuilder.group({
       storeSubCategory: ['', Validators.required],
       isPrePaid: [false, Validators.required],
@@ -66,12 +65,36 @@ export class ShowMenuComponent implements OnInit {
       imageURL: ['', Validators.required]
     })
 
-    this.getMenuCategory()
+    this.getMenuItem()
   }
 
   getMenuCategory() {
     const storeId = localStorage.getItem('storeId')
-    this.api.getMenuCategory(storeId).then(res => { console.log(res) }).catch(error => { console.log(error) })
+    this.api.getMenuItems(new StoreIdSchema(storeId)).then(res => { console.log(res) }).catch(error => { console.log(error) })
+  }
+
+  getMenuItem() {
+    const storeId = localStorage.getItem('storeId')
+    this.api.getMenuItems(new StoreIdSchema(storeId)).then(res => {
+      this.menuGroups = res['menuItems'].map(obj => { return obj.menu })
+
+      for (let menu of this.menuGroups) {
+        this.subMenuGroups[menu] = []
+        this.menuItems[menu] = {}
+      }
+
+      for (let item of res['menuItems']) {
+        this.subMenuGroups[item.menu].push(item.subMenu)
+        this.menuItems[item.menu][item.subMenu] = []
+      }
+      for (let item of res['menuItems']) {
+        this.menuItems[item.menu][item.subMenu].push(item)
+      }
+
+      console.log(this.menuGroups)
+      console.log(this.subMenuGroups)
+      console.log(this.menuItems)
+    }).catch(error => { console.log(error) })
   }
 
   get f(): { [key: string]: AbstractControl } {
@@ -139,15 +162,6 @@ export class ShowMenuComponent implements OnInit {
     return hoursInSec + minutesInSec
   }
 
-  mapRestaurantWithId(restaurantMenu: typeof MockResturantMenus[0]): any {
-    let menu = {}
-    for (let obj of restaurantMenu) {
-      menu[obj.ItemID] = obj
-    }
-
-    return menu
-  }
-
   openEditModal(editObject: MenuItem) {
     this.menuItemForm.controls['ItemName'].setValue(editObject.ItemName)
     this.menuItemForm.controls['ItemType'].setValue(editObject.ItemType)
@@ -176,7 +190,7 @@ export class ShowMenuComponent implements OnInit {
 
   getCategories() {
     const storeId = localStorage.getItem('storeId')
-    this.api.getCategory(storeId).then(res => { console.log(res) }).catch(error => { console.log(error) })
+    this.api.getCategory(new StoreIdSchema(storeId)).then(res => { console.log(res) }).catch(error => { console.log(error) })
   }
 
   removeCategory(category: string) {
