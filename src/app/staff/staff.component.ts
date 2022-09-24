@@ -21,14 +21,7 @@ import { ServiceToasterService } from '../service-toaster.service';
   styleUrls: ['./staff.component.css'],
 })
 export class StaffComponent implements OnInit {
-  staff: StoreStaff[] = [
-    {
-      name: 'abc',
-      role: 'manager',
-      phoneNumber: '987654425',
-      emailAddress: 'abc@yopmail.com',
-    },
-  ];
+  staff: StoreStaff[] = [];
 
   addStaffForm: FormGroup;
   addStaffSubmitted = false;
@@ -68,13 +61,13 @@ export class StaffComponent implements OnInit {
   }
 
   getStaff(): void {
-    const phoneNumber = localStorage.getItem('phone')
+    const phoneNumber = localStorage.getItem('phoneWithCountry').replace('+', '')
     const payload = new GetStaff(new UserInfo(phoneNumber))
 
-    this.api.getStaff(payload).then(res => {
-      console.log(res)
+    this.api.getStaff(payload).then((res: StoreStaff[]) => {
+      this.staff = res
     }).catch(error => {
-      console.log(error)
+      this.toasterService.failure('Something went wrong')
     })
   }
 

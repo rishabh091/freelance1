@@ -18,7 +18,6 @@ export class AuthService {
     const authPromise = this.afAuth.authState.pipe(first()).toPromise()
     authPromise.then(user => {
       user.getIdToken(true).then(token => { localStorage.setItem('token', token) })
-      location.reload()
     })
   }
   /**
