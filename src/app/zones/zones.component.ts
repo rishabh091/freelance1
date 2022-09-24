@@ -48,7 +48,7 @@ export class ZonesComponent implements OnInit {
   }
 
   getZone() {
-    const phoneNumber = localStorage.getItem('phone');
+    const phoneNumber = localStorage.getItem('phoneWithCountry').replace('+', '');
     const payload = new ZoneSchema(new UserInfo(phoneNumber));
     this.api
       .getZone(payload)

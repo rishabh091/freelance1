@@ -91,6 +91,7 @@ export class StaffComponent implements OnInit {
       .then((res: any) => {
         if (res.status == 'success') {
           this.toasterService.success('You have added the staff successfully!');
+          this.getStaff()
         } else {
           this.toasterService.failure(res.status);
         }
