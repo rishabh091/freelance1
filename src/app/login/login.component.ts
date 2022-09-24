@@ -142,10 +142,9 @@ export class LoginComponent implements OnInit {
       .then((result) => {
         this.form.disable();
         clearInterval(this.otpCheckInterval);
-        localStorage.setItem(
-          'phone',
-          this.form.value.countryCode + this.form.value.phone
-        );
+        localStorage.setItem('phone', this.form.value.phone);
+        localStorage.setItem('phoneWithCountry', this.form.value.countryCode + this.form.value.phone)
+
 
         const payload = new UserInfo(String(this.form.value.phone));
         this.api.isUserRegisterd(payload).then((res) => {

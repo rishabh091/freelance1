@@ -3,6 +3,9 @@ import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/fo
 import { Country, State, City }  from 'country-state-city';
 import { AuthService as Api } from '../api/auth.service';
 import { AboutStore, StoreAddress, StorePayment, StoreTimings, UpdateAboutStore, UpdateAddressModule, UpdateContactInfo, UpdateContactInfoModule, UpdateName, UpdatePaymentModule, UpdateStoreTimings, UserInfo } from '../interface/auth.interface';
+import { StoreIdSchema } from '../interface/interface';
+import { ServiceToasterService } from '../service-toaster.service';
+import { ToasterComponent } from '../toaster/toaster.component';
 
 @Component({
   selector: 'app-profile',
@@ -32,7 +35,7 @@ export class ProfileComponent implements OnInit {
   public aboutStoreForm: FormGroup
   public aboutStoreSubmitted = false
 
-  constructor(private formBuilder: FormBuilder, private api: Api) { }
+  constructor(private formBuilder: FormBuilder, private api: Api, private toaster: ServiceToasterService) { }
 
   ngOnInit(): void {
     this.userInfoForm = this.formBuilder.group({
@@ -87,8 +90,10 @@ export class ProfileComponent implements OnInit {
 
   getUser(): void {
     const storeId = localStorage.getItem('storeId')
-    this.api.getStore(storeId).then(res => {
-      console.log(res)
+
+    const payload = new StoreIdSchema(storeId)
+    this.api.getStore(payload).then((res: any) => {
+      this.userInfoForm.controls['storeName'].setValue(res.storename)
     }).catch(error => {
       console.log(error)
     })
@@ -96,8 +101,23 @@ export class ProfileComponent implements OnInit {
 
   getAddress(): void {
     const storeId = localStorage.getItem('storeId')
-    this.api.getAddress(storeId).then(res => {
-      console.log(res)
+
+    const payload = new StoreIdSchema(storeId)
+    this.api.getAddress(payload).then((res: any) => {     
+      const countryObject = this.countries.filter((value) => { return value.name === res.storeaddress.storeaddressCountry })
+
+      this.states = State.getStatesOfCountry(countryObject[0].isoCode)
+      const stateObject = this.states.filter((value) => { return value.name === res.storeaddress.storeaddressState })
+
+      this.cities = City.getCitiesOfState(countryObject[0].isoCode, stateObject[0].isoCode)
+      const cityObject = this.cities.filter(value => { return value.name === res.storeaddress.storeaddressCity })
+     
+      this.addressForm.controls['storeaddressBuilding'].setValue(res.storeaddress.storeaddressBuilding)
+      this.addressForm.controls['storeaddressStreet'].setValue(res.storeaddress.storeaddressStreet)
+      this.addressForm.controls['storeaddressCity'].setValue(cityObject[0])
+      this.addressForm.controls['storeaddressPinCode'].setValue(res.storeaddress.storeaddressPinCode)
+      this.addressForm.controls['storeaddressState'].setValue(stateObject[0])
+      this.addressForm.controls['storeaddressCountry'].setValue(countryObject[0])
     }).catch(error => {
       console.log(error)
     })
@@ -105,8 +125,9 @@ export class ProfileComponent implements OnInit {
 
   getContactInfo(): void {
     const storeId = localStorage.getItem('storeId')
-    this.api.getContactInfo(storeId).then(res => {
-      console.log(res)
+    this.api.getContactInfo(new StoreIdSchema(storeId)).then((res: any) => {
+      this.contactInfoForm.controls['storeEmailAddress'].setValue(res.storeEmailAddress)
+      this.contactInfoForm.controls['storePhoneNumber'].setValue(res.storePhoneNumber)
     }).catch(error => {
       console.log(error)
     })
@@ -114,8 +135,9 @@ export class ProfileComponent implements OnInit {
 
   getPaymentInfo(): void {
     const storeId = localStorage.getItem('storeId')
-    this.api.getPaymentInfo(storeId).then(res => {
-      console.log(res)
+    this.api.getPaymentInfo(new StoreIdSchema(storeId)).then((res: any) => {
+      this.paymentForm.controls['acceptedCurrency'].setValue(res.acceptedCurrency)
+      this.paymentForm.controls['paymentGatewayId'].setValue(res.paymentGatewayID)
     }).catch(error => {
       console.log(error)
     })
@@ -123,17 +145,42 @@ export class ProfileComponent implements OnInit {
 
   getStoreTimings(): void {
     const storeId = localStorage.getItem('storeId')
-    this.api.getStoreTimings(storeId).then(res => {
-      console.log(res)
+    this.api.getStoreTimings(new StoreIdSchema(storeId)).then((res: any) => {
+      this.storeTimingsForm.controls['opensAt'].setValue(this.convert12To24(res.opensAt))
+      console.log(this.convert12To24(res.closesAt))
+      this.storeTimingsForm.controls['closesAt'].setValue(this.convert12To24(res.closesAt))
     }).catch(error => {
       console.log(error)
     })
   }
 
+  convert24To12(timeString: string) {
+    const [hourString, minute] = timeString.split(":");
+    const hour = +hourString % 24;
+    return (hour % 12 || 12) + ":" + minute + (hour < 12 ? " AM" : " PM");
+  }
+  
+  convert12To24(time12h: string) {
+      const [time, modifier] = time12h.split(' ');
+      let [hours, minutes] = time.split(':');
+      if (hours === '12') {
+        hours = '00';
+      }
+      if (modifier === 'PM') {
+        let hours24 = parseInt(hours, 10) + 12;
+        if (hours24 < 10) { hours = `0${hours24}` }
+        else { hours = hours24 + '' }
+      }
+      
+      if (parseInt(hours) < 10) { hours = `0${hours}` }
+      return `${hours}:${minutes}`;
+  }
+
+
   getAboutStore(): void {
     const storeId = localStorage.getItem('storeId')
-    this.api.getStoreAbout(storeId).then(res => {
-      console.log(res)
+    this.api.getStoreAbout(new StoreIdSchema(storeId)).then((res: any) => {
+      this.aboutStoreForm.controls['aboutStore'].setValue(res.aboutstore)
     }).catch(error => {
       console.log(error)
     })
@@ -171,8 +218,8 @@ export class ProfileComponent implements OnInit {
 
     const phoneNumber = localStorage.getItem('phone')
     this.api.updateName(new UpdateName(this.userInfoForm.value.storeName, new UserInfo(phoneNumber))).then(res => {
-      console.log(res)
-    }).catch(error => {console.log(error)})
+      this.toaster.success('Name Updated')
+    }).catch(error => { this.toaster.failure('Cannot update Name') })
   }
 
   addressFormSubmit(): void {
@@ -191,7 +238,7 @@ export class ProfileComponent implements OnInit {
       this.addressForm.value.storeaddressCountry.name
     ))
 
-    this.api.updateAddress(payload).then(res => { console.log(res) }).catch(error => { console.log(error) })
+    this.api.updateAddress(payload).then(res => { this.toaster.success('Address Updated') }).catch(error => { this.toaster.failure('Cannot update Address') })
   }
 
   paymentFormSubmit(): void {
@@ -205,7 +252,7 @@ export class ProfileComponent implements OnInit {
       this.paymentForm.value.acceptedCurrency,
       this.paymentForm.value.paymentGatewayId
     ))
-    this.api.updatePayment(payload).then(res => { console.log(res) }).catch(error => { console.log(error) })
+    this.api.updatePayment(payload).then(res => { this.toaster.success('Payment Updated') }).catch(error => { this.toaster.failure('Cannot update Payment') })
   }
 
   updateContactInfo(): void {
@@ -218,7 +265,7 @@ export class ProfileComponent implements OnInit {
       this.contactInfoForm.value.storeEmailAddress
     ))
 
-    this.api.updateContactInfo(payload).then(res => { console.log(res) }).catch(error => { console.log(error) })
+    this.api.updateContactInfo(payload).then(res => { this.toaster.success('ContactInfo Updated') }).catch(error => { this.toaster.failure('Cannot update ContactInfo') })
   }
 
   updateStoreTimings(): void {
@@ -227,11 +274,11 @@ export class ProfileComponent implements OnInit {
 
     const phoneNumber = localStorage.getItem('phone')
     const payload = new UpdateStoreTimings(new UserInfo(phoneNumber), new StoreTimings(
-      this.storeTimingsForm.value.opensAt,
-      this.storeTimingsForm.value.closesAt
+      this.convert24To12(this.storeTimingsForm.value.opensAt),
+      this.convert24To12(this.storeTimingsForm.value.closesAt)
     ))
 
-    this.api.updateStoreTimings(payload).then(res => { console.log(res) }).catch(error => { console.log(error) })
+    this.api.updateStoreTimings(payload).then(res => { this.toaster.success('StoreTimings Updated') }).catch(error => { this.toaster.failure('Cannot update StoreTimings') })
   }
 
   updateAboutStore(): void {
@@ -241,6 +288,6 @@ export class ProfileComponent implements OnInit {
     const phoneNumber = localStorage.getItem('phone')
     const payload = new UpdateAboutStore(new UserInfo(phoneNumber), new AboutStore(this.aboutStoreForm.value.aboutStore))
 
-    this.api.updateStoreAbout(payload).then(res => { console.log(res) }).catch(error => { console.log(error) })
+    this.api.updateStoreAbout(payload).then(res => { this.toaster.success('StoreAbout Updated') }).catch(error => { this.toaster.failure('Cannot update StoreAbout') })
   }
 }

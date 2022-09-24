@@ -93,9 +93,9 @@ export class AuthService {
     return this.httpClient.post(url, temp).toPromise()
   }
 
-  getStore(storeId: string) {
-    let url = environment.apiUrl + `name?storeid=${storeId}`
-    return this.httpClient.get(url).toPromise()
+  getStore(payload: StoreIdSchema) {
+    let url = environment.apiUrl + `getname`
+    return this.httpClient.post(url, payload).toPromise()
   }
 
   updateName(payload: UpdateName) {
@@ -113,9 +113,9 @@ export class AuthService {
     return this.httpClient.post(url, payload).toPromise()
   }
 
-  getAddress(storeId: string) {
-    let url = environment.apiUrl + 'address?storeid=' + storeId
-    return this.httpClient.get(url).toPromise()
+  getAddress(payload: StoreIdSchema) {
+    let url = environment.apiUrl + 'getaddress'
+    return this.httpClient.post(url, payload).toPromise()
   }
 
   updateContactInfo(payload: UpdateContactInfoModule) {
@@ -123,14 +123,14 @@ export class AuthService {
     return this.httpClient.post(url, payload).toPromise()
   }
 
-  getContactInfo(storeId: string) {
-    let url = environment.apiUrl + 'contactinfo?storeid=' + storeId
-    return this.httpClient.get(url).toPromise()
+  getContactInfo(payload: StoreIdSchema) {
+    let url = environment.apiUrl + 'getcontactinfo'
+    return this.httpClient.post(url, payload).toPromise()
   }
 
-  getPaymentInfo(storeId: string) {
-    let url = environment.apiUrl + 'paymentinfo?storeid=' + storeId
-    return this.httpClient.get(url).toPromise()
+  getPaymentInfo(payload: StoreIdSchema) {
+    let url = environment.apiUrl + 'getpaymentinfo'
+    return this.httpClient.post(url, payload).toPromise()
   }
 
   updateStoreTimings(payload: UpdateStoreTimings) {
@@ -138,9 +138,9 @@ export class AuthService {
     return this.httpClient.post(url, payload).toPromise()
   }
 
-  getStoreTimings(storeId: string) {
-    let url = environment.apiUrl + 'storetimings?storeid=' + storeId
-    return this.httpClient.get(url).toPromise()
+  getStoreTimings(payload: StoreIdSchema) {
+    let url = environment.apiUrl + 'getstoretimings'
+    return this.httpClient.post(url, payload).toPromise()
   }
 
   updateStoreAbout(payload: UpdateAboutStore) {
@@ -148,9 +148,9 @@ export class AuthService {
     return this.httpClient.post(url, payload).toPromise()
   }
 
-  getStoreAbout(storeId: string) {
-    let url = environment.apiUrl + 'aboutstore?storeid=' + storeId
-    return this.httpClient.get(url).toPromise()
+  getStoreAbout(payload: StoreIdSchema) {
+    let url = environment.apiUrl + 'getaboutstore'
+    return this.httpClient.post(url, payload).toPromise()
   }
 
   removeMenuCategory(payload: RemoveMenuCategory) {
