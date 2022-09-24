@@ -28,13 +28,61 @@
     </ul>
 
     <ul class="navbar-nav ml-auto">
-      <li class="nav-item">
-        <a href="/profile">
-          <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
-          class="img-fluid user-icon"
-          title="Profile">
+      <li class="nav-item dropdown">
+        <a
+          href="#"
+          class="nav-link dropdown-toggle"
+          role="button"
+          data-bs-toggle="dropdown"
+        >
+          <img
+            src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
+            class="img-fluid user-icon"
+            title="Profile"
+          />
         </a>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="/profile">Profile</a></li>
+          <li>
+            <a class="dropdown-item" data-toggle="modal" data-target="#logout"
+              >Logout</a
+            >
+          </li>
+        </ul>
       </li>
     </ul>
   </div>
 </nav>
+
+<div class="modal" id="logout">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">LOG<span class="text-warning">OUT</span></h4>
+        <button type="button" class="close" data-dismiss="modal">
+          &times;
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="text-center">Are you sure you want to logout?</div>
+       <div class="d-flex justify-content-around mt-4 mb-4" >
+        <button
+        class="btn rounded-0 btn-outline-warning font-weight-bold"
+        data-bs-dismiss="modal"
+        style="width: 20vh;"
+      >
+        CANCEL
+      </button>
+      <button
+        class="btn btn-warning rounded-0 font-weight-bold"
+        (click)="logout()"
+        style="width: 20vh; color: white;"
+      >
+        LOGOUT
+      </button>
+       </div>
+      </div>
+    </div>
+  </div>
+</div>

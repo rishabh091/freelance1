@@ -3,3 +3,6 @@
     width: 25px;
     cursor: pointer;
 }
+.dropdown-menu{
+    left: -10vh;
+}

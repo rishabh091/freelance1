@@ -4,17 +4,22 @@
       <div class="center heading m-2">ZONES</div>
 
       <div class="addButton">
-        <button type="button" class="btn btn-warning float-right"
-        (click)="addZone()">
+        <button
+          type="button"
+          class="btn btn-warning float-right"
+          (click)="addZone()"
+        >
           ADD ZONE
         </button>
       </div>
 
       <div class="zones">
-        <div *ngFor="let i of zone">
-          <div class="zone font-weight-bold" [routerLink]="['/table/', i]">
+        <div *ngFor="let z of zone; let i = index">
+          <div class="zone font-weight-bold" [routerLink]="['/table/', z]">
             <div class="zoneName">ZONE</div>
-            <div class="number">{{ i.zone }}</div>
+            <div class="number">{{ z.zone }}</div>
+
+            <div (click)="removeZone(i)">Delete</div>
           </div>
         </div>
       </div>

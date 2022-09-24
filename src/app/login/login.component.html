@@ -1,13 +1,45 @@
 <div class="background-image">
   <div class="pt-5">
-    <div class="center"><img src="https://img.icons8.com/clouds/344/restaurant.png" alt=""
-      class="img-fork"></div>
+    <div class="center">
+      <img
+        src="https://img.icons8.com/clouds/344/restaurant.png"
+        alt=""
+        class="img-fork"
+      />
+    </div>
     <div class="center heading m-2">Restaurant Login</div>
     <div class="center">
-      <div class="container m-3 p-3 form-div" style="background-color: #4c5462" >
+      <div class="container m-3 p-3 form-div" style="background-color: #4c5462">
         <div class="center"></div>
         <div class="register-form mt-3">
           <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+              <label>Select County Code</label>
+
+              <select
+                class="form-control"
+                formControlName="countryCode"
+                class="form-control"
+                [ngClass]="{ 'is-invalid': submitted && f.countryCode.errors }"
+              >
+              <option selected value="">-- Select Country Code -- </option>
+                <option
+                  *ngFor="let flag of countryData.flags"
+                  value="{{flag.number}}"
+                >
+                  {{ flag.name }} ( {{ flag.number }} )
+                </option>
+              </select>
+              <div
+                *ngIf="submitted && f.countryCode.errors"
+                class="invalid-feedback"
+              >
+                <div *ngIf="f.countryCode.errors.required" class="error-color">
+                  country Code is required
+                </div>
+              </div>
+            </div>
+
             <div class="form-group">
               <label>Enter Mobile</label>
               <input
@@ -18,30 +50,52 @@
                 [ngClass]="{ 'is-invalid': submitted && f.phone.errors }"
               />
               <div *ngIf="submitted && f.phone.errors" class="invalid-feedback">
-                <div *ngIf="f.phone.errors.required"  class="error-color">
+                <div *ngIf="f.phone.errors.required" class="error-color">
                   Phone Number is required
                 </div>
-                <div *ngIf="submitted && (f.phone.errors.min || f.phone.errors.max)" class="error-color">
+                <div
+                  *ngIf="
+                    submitted && (f.phone.errors.min || f.phone.errors.max)
+                  "
+                  class="error-color"
+                >
                   Invalid Phone Number
                 </div>
               </div>
 
-<div class="center mtgit a-3">
-  <mat-list-item *ngIf="!requestedOTP"> 
-    <div  class="captcha" id="recaptcha-container"></div>            
-  </mat-list-item> 
-
-</div>
+              <div class="center mt-3">
+                <mat-list-item *ngIf="!requestedOTP">
+                  <div class="captcha" id="recaptcha-container"></div>
+                </mat-list-item>
+              </div>
               <div *ngIf="requestedOTP" class="mt-4">
-                <input type="number" class="form-control" [(ngModel)]="otp" placeholder="Enter OTP" [ngModelOptions]="{standalone: true}">
+                <input
+                  type="number"
+                  class="form-control"
+                  [(ngModel)]="otp"
+                  placeholder="Enter OTP"
+                  [ngModelOptions]="{ standalone: true }"
+                />
               </div>
             </div>
-  
+
             <div class="form-group">
               <div class="center">
-                <button *ngIf="!requestedOTP" type="submit" class="btn btn-login mt-3">SEND OTP</button>
-                <button *ngIf="requestedOTP" type="button" class="btn btn-login mt-3" (click)="verifyOtp()">VERIFY OTP</button>
-  
+                <button
+                  *ngIf="!requestedOTP"
+                  type="submit"
+                  class="btn btn-login mt-3"
+                >
+                  SEND OTP
+                </button>
+                <button
+                  *ngIf="requestedOTP"
+                  type="button"
+                  class="btn btn-login mt-3"
+                  (click)="verifyOtp()"
+                >
+                  VERIFY OTP
+                </button>
               </div>
               <a href="/signup" class="font-weight-bold p-2 center a-link mt-1">
                 Not have an account?
@@ -54,7 +108,16 @@
   </div>
 </div>
 
-<div *ngIf="errorMessage" class="alert alert-danger alert-dismissible" [ngClass]="{ 'alert-danger': !requestedOTP && !otpRequestCountdown, 'alert-success': requestedOTP }" style="position: absolute; z-index: 10; top: 0vh; width: 100%;" id="otpError">
+<div
+  *ngIf="errorMessage"
+  class="alert alert-danger alert-dismissible"
+  [ngClass]="{
+    'alert-danger': !requestedOTP && !otpRequestCountdown,
+    'alert-success': requestedOTP
+  }"
+  style="position: absolute; z-index: 10; top: 0vh; width: 100%"
+  id="otpError"
+>
   <button type="button" class="close" data-dismiss="alert">&times;</button>
   {{ errorMessage }}
 </div>
