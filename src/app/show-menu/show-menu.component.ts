@@ -70,7 +70,7 @@ export class ShowMenuComponent implements OnInit {
   weekDayAvailabilityError = true;
 
   public setCategoryName: string = '';
-  private setSubCategoryName: string = '';
+  public setSubCategoryName: string = '';
   public expand = [];
 
   ngOnInit(): void {
@@ -117,12 +117,12 @@ export class ShowMenuComponent implements OnInit {
   }
 
 
-  getSubCategories() {
+  getSubCategories(category: string) {
     const storeId = localStorage.getItem('storeId');
     this.api
-      .getSubCategory(new SubMenuCategories(storeId), 'pizza')
+      .getSubCategory(new SubMenuCategories(storeId, category))
       .then((res) => {
-        console.log(res);
+        this.subMenuGroups[category] = res['menuSubCategories']
       })
       .catch((error) => {
         console.log(error);
@@ -145,7 +145,8 @@ export class ShowMenuComponent implements OnInit {
         }
 
         for (let item of res['menuItems']) {
-          this.subMenuGroups[item.menu].push(item.subMenu);
+          this.subMenuGroups[item.menu] = [];
+          this.getSubCategories(item.menu)
           this.menuItems[item.menu][item.subMenu] = [];
         }
         for (let item of res['menuItems']) {
@@ -339,7 +340,7 @@ export class ShowMenuComponent implements OnInit {
       });
   }
 
-  removeSubCategory(category: string, subCategory: string, imageUrl: string) {
+  removeSubCategory(category: string, subCategory: string, imageUrl: string = '') {
     const phoneNumber = localStorage.getItem('phone');
     this.api
       .removeMenuSubCategory(
@@ -385,7 +386,7 @@ export class ShowMenuComponent implements OnInit {
     this.setCategoryName = item;
   }
 
-  seSubtCategory(item) {
+  setSubCategory(item) {
     this.updateCategoryForm.controls['storeSubCategory'].setValue(item);
     this.setSubCategoryName = item;
   }
