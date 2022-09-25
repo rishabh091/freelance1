@@ -44,6 +44,11 @@
   font-weight: bold;
   text-transform: uppercase;
 }
+.subcategory-name {
+  font-size: 20px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
 .category-image {
   width: 100%;
   object-fit: cover;
@@ -63,4 +68,13 @@
 }
 .opacityText {
   opacity: 0.5;
+}
+.icon {
+  height: 4vh;
+  width: 4vh;
+}
+
+.iconsub {
+  height: 3vh;
+  width: 3vh;
 }

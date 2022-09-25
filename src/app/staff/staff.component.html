@@ -80,30 +80,45 @@
           <form [formGroup]="addStaffForm" (ngSubmit)="addStaff()">
             <div class="form-group">
               <label>Staff Name</label>
-              <input type="text" formControlName="name" class="form-control" />
-            </div>
-            <div
-              *ngIf="addStaffSubmitted && addStaffFunction.name.errors"
-              class="text-danger"
-            >
-              <div *ngIf="addStaffFunction.name.errors.required">
-                Name is required
+              <input
+                type="text"
+                formControlName="name"
+                class="form-control"
+                [ngClass]="{
+                  'is-invalid':
+                    addStaffSubmitted && addStaffFunction.name.errors
+                }"
+              />
+              <div
+                *ngIf="addStaffSubmitted && addStaffFunction.name.errors"
+                class="text-danger"
+              >
+                <div *ngIf="addStaffFunction.name.errors.required">
+                  Name is required
+                </div>
               </div>
             </div>
 
             <div class="form-group">
               <label>Role</label>
-              <select class="form-control" formControlName="role">
+              <select
+                class="form-control"
+                formControlName="role"
+                [ngClass]="{
+                  'is-invalid':
+                    addStaffSubmitted && addStaffFunction.role.errors
+                }"
+              >
                 <option value="manager">Manager</option>
                 <option value="staff">Staff</option>
               </select>
-            </div>
-            <div
-              *ngIf="addStaffSubmitted && addStaffFunction.role.errors"
-              class="text-danger"
-            >
-              <div *ngIf="addStaffFunction.role.errors.required">
-                Role is required
+              <div
+                *ngIf="addStaffSubmitted && addStaffFunction.role.errors"
+                class="text-danger"
+              >
+                <div *ngIf="addStaffFunction.role.errors.required">
+                  Role is required
+                </div>
               </div>
             </div>
 
@@ -113,14 +128,53 @@
                 type="email"
                 formControlName="emailAddress"
                 class="form-control"
+                [ngClass]="{
+                  'is-invalid':
+                    addStaffSubmitted && addStaffFunction.emailAddress.errors
+                }"
               />
+              <div
+                *ngIf="
+                  addStaffSubmitted && addStaffFunction.emailAddress.errors
+                "
+                class="text-danger"
+              >
+                <div *ngIf="addStaffFunction.emailAddress.errors.required">
+                  Email is required
+                </div>
+              </div>
             </div>
-            <div
-              *ngIf="addStaffSubmitted && addStaffFunction.emailAddress.errors"
-              class="text-danger"
-            >
-              <div *ngIf="addStaffFunction.emailAddress.errors.required">
-                Email is required
+
+            <div class="form-group">
+              <label>Select County Code</label>
+
+              <select
+                class="form-control"
+                formControlName="countryCode"
+                class="form-control"
+                [ngClass]="{
+                  'is-invalid':
+                    addStaffSubmitted && addStaffFunction.countryCode.errors
+                }"
+              >
+                <option selected value="">-- Select Country Code --</option>
+                <option
+                  *ngFor="let flag of countryData.flags"
+                  value="{{ flag.number }}"
+                >
+                  {{ flag.name }} ( {{ flag.number }} )
+                </option>
+              </select>
+              <div
+                *ngIf="addStaffSubmitted && addStaffFunction.countryCode.errors"
+                class="invalid-feedback"
+              >
+                <div
+                  *ngIf="addStaffFunction.countryCode.errors.required"
+                  class="error-color"
+                >
+                  country Code is required
+                </div>
               </div>
             </div>
 
@@ -130,14 +184,18 @@
                 type="number"
                 formControlName="phoneNumber"
                 class="form-control"
+                [ngClass]="{
+                  'is-invalid':
+                    addStaffSubmitted && addStaffFunction.phoneNumber.errors
+                }"
               />
-            </div>
-            <div
-              *ngIf="addStaffSubmitted && addStaffFunction.phoneNumber.errors"
-              class="text-danger"
-            >
-              <div *ngIf="addStaffFunction.phoneNumber.errors.required">
-                Phone Number is required
+              <div
+                *ngIf="addStaffSubmitted && addStaffFunction.phoneNumber.errors"
+                class="text-danger"
+              >
+                <div *ngIf="addStaffFunction.phoneNumber.errors.required">
+                  Phone Number is required
+                </div>
               </div>
             </div>
 

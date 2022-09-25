@@ -178,6 +178,7 @@ export class AuthService {
     return this.httpClient.post(url, payload).toPromise()
   }
 
+
   getTableTransaction(payload: TableTransactions) {
     let url = environment.apiUrl + 'gettabletransactions'
     return this.httpClient.post(url, payload).toPromise()

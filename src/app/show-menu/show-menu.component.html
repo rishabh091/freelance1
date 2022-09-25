@@ -9,46 +9,288 @@
       </div>
 
       <div *ngFor="let item of menuGroups; let i = index">
-        <div class="container-fluid pr-0 borderRight item-display mb-2 shadow">
-          <div class="row" (click)="expandMenu(i)">
+        <div class="borderRight item-display mb-2 shadow">
+          <div class="row">
             <div class="col-sm-6 p-4">
               <div class="category-name">{{ item }}</div>
             </div>
             <div class="col-sm-6 p-4 text-right">
-              <a class="btn btn-outline-info rounded-0 font-weight-bold" href="/addMenu">
-                +
-              </a>
-            </div>
-          </div>
-
-          <!-- <div [ngClass]="{'expandable-hide': expand[i]}" class="bg-light p-3">
-            <div *ngFor="let product of item.FoodItemsIDs" class="shadow p-4 mb-3 borderBox">
-              <div class="row">
-                <div class="col-sm-6">
-                  <div class="d-flex">
-                    <div style="font-size: 1.2rem; word-spacing: 7px; letter-spacing: 2px;" class="font-weight-bold text-uppercase">
-                      {{ restaurantMenu[product].ItemName }}
-                    </div>
-                    <img *ngIf="restaurantMenu[product].ItemType != 'veg'" src="https://img.icons8.com/fluency/48/000000/non-vegetarian-food-symbol.png" class="img-fluid ml-2 mt-1" style="height: 20px;"/>
-                    <img *ngIf="restaurantMenu[product].ItemType == 'veg'" src="https://img.icons8.com/fluency/48/000000/vegetarian-food-symbol.png" class="img-fluid ml-2 mt-1" style="height: 20px;"/>
-                  </div>
-                  <h4 class="font-weight-bold text-success mt-3 "><i>₹ {{ restaurantMenu[product].Price }}</i></h4>
-                  <div class="mt-3">Discount: {{ restaurantMenu[product].Discount }} %</div>
-
-                  <div *ngIf="restaurantMenu[product].AvailableNow" class="text-success mt-3">Available</div>
-                  <div *ngIf="!restaurantMenu[product].AvailableNow" class="text-danger mt-3">Not Available</div>
-                  <div><b>Next Availability Time: </b>{{ restaurantMenu[product].NextAvailableTime | date: 'short' }}</div>
+              <div class="d-flex justify-content-end">
+                <div>
+                  <img
+                    src="../../assets/pencil.png"
+                    (click)="setCategory(item)"
+                    class="icon"
+                    data-toggle="modal"
+                    data-target="#updateCategory"
+                  />
                 </div>
-                <div class="col-sm-6">
-                  <img [src]="restaurantMenu[product].DisplayImagePath" class="img-fluid" style="width: 100%; object-fit: cover; height: 23vh;">
-                </div>
-                <div class="mt-3 text-right">
-                  <button class="btn btn-outline-warning">Edit Product</button>
+                <div class="ml-3 mr-3">
+                  <img
+                    src="../../assets/delete.png"
+                    (click)="setCategory(item)"
+                    class="icon"
+                    data-toggle="modal"
+                    data-target="#deleteCategory"
+                  />
                 </div>
               </div>
             </div>
-          </div> -->
+          </div>
+
+          <div class="pr-3 pl-3">
+            <div
+              *ngFor="let subCat of subMenuGroups[item]; let i = index"
+              class="shadow p-4 mb-3 borderBox"
+            >
+              <div class="row" (click)="expandMenu(i)">
+                <div class="col-sm-6">
+                  <div class="subcategory-name">{{ subCat }}</div>
+                </div>
+                <div class="col-sm-6 text-right">
+                  <div class="d-flex justify-content-end">
+                    <div>
+                      <img
+                        src="../../assets/pencil.png"
+                        (click)="setSubCategory(subCat)"
+                        class="iconsub"
+                        data-toggle="modal"
+                        data-target="#updateSubCategory"
+                      />
+                    </div>
+                    <div class="ml-3 mr-3">
+                      <img
+                        src="../../assets/delete.png"
+                        (click)="setSubCategory(subCat)"
+                        class="iconsub"
+                        data-toggle="modal"
+                        data-target="#deleteSubCategory"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div [ngClass]="{ 'expandable-hide': expand[i] }">abc</div>
+            </div>
+          </div>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <div *ngFor="let subCat of subMenuGroups[item]">
+  {{ subCat }}
+</div> -->
+
+<div class="modal" id="deleteCategory">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">
+          DELETE<span class="text-warning"> CATEGORY</span>
+        </h4>
+        <button type="button" class="close" data-dismiss="modal">
+          &times;
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="text-center">
+          Are you sure you want to delete {{ setCategoryName }}?
+        </div>
+        <div class="d-flex justify-content-around mt-4 mb-4">
+          <button
+            class="btn rounded-0 btn-outline-warning font-weight-bold"
+            data-dismiss="modal"
+            style="width: 20vh"
+          >
+            CANCEL
+          </button>
+          <button
+            class="btn btn-warning rounded-0 font-weight-bold"
+            (click)="removeCategory(setCategoryName)"
+            style="width: 20vh; color: white"
+          >
+            DELETE
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="updateCategory">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">
+          UPDATE<span class="text-warning"> CATEGORY</span>
+        </h4>
+        <button type="button" class="close" data-dismiss="modal">
+          &times;
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="updateCategoryForm" (ngSubmit)="updateCategory()">
+          <div class="form-group">
+            <label>Item Category</label>
+            <input
+              type="text"
+              formControlName="storeSubCategory"
+              class="form-control"
+              [ngClass]="{
+                'is-invalid':
+                  updateCategorySubmitted &&
+                  updateCategoryFormControls.storeSubCategory.errors
+              }"
+            />
+            <div
+              *ngIf="
+                updateCategorySubmitted &&
+                updateCategoryFormControls.storeSubCategory.errors
+              "
+              class="text-danger"
+            >
+              <div
+                *ngIf="
+                  updateCategoryFormControls.storeSubCategory.errors.required
+                "
+              >
+                Category Name is required
+              </div>
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-around mt-4 mb-4">
+            <button
+              type="button"
+              class="btn rounded-0 btn-outline-warning font-weight-bold"
+              data-dismiss="modal"
+              style="width: 20vh"
+            >
+              CANCEL
+            </button>
+            <button
+              type="submit"
+              class="btn btn-warning rounded-0 font-weight-bold"
+              (click)="updateCategory()"
+              style="width: 20vh; color: white"
+            >
+              UPDATE
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<div class="modal" id="deleteSubCategory">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">
+          DELETE<span class="text-warning"> SUB-CATEGORY</span>
+        </h4>
+        <button type="button" class="close" data-dismiss="modal">
+          &times;
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="text-center">
+          Are you sure you want to delete {{ setSubCategoryName }}?
+        </div>
+        <div class="d-flex justify-content-around mt-4 mb-4">
+          <button
+            class="btn rounded-0 btn-outline-warning font-weight-bold"
+            data-dismiss="modal"
+            style="width: 20vh"
+          >
+            CANCEL
+          </button>
+          <button
+            class="btn btn-warning rounded-0 font-weight-bold"
+            (click)="removeSubCategory(setCategoryName)"
+            style="width: 20vh; color: white"
+          >
+            DELETE
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="updateSubCategory">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">
+          UPDATE<span class="text-warning"> CATEGORY</span>
+        </h4>
+        <button type="button" class="close" data-dismiss="modal">
+          &times;
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="updateCategoryForm" (ngSubmit)="updateCategory()">
+          <div class="form-group">
+            <label>Item Category</label>
+            <input
+              type="text"
+              formControlName="storeSubCategory"
+              class="form-control"
+              [ngClass]="{
+                'is-invalid':
+                  updateCategorySubmitted &&
+                  updateCategoryFormControls.storeSubCategory.errors
+              }"
+            />
+            <div
+              *ngIf="
+                updateCategorySubmitted &&
+                updateCategoryFormControls.storeSubCategory.errors
+              "
+              class="text-danger"
+            >
+              <div
+                *ngIf="
+                  updateCategoryFormControls.storeSubCategory.errors.required
+                "
+              >
+                Category Name is required
+              </div>
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-around mt-4 mb-4">
+            <button
+              type="button"
+              class="btn rounded-0 btn-outline-warning font-weight-bold"
+              data-dismiss="modal"
+              style="width: 20vh"
+            >
+              CANCEL
+            </button>
+            <button
+              type="submit"
+              class="btn btn-warning rounded-0 font-weight-bold"
+              (click)="updateCategory()"
+              style="width: 20vh; color: white"
+            >
+              UPDATE
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   </div>

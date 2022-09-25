@@ -40,8 +40,9 @@ label {
   font-size: large;
 }
 .zone {
-  height: 6rem;
-  width: 6rem;
+  height: 7rem;
+  width: 7rem;
+  min-width: fit-content;
   text-align: center;
   background-color: #26585a;
   margin: 2vh;
@@ -68,5 +69,17 @@ label {
 }
 
 .zoneName{
-  color:  white
+  color:  white;
+  font-size: x-large;
+  font-weight: bold;
+}
+
+.form-group {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.deleteIcon{
+  height: 4vh;
+  width: 4vh;
 }

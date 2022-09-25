@@ -17,10 +17,10 @@
       <div class="zones">
         <div *ngFor="let z of zone; let i = index">
           <div class="zone font-weight-bold" [routerLink]="['/table/', z]">
-            <div class="zoneName">ZONE</div>
-            <div class="number">{{ z.zone }}</div>
-
-            <div (click)="removeZone(i)">Delete</div>
+            <div class="zoneName">{{z.zone}}</div>
+            <div (click)="removeZone(i)" >
+              <img  class="deleteIcon mt-3" src="../../assets/delete.png" alt="">
+            </div>
           </div>
         </div>
       </div>
@@ -51,7 +51,7 @@
               <input type="text" formControlName="zone" class="form-control" />
             </div>
             <div
-              *ngIf="addZoneControls && addZoneControls.zone.errors"
+              *ngIf="addZoneSubmitted && addZoneControls.zone.errors"
               class="text-danger"
             >
               <div *ngIf="addZoneControls.zone.errors.required">
@@ -65,7 +65,7 @@
 
             </div>
             <div
-              *ngIf="addZoneControls && addZoneControls.startTableNumber.errors"
+              *ngIf="addZoneSubmitted && addZoneControls.startTableNumber.errors"
               class="text-danger"
             >
               <div *ngIf="addZoneControls.startTableNumber.errors.required">
@@ -79,7 +79,7 @@
 
             </div>
             <div
-              *ngIf="addZoneControls && addZoneControls.endTableNumber.errors"
+              *ngIf="addZoneSubmitted && addZoneControls.endTableNumber.errors"
               class="text-danger"
             >
               <div *ngIf="addZoneControls.endTableNumber.errors.required">

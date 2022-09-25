@@ -48,12 +48,14 @@ export class ZonesComponent implements OnInit {
   }
 
   getZone() {
-    const phoneNumber = localStorage.getItem('phoneWithCountry').replace('+', '');
+    const phoneNumber = localStorage
+      .getItem('phoneWithCountry')
+      .replace('+', '');
     const payload = new ZoneSchema(new UserInfo(phoneNumber));
     this.api
       .getZone(payload)
-      .then((res: CreateTableInfo[]) => {
-        this.zone = res;
+      .then((res: any) => {
+        this.zone = res.zoneInfo;
       })
       .catch((error) => {
         console.log(error);
@@ -63,6 +65,13 @@ export class ZonesComponent implements OnInit {
   addZone() {
     this.addZoneSubmitted = true;
     if (this.addZoneForm.invalid) {
+      return;
+    }
+
+    if (
+      this.addZoneForm.value.startTableNumber >
+      this.addZoneForm.value.endTableNumber
+    ) {
       return;
     }
 

@@ -15,6 +15,8 @@ import {
 import { AuthService as AuthApiService } from '../api/auth.service';
 import { UserInfo } from '../interface/auth.interface';
 import { ServiceToasterService } from '../service-toaster.service';
+import { Data } from '../countryCodes.data';
+
 @Component({
   selector: 'app-staff',
   templateUrl: './staff.component.html',
@@ -29,6 +31,8 @@ export class StaffComponent implements OnInit {
   updateStaffForm: FormGroup;
   updateStaffSubmitted = false;
 
+  countryData = new Data();
+
   constructor(
     private formBuilder: FormBuilder,
     private api: AuthApiService,
@@ -40,6 +44,7 @@ export class StaffComponent implements OnInit {
       name: ['', Validators.required],
       role: ['', Validators.required],
       emailAddress: ['', Validators.required],
+      countryCode : ['', Validators.required],
       phoneNumber: ['', Validators.required],
     });
 
@@ -81,7 +86,7 @@ export class StaffComponent implements OnInit {
       new StoreStaff(
         this.addStaffForm.value.name,
         this.addStaffForm.value.role,
-        this.addStaffForm.value.phoneNumber + '',
+        this.addStaffForm.value.countryCode + this.addStaffForm.value.phoneNumber + '',
         this.addStaffForm.value.emailAddress
       )
     );
