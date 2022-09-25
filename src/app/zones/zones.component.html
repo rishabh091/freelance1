@@ -16,7 +16,7 @@
 
       <div class="zones">
         <div *ngFor="let z of zone; let i = index">
-          <div class="zone font-weight-bold" [routerLink]="['/table/', z]">
+          <div class="zone font-weight-bold" (click)="goToTables(z)">
             <div class="zoneName">{{z.zone}}</div>
             <div (click)="removeZone(i)" >
               <img  class="deleteIcon mt-3" src="../../assets/delete.png" alt="">

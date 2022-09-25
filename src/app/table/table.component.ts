@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { AuthService as ApiAuthService } from '../api/auth.service';
 import { UserInfo } from '../interface/auth.interface';
 import { GetTableInfo, GetTableState, TableOrderMove, TableTransactions, UpdateTableInfo, UpdateTableState } from '../interface/table.interface';
+import { CreateTableInfo, ZoneSchema } from '../interface/zone.interface';
 
 @Component({
   selector: 'app-table',
@@ -12,11 +13,13 @@ import { GetTableInfo, GetTableState, TableOrderMove, TableTransactions, UpdateT
 })
 export class TableComponent implements OnInit {
 
-  public table = [1,2,3,4,5,6,7,8,9,10]
+  public table = []
 
   public updateTableStateForm: FormGroup
   public updateTableStateFormSubmitted = false
   public selectedZone: string
+  public allZones: []
+  public selectedZoneObject: CreateTableInfo[]
 
   constructor(private formBuilder: FormBuilder, private api: ApiAuthService,
     private route: ActivatedRoute) {
@@ -28,12 +31,33 @@ export class TableComponent implements OnInit {
     })
   }
 
+  getZone() {
+    const phoneNumber = localStorage.getItem('phoneWithCountry').replace('+', '');
+    const payload = new ZoneSchema(new UserInfo(phoneNumber));
+    this.api.getZone(payload).then((res: any) => {
+        this.allZones = res.zoneInfo;
+        this.selectedZoneObject = this.allZones.filter((zone: any) => { return zone.zone == this.selectedZone })
+        
+        for (let i = this.selectedZoneObject[0].startTableNumber; i <= this.selectedZoneObject[0].endTableNumber; i++) {
+          this.table.push(i)
+        }
+      }).catch((error) => {
+        console.log(error);
+      });
+  }
+
   get updateTableStateFormControls(): { [key: string]: AbstractControl } {
     return this.updateTableStateForm.controls;
   }
 
   ngOnInit(): void {
     this.selectedZone = this.route.snapshot.paramMap.get('zone')
+    this.getZone()
+  }
+
+  getTableData(tableNumber: number) {
+    this.getTableTransaction(tableNumber)
+    this.getTableState(tableNumber)
   }
 
   getTableTransaction(tableNumber: number) {

@@ -95,6 +95,10 @@ export class ZonesComponent implements OnInit {
       });
   }
 
+  goToTables(zone: CreateTableInfo) {
+    this.router.navigate(['/table/' + zone.zone])
+  }
+
   removeZone(index: number) {
     const zone = this.zone[index];
     const phoneNumber = localStorage.getItem('phone');
