@@ -78,7 +78,7 @@ export class AddMenuComponent implements OnInit {
     console.log(this.weekDayAvailability)
     console.log(JSON.stringify(this.form.value, null, 2));
 
-    const phoneNumber = localStorage.getItem('phone')
+    const phoneNumber = localStorage.getItem('phoneWithCountry').replace('+', '')
     const payload = new AddMenuItem(new UserInfo(phoneNumber),
     new MenuInfo(this.form.value.menuCategory,
       this.form.value.menuSubCategory,

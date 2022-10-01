@@ -152,7 +152,7 @@ var ShowMenuComponent = /** @class */ (function () {
         });
         this.menuItemForm.value.availableFrom = this.convertToSeconds(this.menuItemForm.value.availableFrom);
         this.menuItemForm.value.availableTill = this.convertToSeconds(this.menuItemForm.value.availableTill);
-        var phoneNumber = localStorage.getItem('phone');
+        var phoneNumber = localStorage.getItem('phoneWithCountry').replace('+', '');
         var pricePayload = new category_interface_1.UpdateMenuItemPrice(new auth_interface_1.UserInfo(phoneNumber), new category_interface_1.MenuItemPrice(this.category, this.subCategory, this.menuItemForm.value.ItemName, this.menuItemForm.value.Price));
         var currentAvailabilityPayload = new category_interface_1.UpdateItemCurrentAvailability(new auth_interface_1.UserInfo(phoneNumber), new category_interface_1.MenuItemCurrentAvailability(this.category, this.subCategory, this.menuItemForm.value.ItemName, this.menuItemForm.value.AvailableNow));
         var dailyAvailabilityPayload = new category_interface_1.UpdateMenuItemDailyAvailability(new auth_interface_1.UserInfo(phoneNumber), new category_interface_1.ItemDailyAvailability(this.category, this.subCategory, this.menuItemForm.value.ItemName, this.menuItemForm.value.availableFrom, this.menuItemForm.value.availableTill, this.weekDayAvailability));
@@ -200,7 +200,7 @@ var ShowMenuComponent = /** @class */ (function () {
         if (this.updateCategoryForm.invalid) {
             return;
         }
-        var phoneNumber = localStorage.getItem('phone');
+        var phoneNumber = localStorage.getItem('phoneWithCountry').replace('+', '');
         var payload = new category_interface_1.UpdateCategory(new auth_interface_1.UserInfo(phoneNumber), new category_interface_1.UpdateCategoryModule(this.updateCategoryForm.value.storeSubCatagory, this.updateCategoryForm.value.isPrePaid, this.updateCategoryForm.value.isFoodServedToTable));
         this.api
             .updateCategory(payload)
@@ -211,7 +211,7 @@ var ShowMenuComponent = /** @class */ (function () {
         });
     };
     ShowMenuComponent.prototype.removeCategory = function (category) {
-        var phoneNumber = localStorage.getItem('phone');
+        var phoneNumber = localStorage.getItem('phoneWithCountry').replace('+', '');
         this.api
             .removeMenuCategory(new category_interface_1.RemoveMenuCategory(new auth_interface_1.UserInfo(phoneNumber), new category_interface_1.MenuInfo(category)))
             .then(function (res) {
@@ -221,7 +221,7 @@ var ShowMenuComponent = /** @class */ (function () {
         });
     };
     ShowMenuComponent.prototype.removeMenuItem = function (category, subCategory, menuItem) {
-        var phoneNumber = localStorage.getItem('phone');
+        var phoneNumber = localStorage.getItem('phoneWithCountry').replace('+', '');
         this.api
             .removeMenuItem(new item_interface_1.RemoveMenuItemModule(new auth_interface_1.UserInfo(phoneNumber), new item_interface_1.RemoveMenuItem(category, subCategory, menuItem)))
             .then(function (res) {
@@ -231,7 +231,7 @@ var ShowMenuComponent = /** @class */ (function () {
         });
     };
     ShowMenuComponent.prototype.removeSubCategory = function (category, subCategory, imageUrl) {
-        var phoneNumber = localStorage.getItem('phone');
+        var phoneNumber = localStorage.getItem('phoneWithCountry').replace('+', '');
         this.api
             .removeMenuSubCategory(new category_interface_1.AddSubCategory(new auth_interface_1.UserInfo(phoneNumber), new category_interface_1.AddSubCategoryMenuInfo(category, subCategory, imageUrl)))
             .then(function (res) {
@@ -244,7 +244,7 @@ var ShowMenuComponent = /** @class */ (function () {
         this.subMenuSubmitted = true;
         if (this.subMenuCategoryForm.invalid)
             return;
-        var phoneNumber = localStorage.getItem('phone');
+        var phoneNumber = localStorage.getItem('phoneWithCountry').replace('+', '');
         var payload = new category_interface_1.AddSubCategory(new auth_interface_1.UserInfo(phoneNumber), new category_interface_1.AddSubCategoryMenuInfo(this.subMenuCategoryForm.value.menuCategory, this.subMenuCategoryForm.value.menuSubCategory, this.subMenuCategoryForm.value.imageURL));
         this.api
             .updateMenuSubCategory(payload)

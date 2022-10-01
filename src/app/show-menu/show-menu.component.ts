@@ -194,7 +194,7 @@ export class ShowMenuComponent implements OnInit {
       this.menuItemForm.value.availableTill
     );
 
-    const phoneNumber = localStorage.getItem('phone');
+    const phoneNumber = localStorage.getItem('phoneWithCountry').replace('+', '');
     const pricePayload = new UpdateMenuItemPrice(
       new UserInfo(phoneNumber),
       new MenuItemPrice(
@@ -284,7 +284,7 @@ export class ShowMenuComponent implements OnInit {
       return;
     }
 
-    const phoneNumber = localStorage.getItem('phone');
+    const phoneNumber = localStorage.getItem('phoneWithCountry').replace('+', '');
     const payload = new UpdateCategory(
       new UserInfo(phoneNumber),
       new UpdateCategoryModule(
@@ -307,7 +307,7 @@ export class ShowMenuComponent implements OnInit {
 
 
   removeCategory(category: string) {
-    const phoneNumber = localStorage.getItem('phone');
+    const phoneNumber = localStorage.getItem('phoneWithCountry').replace('+', '');
     this.api
       .removeMenuCategory(
         new RemoveMenuCategory(
@@ -324,7 +324,7 @@ export class ShowMenuComponent implements OnInit {
   }
 
   removeMenuItem(category: string, subCategory: string, menuItem: string) {
-    const phoneNumber = localStorage.getItem('phone');
+    const phoneNumber = localStorage.getItem('phoneWithCountry').replace('+', '');
     this.api
       .removeMenuItem(
         new RemoveMenuItemModule(
@@ -341,7 +341,7 @@ export class ShowMenuComponent implements OnInit {
   }
 
   removeSubCategory(category: string, subCategory: string, imageUrl: string = '') {
-    const phoneNumber = localStorage.getItem('phone');
+    const phoneNumber = localStorage.getItem('phoneWithCountry').replace('+', '');
     this.api
       .removeMenuSubCategory(
         new AddSubCategory(
@@ -361,7 +361,7 @@ export class ShowMenuComponent implements OnInit {
     this.subMenuSubmitted = true;
     if (this.subMenuCategoryForm.invalid) return;
 
-    const phoneNumber = localStorage.getItem('phone');
+    const phoneNumber = localStorage.getItem('phoneWithCountry').replace('+', '');
     const payload = new AddSubCategory(
       new UserInfo(phoneNumber),
       new AddSubCategoryMenuInfo(

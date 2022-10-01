@@ -80,7 +80,7 @@ export class StaffComponent implements OnInit {
     this.addStaffSubmitted = true;
     if (this.addStaffForm.invalid) return;
 
-    const phoneNumber = localStorage.getItem('phone');
+    const phoneNumber = localStorage.getItem('phoneWithCountry').replace('+', '');
     const payload = new AddStaff(
       new UserInfo(phoneNumber),
       new StoreStaff(
@@ -110,7 +110,7 @@ export class StaffComponent implements OnInit {
     this.updateStaffSubmitted = true;
     if (this.updateStaffForm.invalid) return;
 
-    const phoneNumber = localStorage.getItem('phone');
+    const phoneNumber = localStorage.getItem('phoneWithCountry').replace('+', '');
     const payload = new UpdateStaff(
       new UserInfo(phoneNumber),
       new StoreStaff(
@@ -139,7 +139,7 @@ export class StaffComponent implements OnInit {
 
   removeStaff(index: number): void {
     const staff = this.staff[index];
-    const phoneNumber = localStorage.getItem('phone');
+    const phoneNumber = localStorage.getItem('phoneWithCountry').replace('+', '');
 
     const payload = new RemoveStaff(
       new UserInfo(phoneNumber),

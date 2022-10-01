@@ -75,7 +75,7 @@ export class ZonesComponent implements OnInit {
       return;
     }
 
-    const phoneNumber = localStorage.getItem('phone');
+    const phoneNumber = localStorage.getItem('phoneWithCountry').replace('+', '');
     const payload = new CreateZone(
       new UserInfo(phoneNumber),
       new CreateTableInfo(
@@ -101,7 +101,7 @@ export class ZonesComponent implements OnInit {
 
   removeZone(index: number) {
     const zone = this.zone[index];
-    const phoneNumber = localStorage.getItem('phone');
+    const phoneNumber = localStorage.getItem('phoneWithCountry').replace('+', '');
 
     const payload = new RemoveZone(
       new UserInfo(phoneNumber),

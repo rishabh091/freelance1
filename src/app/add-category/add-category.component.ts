@@ -69,7 +69,7 @@ export class AddCategoryComponent implements OnInit {
     if (this.form.invalid) {
       return;
     }
-    const phoneNumber = localStorage.getItem('phone');
+    const phoneNumber = localStorage.getItem('phoneW');
     const payload = new AddCategory(
       new UserInfo(phoneNumber),
       new AddCategoryMenuInfo(this.form.value.menuCategory)
@@ -99,7 +99,7 @@ export class AddCategoryComponent implements OnInit {
       return;
     }
 
-    const phoneNumber = localStorage.getItem('phone');
+    const phoneNumber = localStorage.getItem('phoneWithCountry').replace('+', '');
     const payload = new AddSubCategory(
       new UserInfo(phoneNumber),
       new AddSubCategoryMenuInfo(

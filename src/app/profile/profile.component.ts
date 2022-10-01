@@ -216,7 +216,7 @@ export class ProfileComponent implements OnInit {
       return;
     }
 
-    const phoneNumber = localStorage.getItem('phone')
+    const phoneNumber = localStorage.getItem('phoneWithCountry').replace('+', '')
     this.api.updateName(new UpdateName(this.userInfoForm.value.storeName, new UserInfo(phoneNumber))).then(res => {
       this.toaster.success('Name Updated')
     }).catch(error => { this.toaster.failure('Cannot update Name') })
@@ -228,7 +228,7 @@ export class ProfileComponent implements OnInit {
       return;
     }
 
-    const phoneNumber = localStorage.getItem('phone')
+    const phoneNumber = localStorage.getItem('phoneWithCountry').replace('+', '')
     const payload = new UpdateAddressModule(new UserInfo(phoneNumber), new StoreAddress(
       this.addressForm.value.storeaddressBuilding,
       this.addressForm.value.storeaddressStreet,
@@ -247,7 +247,7 @@ export class ProfileComponent implements OnInit {
       return;
     }
 
-    const phoneNumber = localStorage.getItem('phone')
+    const phoneNumber = localStorage.getItem('phoneWithCountry').replace('+', '')
     const payload = new UpdatePaymentModule(new UserInfo(phoneNumber), new StorePayment(
       this.paymentForm.value.acceptedCurrency,
       this.paymentForm.value.paymentGatewayId
@@ -259,7 +259,7 @@ export class ProfileComponent implements OnInit {
     this.contactInfoSubmitted = true
     if (this.contactInfoForm.invalid) return
 
-    const phoneNumber = localStorage.getItem('phone')
+    const phoneNumber = localStorage.getItem('phoneWithCountry').replace('+', '')
     const payload = new UpdateContactInfoModule(new UserInfo(phoneNumber), new UpdateContactInfo(
       this.contactInfoForm.value.storePhoneNumber,
       this.contactInfoForm.value.storeEmailAddress
@@ -272,7 +272,7 @@ export class ProfileComponent implements OnInit {
     this.storeTimingsSubmitted = true
     if (this.storeTimingsForm.invalid) return
 
-    const phoneNumber = localStorage.getItem('phone')
+    const phoneNumber = localStorage.getItem('phoneWithCountry').replace('+', '')
     const payload = new UpdateStoreTimings(new UserInfo(phoneNumber), new StoreTimings(
       this.convert24To12(this.storeTimingsForm.value.opensAt),
       this.convert24To12(this.storeTimingsForm.value.closesAt)
@@ -285,7 +285,7 @@ export class ProfileComponent implements OnInit {
     this.aboutStoreSubmitted = true
     if (this.aboutStoreForm.invalid) return
 
-    const phoneNumber = localStorage.getItem('phone')
+    const phoneNumber = localStorage.getItem('phoneWithCountry').replace('+', '')
     const payload = new UpdateAboutStore(new UserInfo(phoneNumber), new AboutStore(this.aboutStoreForm.value.aboutStore))
 
     this.api.updateStoreAbout(payload).then(res => { this.toaster.success('StoreAbout Updated') }).catch(error => { this.toaster.failure('Cannot update StoreAbout') })

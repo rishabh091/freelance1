@@ -61,13 +61,13 @@ export class TableComponent implements OnInit {
   }
 
   getTableTransaction(tableNumber: number) {
-    const phoneNumber = localStorage.getItem('phone')
+    const phoneNumber = localStorage.getItem('phoneWithCountry').replace('+', '')
     const payload = new TableTransactions(new UserInfo(phoneNumber), tableNumber)
     this.api.getTableTransaction(payload).then(res => { console.log(res) }).catch(error => { console.log(error) })
   }
 
   getTableState(tableNumber: number) {
-    const phoneNumber = localStorage.getItem('phone')
+    const phoneNumber = localStorage.getItem('phoneWithCountry').replace('+', '')
     const payload = new GetTableState(new UserInfo(phoneNumber), new GetTableInfo(this.selectedZone, tableNumber))
 
     this.api.getTableState(payload).then(res => { console.log(res) }).catch(error => { console.log(error) })
@@ -81,7 +81,7 @@ export class TableComponent implements OnInit {
 
     if (this.updateTableStateForm.value.tableNumber <= 0) return
 
-    const phoneNumber = localStorage.getItem('phone')
+    const phoneNumber = localStorage.getItem('phoneWithCountry').replace('+', '')
     const payload = new UpdateTableState(new UserInfo(phoneNumber), new UpdateTableInfo(
       this.updateTableStateForm.value.zone,
       this.updateTableStateForm.value.tableNumber,
@@ -93,7 +93,7 @@ export class TableComponent implements OnInit {
   }
 
   moveTableTransaction(fromTableNumber: number, toTableNumber: number) {
-    const phoneNumber = localStorage.getItem('phone')
+    const phoneNumber = localStorage.getItem('phoneWithCountry').replace('+', '')
     const payload = new TableOrderMove(new UserInfo(phoneNumber), fromTableNumber, toTableNumber)
 
     this.api.moveTableTransactions(payload).then(res => { console.log(res) }).catch(error => { console.log(error) })

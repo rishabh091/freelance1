@@ -240,14 +240,14 @@ export class OrdersComponent implements OnInit {
   }
 
   getOrderByType(type: string) {
-    const phoneNumber = localStorage.getItem('phone')
+    const phoneNumber = localStorage.getItem('phoneWithCountry').replace('+', '')
     const payload = new GetOrders(new UserInfo(phoneNumber), type)
 
     this.api.getOrdersByType(payload).then(res => { console.log(res) }).catch(error => { console.log(error) })
   }
 
   updateOrderStatus(orderID: string, orderStatus: string) {
-    const phoneNumber = localStorage.getItem('phone')
+    const phoneNumber = localStorage.getItem('phoneWithCountry').replace('+', '')
     const payload = new UpdateOrderStatus(new UserInfo(phoneNumber), orderID, orderStatus)
 
     this.api.updateOrderStatus(payload).then(res => { console.log(res) }).catch(error => { console.log(error) })

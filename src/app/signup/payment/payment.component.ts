@@ -37,7 +37,7 @@ export class PaymentComponent implements OnInit {
       paymentGatewayID: ['', Validators.required]
     });
 
-    this.phoneNumber = this.route.snapshot.paramMap.get('phoneNumber');
+    this.phoneNumber = this.route.snapshot.paramMap.get('phoneNumber').replace('+', '')
   }
 
   get f(): { [key: string]: AbstractControl } {

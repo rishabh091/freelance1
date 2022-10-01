@@ -129,7 +129,7 @@ export class SignupComponent implements OnInit {
           this.form.value.storeName,
           this.form.value.emailAddress,
           new UserInfo(
-            this.form.value.countryCode + this.form.value.phoneNumber + ''
+            (this.form.value.countryCode + this.form.value.phoneNumber + '').replace('+', '')
           )
         );
 

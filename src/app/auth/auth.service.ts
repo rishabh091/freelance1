@@ -17,7 +17,9 @@ export class AuthService {
   login() {
     const authPromise = this.afAuth.authState.pipe(first()).toPromise()
     authPromise.then(user => {
-      user.getIdToken(true).then(token => { localStorage.setItem('token', token) })
+      let accessToken = user['_delegate'].accessToken
+      localStorage.setItem('token', accessToken)
+      this.router.navigate(['/orders'])
     })
   }
   /**

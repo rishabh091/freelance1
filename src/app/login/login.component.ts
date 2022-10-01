@@ -146,7 +146,7 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('phoneWithCountry', this.form.value.countryCode + this.form.value.phone)
 
 
-        const payload = new UserInfo(String(this.form.value.phone));
+        const payload = new UserInfo(localStorage.getItem('phoneWithCountry').replace('+', ''));
         this.api.isUserRegisterd(payload).then((res) => {
           localStorage.setItem('privilege', res['value']['isprivilegedUser']);
           localStorage.setItem('storeId', res['value']['restaurantId']);

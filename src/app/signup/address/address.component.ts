@@ -43,7 +43,7 @@ export class AddressComponent implements OnInit {
     });
 
     this.countries = Country.getAllCountries()
-    this.phoneNumber = this.route.snapshot.paramMap.get('phoneNumber')
+    this.phoneNumber = this.route.snapshot.paramMap.get('phoneNumber').replace('+', '')
   }
 
   get f(): { [key: string]: AbstractControl } {
