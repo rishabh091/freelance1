@@ -16,7 +16,7 @@
             </div>
             <div class="col-sm-6 p-4 text-right">
               <div class="d-flex justify-content-end">
-                <div>
+                <!-- <div>
                   <img
                     src="../../assets/pencil.png"
                     (click)="setCategory(item)"
@@ -24,7 +24,7 @@
                     data-toggle="modal"
                     data-target="#updateCategory"
                   />
-                </div>
+                </div> -->
                 <div class="ml-3 mr-3">
                   <img
                     src="../../assets/delete.png"
@@ -43,7 +43,7 @@
               *ngFor="let subCat of subMenuGroups[item]; let i = index"
               class="shadow p-4 mb-3 borderBox"
             >
-              <div class="row" (click)="expandMenu(i)">
+              <div class="row">
                 <div class="col-sm-6">
                   <div class="subcategory-name">{{ subCat }}</div>
                 </div>
@@ -58,20 +58,58 @@
                         data-target="#updateSubCategory"
                       />
                     </div>
+
+                    <!-- to make the below button work we need image and category
+                    name of sub category
                     <div class="ml-3 mr-3">
                       <img
                         src="../../assets/delete.png"
-                        (click)="setSubCategory(subCat)"
+                        (click)="removeSubCategory(subCat)"
                         class="iconsub"
                         data-toggle="modal"
                         data-target="#deleteSubCategory"
                       />
-                    </div>
+                    </div> -->
                   </div>
                 </div>
               </div>
 
-              <div [ngClass]="{ 'expandable-hide': expand[i] }">abc</div>
+              <div class="mt-4">
+                <div
+                  class="shadow p-3 m-3 borderBox row"
+                  *ngFor="let items of menuItems[item][subCat]"
+                >
+                  <div class="col-sm-6">
+                    <div>
+                      <span class="font-weight-bold text-uppercase">
+                        {{ items.menuItemName }}
+                      </span>
+                      <span class="text-muted" style="font-size: 0.8rem">
+                        ({{ items.itemType[0] }})
+                      </span>
+                    </div>
+                    <div class="text-success">₹ {{ items.basePrice }}/-</div>
+                  </div>
+                  <div class="col-sm-6">
+                    <img src="{{ item.imgURL }}" alt="" />
+                    <img
+                      src="../../assets/pencil.png"
+                      (click)="setMenunItems(items)"
+                      class="iconItem"
+                      data-toggle="modal"
+                      data-target="#updateMenuItem"
+                    />
+
+                    <img
+                      src="../../assets/delete.png"
+                      (click)="setMenunItems(items)"
+                      class="iconItem"
+                      data-toggle="modal"
+                      data-target="#deleteMenuItem"
+                    />
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -79,10 +117,6 @@
     </div>
   </div>
 </div>
-
-<!-- <div *ngFor="let subCat of subMenuGroups[item]">
-  {{ subCat }}
-</div> -->
 
 <div class="modal" id="deleteCategory">
   <div class="modal-dialog modal-dialog-centered">
@@ -121,10 +155,9 @@
   </div>
 </div>
 
-<div class="modal" id="updateCategory">
+<!-- <div class="modal" id="updateCategory">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
-      <!-- Modal Header -->
       <div class="modal-header">
         <h4 class="modal-title">
           UPDATE<span class="text-warning"> CATEGORY</span>
@@ -186,11 +219,7 @@
       </div>
     </div>
   </div>
-</div>
-
-
-
-
+</div> -->
 
 <div class="modal" id="deleteSubCategory">
   <div class="modal-dialog modal-dialog-centered">
@@ -234,7 +263,7 @@
       <!-- Modal Header -->
       <div class="modal-header">
         <h4 class="modal-title">
-          UPDATE<span class="text-warning"> CATEGORY</span>
+          UPDATE<span class="text-warning"> SUB CATEGORY</span>
         </h4>
         <button type="button" class="close" data-dismiss="modal">
           &times;
@@ -243,32 +272,22 @@
       <div class="modal-body">
         <form [formGroup]="updateCategoryForm" (ngSubmit)="updateCategory()">
           <div class="form-group">
-            <label>Item Category</label>
-            <input
-              type="text"
-              formControlName="storeSubCategory"
-              class="form-control"
-              [ngClass]="{
-                'is-invalid':
-                  updateCategorySubmitted &&
-                  updateCategoryFormControls.storeSubCategory.errors
-              }"
-            />
-            <div
-              *ngIf="
-                updateCategorySubmitted &&
-                updateCategoryFormControls.storeSubCategory.errors
-              "
-              class="text-danger"
-            >
-              <div
-                *ngIf="
-                  updateCategoryFormControls.storeSubCategory.errors.required
-                "
-              >
-                Category Name is required
-              </div>
-            </div>
+            <label>Is PrePaid? </label>
+
+            <select class="form-control" formControlName="isPrePaid">
+              <option value="" disabled>--Select--</option>
+              <option value="true">True</option>
+              <option value="false">False</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for=""> isFoodServedToTable ? </label>
+            <select class="form-control" formControlName="isFoodServedToTable">
+              <option value="" disabled>--Select--</option>
+              <option value="true">True</option>
+              <option value="false">False</option>
+            </select>
           </div>
 
           <div class="d-flex justify-content-around mt-4 mb-4">
@@ -290,6 +309,219 @@
             </button>
           </div>
         </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="updateMenuItem">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">
+          UPDATE<span class="text-warning"> MENU ITEM</span>
+        </h4>
+        <button type="button" class="close" data-dismiss="modal">
+          &times;
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="menuItemForm" (ngSubmit)="editProduct()">
+          <div class="form-group">
+            <label>Item Name</label>
+            <input
+              type="text"
+              formControlName="ItemName"
+              class="form-control"
+            />
+          </div>
+          <div *ngIf="submitted && f.ItemName.errors" class="text-danger mb-5">
+            <div *ngIf="f.ItemName.errors.required">Item Name is required</div>
+          </div>
+
+          <div class="form-group">
+            <label>Item Type</label>
+            <select class="form-control" formControlName="ItemType">
+              <option value="">--Select--</option>
+              <option value="veg">Veg</option>
+              <option value="nonveg">Non-Veg</option>
+              <option value="egg">Egg</option>
+              <option value="vegan">Vegan</option>
+              <option value="alchoholic">Alcholic</option>
+              <option value="nonalchoholic">Non-Alcholic</option>
+            </select>
+          </div>
+          <div *ngIf="submitted && f.ItemType.errors" class="text-danger mb-5">
+            <div *ngIf="f.ItemType.errors.required">Item type is required</div>
+          </div>
+
+          <div class="form-group">
+            <label>Price</label>
+            <input type="number" formControlName="Price" class="form-control" />
+          </div>
+          <div *ngIf="submitted && f.Price.errors" class="text-danger mb-5">
+            <div *ngIf="f.Price.errors.required">Price is required</div>
+          </div>
+
+          <div class="form-group">
+            <label>Display Image</label>
+            <input
+              type="file"
+              formControlName="DisplayImagePath"
+              class="form-control"
+            />
+          </div>
+          <div
+            *ngIf="submitted && f.DisplayImagePath.errors"
+            class="text-danger mb-5"
+          >
+            Image is required
+          </div>
+          <!-- 
+          <div class="form-group">
+            <label>Available From</label>
+            <input
+              type="time"
+              formControlName="availableFrom"
+              class="form-control"
+            />
+          </div>
+          <div
+            *ngIf="submitted && f.availableFrom.errors"
+            class="text-danger mb-5"
+          >
+            Available From is required
+          </div>
+
+          <div class="form-group">
+            <label>Available Till</label>
+            <input
+              type="time"
+              formControlName="availableTill"
+              class="form-control"
+            />
+          </div>
+          <div
+            *ngIf="submitted && f.availableTill.errors"
+            class="text-danger mb-5"
+          >
+            Available Till is required
+          </div>
+
+          <div class="form-group">
+            <label>Week Day Availablitiy</label>
+            <div>
+              <input
+                type="checkbox"
+                [(ngModel)]="weekDayAvailability[0]"
+                [ngModelOptions]="{ standalone: true }"
+              />
+              Sunday
+            </div>
+            <div>
+              <input
+                type="checkbox"
+                [(ngModel)]="weekDayAvailability[1]"
+                [ngModelOptions]="{ standalone: true }"
+              />
+              Monday
+            </div>
+            <div>
+              <input
+                type="checkbox"
+                [(ngModel)]="weekDayAvailability[2]"
+                [ngModelOptions]="{ standalone: true }"
+              />
+              Tuesday
+            </div>
+            <div>
+              <input
+                type="checkbox"
+                [(ngModel)]="weekDayAvailability[3]"
+                [ngModelOptions]="{ standalone: true }"
+              />
+              Wednesday
+            </div>
+            <div>
+              <input
+                type="checkbox"
+                [(ngModel)]="weekDayAvailability[4]"
+                [ngModelOptions]="{ standalone: true }"
+              />
+              Thrusday
+            </div>
+            <div>
+              <input
+                type="checkbox"
+                [(ngModel)]="weekDayAvailability[5]"
+                [ngModelOptions]="{ standalone: true }"
+              />
+              Friday
+            </div>
+            <div>
+              <input
+                type="checkbox"
+                [(ngModel)]="weekDayAvailability[6]"
+                [ngModelOptions]="{ standalone: true }"
+              />
+              Satday
+            </div>
+          </div>
+          <div
+            *ngIf="submitted && weekDayAvailabilityError"
+            class="text-danger mb-5"
+          >
+            You need to select atleast 1 day
+          </div> -->
+
+          <div class="form-group text-right">
+            <button
+              type="submit"
+              class="btn btn-success rounded-0"
+              style="width: 200px"
+            >
+              Save
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="deleteMenuItem">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">
+          DELETE<span class="text-warning"> MENU ITEM</span>
+        </h4>
+        <button type="button" class="close" data-dismiss="modal">
+          &times;
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="text-center">
+          Are you sure you want to delete {{ setItemName }}?
+        </div>
+        <div class="d-flex justify-content-around mt-4 mb-4">
+          <button
+            class="btn rounded-0 btn-outline-warning font-weight-bold"
+            data-dismiss="modal"
+            style="width: 20vh"
+          >
+            CANCEL
+          </button>
+          <button
+            class="btn btn-warning rounded-0 font-weight-bold"
+            style="width: 20vh; color: white"
+            (click)="removeMenuItem()"
+          >
+            DELETE
+          </button>
+        </div>
       </div>
     </div>
   </div>

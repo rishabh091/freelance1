@@ -71,8 +71,19 @@ export class ShowMenuComponent implements OnInit {
 
   public setCategoryName: string = '';
   public setSubCategoryName: string = '';
+  public setItemName: string = '';
+
   public expand = [];
 
+  setMenunItems(items) {
+    this.setCategoryName = items.menu;
+    this.setSubCategoryName = items.subMenu;
+    this.setItemName = items.menuItemName;
+    this.menuItemForm.controls['ItemName'].setValue(items.menuItemName);
+    this.menuItemForm.controls['ItemType'].setValue(items.itemType[0]);
+    this.menuItemForm.controls['Price'].setValue(items.basePrice);
+    this.menuItemForm.controls['DisplayImagePath'].setValue(items.imgURL);
+  }
   ngOnInit(): void {
     // move it to api from where menu is coming
     this.expand = this.menuGroups.map((obj) => {
@@ -83,10 +94,9 @@ export class ShowMenuComponent implements OnInit {
       ItemName: ['', Validators.required],
       ItemType: ['', Validators.required],
       Price: [0, Validators.required],
-      Discount: [0],
       AvailableNow: [false, Validators.required],
       NextAvailableTime: [new Date(), Validators.required],
-      DisplayImagePath: [''],
+      DisplayImagePath: ['', Validators.required],
     });
 
     this.updateCategoryForm = this.formBuilder.group({
@@ -116,19 +126,17 @@ export class ShowMenuComponent implements OnInit {
       });
   }
 
-
   getSubCategories(category: string) {
     const storeId = localStorage.getItem('storeId');
     this.api
       .getSubCategory(new SubMenuCategories(storeId, category))
       .then((res) => {
-        this.subMenuGroups[category] = res['menuSubCategories']
+        this.subMenuGroups[category] = res['menuSubCategories'];
       })
       .catch((error) => {
         console.log(error);
       });
   }
-
 
   getMenuItem() {
     const storeId = localStorage.getItem('storeId');
@@ -138,6 +146,7 @@ export class ShowMenuComponent implements OnInit {
         this.menuGroups = res['menuItems'].map((obj) => {
           return obj.menu;
         });
+        this.menuGroups = [...new Set(this.menuGroups)];
 
         for (let menu of this.menuGroups) {
           this.subMenuGroups[menu] = [];
@@ -146,7 +155,7 @@ export class ShowMenuComponent implements OnInit {
 
         for (let item of res['menuItems']) {
           this.subMenuGroups[item.menu] = [];
-          this.getSubCategories(item.menu)
+          this.getSubCategories(item.menu);
           this.menuItems[item.menu][item.subMenu] = [];
         }
         for (let item of res['menuItems']) {
@@ -184,73 +193,76 @@ export class ShowMenuComponent implements OnInit {
       return;
     }
 
-    this.weekDayAvailability.map((available) => {
-      if (available) this.weekDayAvailabilityError = false;
-    });
-    this.menuItemForm.value.availableFrom = this.convertToSeconds(
-      this.menuItemForm.value.availableFrom
-    );
-    this.menuItemForm.value.availableTill = this.convertToSeconds(
-      this.menuItemForm.value.availableTill
-    );
+    // this.weekDayAvailability.map((available) => {
+    //   if (available) this.weekDayAvailabilityError = false;
+    // });
+    // this.menuItemForm.value.availableFrom = this.convertToSeconds(
+    //   this.menuItemForm.value.availableFrom
+    // );
+    // this.menuItemForm.value.availableTill = this.convertToSeconds(
+    //   this.menuItemForm.value.availableTill
+    // );
 
-    const phoneNumber = localStorage.getItem('phoneWithCountry').replace('+', '');
+    const phoneNumber = localStorage
+      .getItem('phoneWithCountry')
+      .replace('+', '');
     const pricePayload = new UpdateMenuItemPrice(
       new UserInfo(phoneNumber),
       new MenuItemPrice(
-        this.category,
-        this.subCategory,
+        this.setCategoryName,
+        this.setSubCategoryName,
         this.menuItemForm.value.ItemName,
         this.menuItemForm.value.Price
       )
     );
 
-    const currentAvailabilityPayload = new UpdateItemCurrentAvailability(
-      new UserInfo(phoneNumber),
-      new MenuItemCurrentAvailability(
-        this.category,
-        this.subCategory,
-        this.menuItemForm.value.ItemName,
-        this.menuItemForm.value.AvailableNow
-      )
-    );
+    // const currentAvailabilityPayload = new UpdateItemCurrentAvailability(
+    //   new UserInfo(phoneNumber),
+    //   new MenuItemCurrentAvailability(
+    //     this.category,
+    //     this.subCategory,
+    //     this.menuItemForm.value.ItemName,
+    //     this.menuItemForm.value.AvailableNow
+    //   )
+    // );
 
-    const dailyAvailabilityPayload = new UpdateMenuItemDailyAvailability(
-      new UserInfo(phoneNumber),
-      new ItemDailyAvailability(
-        this.category,
-        this.subCategory,
-        this.menuItemForm.value.ItemName,
-        this.menuItemForm.value.availableFrom,
-        this.menuItemForm.value.availableTill,
-        this.weekDayAvailability
-      )
-    );
+    // const dailyAvailabilityPayload = new UpdateMenuItemDailyAvailability(
+    //   new UserInfo(phoneNumber),
+    //   new ItemDailyAvailability(
+    //     this.category,
+    //     this.subCategory,
+    //     this.menuItemForm.value.ItemName,
+    //     this.menuItemForm.value.availableFrom,
+    //     this.menuItemForm.value.availableTill,
+    //     this.weekDayAvailability
+    //   )
+    // );
 
     this.api
       .updateMenuItemPrice(pricePayload)
       .then((res) => {
         console.log(res);
+        this.getMenuItem();
       })
       .catch((error) => {
         console.log(error);
       });
-    this.api
-      .updateMenuItemCurrentAvailability(currentAvailabilityPayload)
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    this.api
-      .updateMenuItemDailyAvailability(dailyAvailabilityPayload)
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    // this.api
+    //   .updateMenuItemCurrentAvailability(currentAvailabilityPayload)
+    //   .then((res) => {
+    //     console.log(res);
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
+    // this.api
+    //   .updateMenuItemDailyAvailability(dailyAvailabilityPayload)
+    //   .then((res) => {
+    //     console.log(res);
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
   }
 
   convertToSeconds(time: string): number {
@@ -284,11 +296,13 @@ export class ShowMenuComponent implements OnInit {
       return;
     }
 
-    const phoneNumber = localStorage.getItem('phoneWithCountry').replace('+', '');
+    const phoneNumber = localStorage
+      .getItem('phoneWithCountry')
+      .replace('+', '');
     const payload = new UpdateCategory(
       new UserInfo(phoneNumber),
       new UpdateCategoryModule(
-        this.updateCategoryForm.value.storeSubCatagory,
+        this.setSubCategoryName,
         this.updateCategoryForm.value.isPrePaid,
         this.updateCategoryForm.value.isFoodServedToTable
       )
@@ -304,10 +318,10 @@ export class ShowMenuComponent implements OnInit {
       });
   }
 
-
-
   removeCategory(category: string) {
-    const phoneNumber = localStorage.getItem('phoneWithCountry').replace('+', '');
+    const phoneNumber = localStorage
+      .getItem('phoneWithCountry')
+      .replace('+', '');
     this.api
       .removeMenuCategory(
         new RemoveMenuCategory(
@@ -323,16 +337,23 @@ export class ShowMenuComponent implements OnInit {
       });
   }
 
-  removeMenuItem(category: string, subCategory: string, menuItem: string) {
-    const phoneNumber = localStorage.getItem('phoneWithCountry').replace('+', '');
+  removeMenuItem() {
+    const phoneNumber = localStorage
+      .getItem('phoneWithCountry')
+      .replace('+', '');
     this.api
       .removeMenuItem(
         new RemoveMenuItemModule(
           new UserInfo(phoneNumber),
-          new RemoveMenuItem(category, subCategory, menuItem)
+          new RemoveMenuItem(
+            this.setCategoryName,
+            this.setSubCategoryName,
+            this.setItemName
+          )
         )
       )
       .then((res) => {
+        this.getMenuItem()
         console.log(res);
       })
       .catch((error) => {
@@ -340,8 +361,14 @@ export class ShowMenuComponent implements OnInit {
       });
   }
 
-  removeSubCategory(category: string, subCategory: string, imageUrl: string = '') {
-    const phoneNumber = localStorage.getItem('phoneWithCountry').replace('+', '');
+  removeSubCategory(
+    category: string,
+    subCategory: string,
+    imageUrl: string = ''
+  ) {
+    const phoneNumber = localStorage
+      .getItem('phoneWithCountry')
+      .replace('+', '');
     this.api
       .removeMenuSubCategory(
         new AddSubCategory(
@@ -361,7 +388,9 @@ export class ShowMenuComponent implements OnInit {
     this.subMenuSubmitted = true;
     if (this.subMenuCategoryForm.invalid) return;
 
-    const phoneNumber = localStorage.getItem('phoneWithCountry').replace('+', '');
+    const phoneNumber = localStorage
+      .getItem('phoneWithCountry')
+      .replace('+', '');
     const payload = new AddSubCategory(
       new UserInfo(phoneNumber),
       new AddSubCategoryMenuInfo(
