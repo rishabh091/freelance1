@@ -15,6 +15,7 @@ import {
 } from '../interface/zone.interface';
 import { UserInfo } from '../interface/auth.interface';
 import { AuthService as ApiAuthService } from '../api/auth.service';
+import { ServiceToasterService } from '../service-toaster.service';
 
 @Component({
   selector: 'app-zones',
@@ -30,7 +31,8 @@ export class ZonesComponent implements OnInit {
   constructor(
     public router: Router,
     private formBuilder: FormBuilder,
-    private api: ApiAuthService
+    private api: ApiAuthService,
+    private toaster: ServiceToasterService
   ) {
     this.addZoneForm = this.formBuilder.group({
       zone: ['', Validators.required],
@@ -88,10 +90,13 @@ export class ZonesComponent implements OnInit {
     this.api
       .addZone(payload)
       .then((res) => {
-        console.log(res);
+        this.addZoneForm.reset()
+        this.addZoneSubmitted = false
+        this.toaster.success('Zone Added');
+        this.getZone();
       })
       .catch((error) => {
-        console.log(error);
+        this.toaster.failure('Please try again later')
       });
   }
 
@@ -99,7 +104,8 @@ export class ZonesComponent implements OnInit {
     this.router.navigate(['/table/' + zone.zone])
   }
 
-  removeZone(index: number) {
+  removeZone(event, index: number) {
+    event.stopPropagation()
     const zone = this.zone[index];
     const phoneNumber = localStorage.getItem('phoneWithCountry').replace('+', '');
 
@@ -110,10 +116,11 @@ export class ZonesComponent implements OnInit {
     this.api
       .removeZone(payload)
       .then((res) => {
+        this.getZone()
         console.log(res);
       })
       .catch((error) => {
-        console.log(error);
+        this.toaster.failure(error);
       });
   }
 }

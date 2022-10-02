@@ -44,6 +44,7 @@
                   alt=""
                   data-toggle="modal"
                   data-target="#editStaff"
+                  (click)="editStaff(i)"
                 />
                 <img
                   class="img-size"
@@ -250,7 +251,7 @@
             <div class="form-group">
               <label>Role</label>
               <select class="form-control" formControlName="role">
-                <option value="manager">Manager</option>
+                <option value="manager" disabled="true">Manager</option>
                 <option value="staff">Staff</option>
               </select>
             </div>

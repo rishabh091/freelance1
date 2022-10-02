@@ -69,7 +69,7 @@ export class AddCategoryComponent implements OnInit {
     if (this.form.invalid) {
       return;
     }
-    const phoneNumber = localStorage.getItem('phoneW');
+    const phoneNumber = localStorage.getItem('phoneWithCountry').replace('+', '');
     const payload = new AddCategory(
       new UserInfo(phoneNumber),
       new AddCategoryMenuInfo(this.form.value.menuCategory)
@@ -84,6 +84,11 @@ export class AddCategoryComponent implements OnInit {
           this.text = res.status;
           this.failure(this.text);
         }
+
+        this.form.reset()
+        this.submitted = false
+
+        this.getCategory()
       })
       .catch((error) => {
         this.text = 'Error in adding the category!';
@@ -118,6 +123,9 @@ export class AddCategoryComponent implements OnInit {
         } else {
           this.failure(res.status);
         }
+
+        this.subCategoryForm.reset()
+        this.subCategorySubmitted = false
       })
       .catch((error) => {
         this.text = 'Error in adding the sub-category!';

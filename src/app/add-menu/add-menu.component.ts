@@ -10,6 +10,7 @@ import { UserInfo } from '../interface/auth.interface';
 import { SubMenuCategories } from '../interface/category.interface';
 import { StoreIdSchema } from '../interface/interface';
 import { AddMenuItem, MenuInfo } from '../interface/item.interface';
+import { ServiceToasterService } from '../service-toaster.service';
 
 @Component({
   selector: 'app-add-menu',
@@ -27,7 +28,7 @@ export class AddMenuComponent implements OnInit {
   categories: string[]
   subCategories: string[]
 
-  constructor(private formBuilder: FormBuilder, private api: AuthApiService) {}
+  constructor(private formBuilder: FormBuilder, private api: AuthApiService, private toaster: ServiceToasterService) {}
  
   ngOnInit(): void {
     this.form = this.formBuilder.group({
@@ -75,9 +76,6 @@ export class AddMenuComponent implements OnInit {
     this.form.value.availableFrom = this.convertToSeconds(this.form.value.availableFrom)
     this.form.value.availableTill = this.convertToSeconds(this.form.value.availableTill)
 
-    console.log(this.weekDayAvailability)
-    console.log(JSON.stringify(this.form.value, null, 2));
-
     const phoneNumber = localStorage.getItem('phoneWithCountry').replace('+', '')
     const payload = new AddMenuItem(new UserInfo(phoneNumber),
     new MenuInfo(this.form.value.menuCategory,
@@ -90,7 +88,14 @@ export class AddMenuComponent implements OnInit {
       this.form.value.availableTill,
       this.weekDayAvailability))
 
-      this.api.addMenuItem(payload).then(res => {console.log('success')}).catch(error => {console.log(error)})
+      this.api.addMenuItem(payload).then(res => {
+        this.toaster.success('Item Added')
+        this.form.reset()
+        this.submitted = false
+        this.weekDayAvailability = [false, false, false, false, false, false, false]
+      }).catch(error => {
+        this.toaster.failure('Error, Please try again later')
+      })
   }
 
   convertToSeconds(time: string): number {

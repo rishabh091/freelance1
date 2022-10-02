@@ -5,6 +5,7 @@ import {
   RemoveStaff,
   StoreStaff,
   UpdateStaff,
+  UpdateStoreStaff
 } from '../interface/staff.interface';
 import {
   AbstractControl,
@@ -69,8 +70,8 @@ export class StaffComponent implements OnInit {
     const phoneNumber = localStorage.getItem('phoneWithCountry').replace('+', '')
     const payload = new GetStaff(new UserInfo(phoneNumber))
 
-    this.api.getStaff(payload).then((res: StoreStaff[]) => {
-      this.staff = res
+    this.api.getStaff(payload).then((res: any) => {
+      this.staff = res.storestaff
     }).catch(error => {
       this.toasterService.failure('Something went wrong')
     })
@@ -99,11 +100,20 @@ export class StaffComponent implements OnInit {
           this.getStaff()
         } else {
           this.toasterService.failure(res.status);
+          this.getStaff()
         }
       })
       .catch((error) => {
         this.toasterService.failure('Error in adding the staff!');
       });
+  }
+
+  editStaff(index: number): void {
+    const staff = this.staff[index]
+    this.updateStaffForm.controls['name'].setValue(staff.name)
+    this.updateStaffForm.controls['role'].setValue(staff.role)
+    this.updateStaffForm.controls['phoneNumber'].setValue(staff.phoneNumber.replace('+', ''))
+    this.updateStaffForm.controls['emailAddress'].setValue(staff.emailAddress)
   }
 
   updateStaff(): void {
@@ -113,9 +123,9 @@ export class StaffComponent implements OnInit {
     const phoneNumber = localStorage.getItem('phoneWithCountry').replace('+', '');
     const payload = new UpdateStaff(
       new UserInfo(phoneNumber),
-      new StoreStaff(
+      new UpdateStoreStaff(
         this.updateStaffForm.value.name,
-        this.updateStaffForm.value.role,
+        this.updateStaffForm.value.role[0],
         this.updateStaffForm.value.phoneNumber,
         this.updateStaffForm.value.emailAddress
       )
@@ -124,13 +134,8 @@ export class StaffComponent implements OnInit {
     this.api
       .updateStaff(payload)
       .then((res: any) => {
-        if (res.status == 'success') {
-          this.toasterService.success(
-            'You have updated the staff successfully!'
-          );
-        } else {
-          this.toasterService.failure(res.status);
-        }
+        this.toasterService.success('You have updated the staff successfully!');
+        this.getStaff()
       })
       .catch((error) => {
         this.toasterService.failure('Error in updating the staff!');
@@ -143,9 +148,9 @@ export class StaffComponent implements OnInit {
 
     const payload = new RemoveStaff(
       new UserInfo(phoneNumber),
-      new StoreStaff(
+      new UpdateStoreStaff(
         staff.name,
-        staff.role,
+        staff.role[0],
         staff.phoneNumber,
         staff.emailAddress
       )
@@ -154,13 +159,10 @@ export class StaffComponent implements OnInit {
     this.api
       .removeStaff(payload)
       .then((res: any) => {
-        if (res.status) {
-          this.toasterService.success(
-            'You have removed the staff successfully!'
-          );
-        } else {
-          this.toasterService.failure(res.status);
-        }
+        this.toasterService.success(
+          'You have removed the staff successfully!'
+        );
+        this.getStaff()
       })
       .catch((error) => {
         this.toasterService.failure('Error in removing the staff!');
