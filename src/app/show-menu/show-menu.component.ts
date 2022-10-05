@@ -73,9 +73,7 @@ export class ShowMenuComponent implements OnInit {
   public setSubCategoryName: string = '';
   public setItemName: string = '';
 
-  public expand = [];
-
-  setMenunItems(items) {
+  setMenuItems(items) {
     this.setCategoryName = items.menu;
     this.setSubCategoryName = items.subMenu;
     this.setItemName = items.menuItemName;
@@ -85,11 +83,6 @@ export class ShowMenuComponent implements OnInit {
     this.menuItemForm.controls['DisplayImagePath'].setValue(items.imgURL);
   }
   ngOnInit(): void {
-    // move it to api from where menu is coming
-    this.expand = this.menuGroups.map((obj) => {
-      return true;
-    });
-
     this.menuItemForm = this.formBuilder.group({
       ItemName: ['', Validators.required],
       ItemType: ['', Validators.required],
@@ -181,10 +174,6 @@ export class ShowMenuComponent implements OnInit {
 
   get updateCategoryFormControls(): { [key: string]: AbstractControl } {
     return this.updateCategoryForm.controls;
-  }
-
-  expandMenu(index: number): void {
-    this.expand[index] = !this.expand[index];
   }
 
   editProduct(): void {
@@ -288,6 +277,12 @@ export class ShowMenuComponent implements OnInit {
     this.menuItemForm.controls['DisplayImagePath'].setValue(
       editObject.DisplayImagePath
     );
+  }
+
+  expand(event, index: number) {
+	const element = document.getElementById('menuDropdown' + index)
+	if (element.clientHeight) element.style.height = '0px'
+	else element.style.height = '100%'
   }
 
   // updateCategory(): void {

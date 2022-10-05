@@ -1,113 +1,28 @@
 <div class="background-image">
-  <div class="center">
-    <div class="container bg-light m-3 p-3" style="border-radius: 1vh">
-      <div class="center heading m-2">HELLO MENU</div>
-      <div class="center">
-        <div class="sub-heading m-2 pb-4 mb-5">
-          khf shfdd iurddrig dg rdihgi df kfsjf h fufgur ug rugu gfd
+  <div class="container mt-5 mb-5 p-2">
+    <div *ngFor="let category of menuGroups; let i = index;" class="rounded-border bg-dark text-white mb-3">
+      <div class="d-flex justify-content-between" (click)="expand($event, i)">
+        <div class="p-3 rounded-border text-uppercase category" style="letter-spacing: 4px; font-size: 1.2rem;">{{ category }}</div>
+        <div class="center pr-3">
+          <img src="../../assets/delete.png" (click)="setCategory(category)" class="icon" data-toggle="modal" data-target="#deleteCategory">
         </div>
       </div>
 
-      <div *ngFor="let item of menuGroups; let i = index">
-        <div class="borderRight item-display mb-2 shadow">
-          <div class="row">
-            <div class="col-sm-6 p-4">
-              <div class="category-name">{{ item }}</div>
-            </div>
-            <div class="col-sm-6 p-4 text-right">
-              <div class="d-flex justify-content-end">
-                <!-- <div>
-                  <img
-                    src="../../assets/pencil.png"
-                    (click)="setCategory(item)"
-                    class="icon"
-                    data-toggle="modal"
-                    data-target="#updateCategory"
-                  />
-                </div> -->
-                <div class="ml-3 mr-3">
-                  <img
-                    src="../../assets/delete.png"
-                    (click)="setCategory(item)"
-                    class="icon"
-                    data-toggle="modal"
-                    data-target="#deleteCategory"
-                  />
+      <div class="custom-dropdown" id="{{ 'menuDropdown' + i }}">
+        <div class="p-3">
+          <hr class="border">
+          <div *ngFor="let subCat of subMenuGroups[category]; let i = index;" class="rounded-border bg-light text-dark mt-2 mb-5">
+            <div class="text-center font-weight-bold text-uppercase bg-warning p-3 upper-rounded-corners" style="left: 4px;">{{ subCat }}</div>
+            <div *ngFor="let item of menuItems[category][subCat];" class="p-3">
+              <div class="d-flex justify-content-between">
+                <div>
+                  <span class="text-capitalize">{{ item.menuItemName }}</span>
+                  <span class="text-muted text-lowercase ml-1">({{ item.itemType[0] }})</span><br>
+                  <span class="text-success">₹ {{ item.basePrice }}</span>
                 </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="pr-3 pl-3">
-            <div
-              *ngFor="let subCat of subMenuGroups[item]; let i = index"
-              class="shadow p-4 mb-3 borderBox"
-            >
-              <div class="row">
-                <div class="col-sm-6">
-                  <div class="subcategory-name">{{ subCat }}</div>
-                </div>
-                <div class="col-sm-6 text-right">
-                  <!-- <div class="d-flex justify-content-end">
-                    <div>
-                      <img
-                        src="../../assets/pencil.png"
-                        (click)="setSubCategory(subCat)"
-                        class="iconsub"
-                        data-toggle="modal"
-                        data-target="#updateSubCategory"
-                      />
-                    </div>
-
-                    to make the below button work we need image and category
-                    name of sub category
-                    <div class="ml-3 mr-3">
-                      <img
-                        src="../../assets/delete.png"
-                        (click)="removeSubCategory(subCat)"
-                        class="iconsub"
-                        data-toggle="modal"
-                        data-target="#deleteSubCategory"
-                      />
-                    </div>
-                  </div> -->
-                </div>
-              </div>
-
-              <div class="mt-4">
-                <div
-                  class="shadow p-3 m-3 borderBox row"
-                  *ngFor="let items of menuItems[item][subCat]"
-                >
-                  <div class="col-sm-6">
-                    <div>
-                      <span class="font-weight-bold text-uppercase">
-                        {{ items.menuItemName }}
-                      </span>
-                      <span class="text-muted" style="font-size: 0.8rem">
-                        ({{ items.itemType[0] }})
-                      </span>
-                    </div>
-                    <div class="text-success">₹ {{ items.basePrice }}/-</div>
-                  </div>
-                  <div class="col-sm-6">
-                    <img src="{{ item.imgURL }}" alt="" />
-                    <img
-                      src="../../assets/pencil.png"
-                      (click)="setMenunItems(items)"
-                      class="iconItem"
-                      data-toggle="modal"
-                      data-target="#updateMenuItem"
-                    />
-
-                    <img
-                      src="../../assets/delete.png"
-                      (click)="setMenunItems(items)"
-                      class="iconItem"
-                      data-toggle="modal"
-                      data-target="#deleteMenuItem"
-                    />
-                  </div>
+                <div class="d-flex pt-2">
+                  <img src="../../assets/pencil.png" (click)="setMenuItems(item)" class="iconItem" data-toggle="modal" data-target="#updateMenuItem">
+                  <img src="../../assets/delete.png" (click)="setMenuItems(item)" class="iconItem" data-toggle="modal" data-target="#deleteMenuItem">
                 </div>
               </div>
             </div>
@@ -117,6 +32,8 @@
     </div>
   </div>
 </div>
+
+
 
 <div class="modal" id="deleteCategory">
   <div class="modal-dialog modal-dialog-centered">
