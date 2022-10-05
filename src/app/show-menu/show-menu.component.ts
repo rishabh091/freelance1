@@ -290,33 +290,33 @@ export class ShowMenuComponent implements OnInit {
     );
   }
 
-  updateCategory(): void {
-    this.updateCategorySubmitted = true;
-    if (this.updateCategoryForm.invalid) {
-      return;
-    }
+  // updateCategory(): void {
+  //   this.updateCategorySubmitted = true;
+  //   if (this.updateCategoryForm.invalid) {
+  //     return;
+  //   }
 
-    const phoneNumber = localStorage
-      .getItem('phoneWithCountry')
-      .replace('+', '');
-    const payload = new UpdateCategory(
-      new UserInfo(phoneNumber),
-      new UpdateCategoryModule(
-        this.setSubCategoryName,
-        this.updateCategoryForm.value.isPrePaid,
-        this.updateCategoryForm.value.isFoodServedToTable
-      )
-    );
+  //   const phoneNumber = localStorage
+  //     .getItem('phoneWithCountry')
+  //     .replace('+', '');
+  //   const payload = new UpdateCategory(
+  //     new UserInfo(phoneNumber),
+  //     new UpdateCategoryModule(
+  //       this.setSubCategoryName,
+  //       this.updateCategoryForm.value.isPrePaid,
+  //       this.updateCategoryForm.value.isFoodServedToTable
+  //     )
+  //   );
 
-    this.api
-      .updateCategory(payload)
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
+  //   this.api
+  //     .updateCategory(payload)
+  //     .then((res) => {
+  //       console.log(res);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // }
 
   removeCategory(category: string) {
     const phoneNumber = localStorage

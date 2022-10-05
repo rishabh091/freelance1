@@ -48,7 +48,7 @@
                   <div class="subcategory-name">{{ subCat }}</div>
                 </div>
                 <div class="col-sm-6 text-right">
-                  <div class="d-flex justify-content-end">
+                  <!-- <div class="d-flex justify-content-end">
                     <div>
                       <img
                         src="../../assets/pencil.png"
@@ -59,7 +59,7 @@
                       />
                     </div>
 
-                    <!-- to make the below button work we need image and category
+                    to make the below button work we need image and category
                     name of sub category
                     <div class="ml-3 mr-3">
                       <img
@@ -69,8 +69,8 @@
                         data-toggle="modal"
                         data-target="#deleteSubCategory"
                       />
-                    </div> -->
-                  </div>
+                    </div>
+                  </div> -->
                 </div>
               </div>
 
@@ -256,11 +256,10 @@
     </div>
   </div>
 </div>
-
+<!-- 
 <div class="modal" id="updateSubCategory">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
-      <!-- Modal Header -->
       <div class="modal-header">
         <h4 class="modal-title">
           UPDATE<span class="text-warning"> SUB CATEGORY</span>
@@ -312,7 +311,7 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
 
 <div class="modal" id="updateMenuItem">
   <div class="modal-dialog modal-dialog-centered">
@@ -340,7 +339,7 @@
             <div *ngIf="f.ItemName.errors.required">Item Name is required</div>
           </div>
 
-          <div class="form-group">
+          <!-- <div class="form-group">
             <label>Item Type</label>
             <select class="form-control" formControlName="ItemType">
               <option value="">--Select--</option>
@@ -354,7 +353,7 @@
           </div>
           <div *ngIf="submitted && f.ItemType.errors" class="text-danger mb-5">
             <div *ngIf="f.ItemType.errors.required">Item type is required</div>
-          </div>
+          </div> -->
 
           <div class="form-group">
             <label>Price</label>

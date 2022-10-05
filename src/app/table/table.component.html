@@ -31,7 +31,9 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Table Number</h5>
+        <h5 class="modal-title">Table - <span class="font-weight-bold">
+          {{tableNumber}}
+        </span></h5>
 
         <button
           type="button"
@@ -43,23 +45,66 @@
         </button>
       </div>
       <div class="modal-body">
-       
-        <div class="ml-4">
-          <div class="text-muted" style="font-size: 0.8em;">Availability</div>
-          <label class="switch">
-            <input type="checkbox">
+        <div class="m-2" *ngIf="tableState?.tableCode">Table Code - {{ tableState?.tableCode }}</div>
+
+        <div class="text-center m-2">
+          <div class="text-muted" style="font-size: 0.8em">Is Occupied?</div>
+          <label class="switch" (click)="updateTableState(tableNumber , tableState.tableOpen)">
+            <input type="checkbox" [(ngModel)]="tableState.tableOpen" />
             <span class="slider round"></span>
           </label>
         </div>
+
+        <div class="m-2 p-2" *ngFor="let trans of tableTransactions">
+          <div class="text-center font-weight-bold text-uppercase m-2">
+            {{ trans["user"] }}
+          </div>
+          <div class="table-responsive">
+            <table class="table table-hover">
+              <thead>
+                <th>S.no.</th>
+                <th>Item Name</th>
+                <th>Count</th>
+                <th>Price</th>
+              </thead>
+              <tr *ngFor="let billItems of trans['billItems']; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td class="text-uppercase">{{ billItems.menuItem }}</td>
+                <td>{{ billItems.count }}</td>
+                <td>{{ billItems.itemPrice }}</td>
+              </tr>
+            </table>
+          </div>
+
+          <div class="text-right" style="margin-right: 3vh">
+            <span class="font-weight-bold" style="font-size: 1.2em"
+              >Total : {{ trans["total"] }}
+            </span>
+            <span
+              *ngIf="trans['isBillPayed']"
+              class="text-success"
+              style="font-size: 0.8em"
+            >
+              (PAID)</span
+            >
+            <span
+              *ngIf="!trans['isBillPayed']"
+              class="text-danger"
+              style="font-size: 0.8em"
+            >
+              (UNPAID)</span
+            >
+          </div>
+        </div>
       </div>
-      <div class="modal-footer">
+      <!-- <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">
           Close
         </button>
         <button type="button" class="btn submit_button-color">
           Save changes
         </button>
-      </div>
+      </div> -->
     </div>
   </div>
 </div>
