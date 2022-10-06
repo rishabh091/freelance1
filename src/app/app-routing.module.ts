@@ -14,6 +14,7 @@ import { PaymentComponent } from './signup/payment/payment.component';
 import { ProfileComponent } from './profile/profile.component';
 import { AddCategoryComponent } from './add-category/add-category.component';
 import { StaffComponent } from './staff/staff.component';
+import { DetailsComponent } from './signup/details/details.component';
 
 const routes: Routes = [
   { path: 'orders', component: OrdersComponent, canActivate: [AuthGuard] },
@@ -24,6 +25,7 @@ const routes: Routes = [
   { path: 'signup', component: SignupComponent, canActivate: [AuthLoginGuard] },
   { path: 'signup/address/:phoneNumber', component: AddressComponent, canActivate: [AuthLoginGuard] },
   { path: 'signup/payment/:phoneNumber', component: PaymentComponent, canActivate: [AuthLoginGuard] },
+  { path: 'signup/details/:phoneNumber', component: DetailsComponent, canActivate: [AuthLoginGuard] },
   { path: 'zones', component: ZonesComponent, canActivate: [AuthGuard] },
   { path: 'table/:zone', component: TableComponent, canActivate: [AuthGuard] },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },

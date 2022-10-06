@@ -1,0 +1,125 @@
+<div class="background-image">
+    <div class="center">
+      <img
+        src="https://img.icons8.com/clouds/344/restaurant.png"
+        alt=""
+        class="img-fork"
+      />
+    </div>
+    <div class="center heading m-2">Restaurant Details</div>
+    <div class="center">
+      <div class="container m-3 p-3" style="background-color: #4c5462">
+        <div class="center"></div>
+        <div class="register-form mt-3">
+            <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                <div class="row">
+                  <div class="form-group col-sm-6">
+                    <label>Opens At</label>
+                    <input
+                      type="time"
+                      formControlName="opensAt"
+                      class="form-control"
+                      [ngClass]="{ 'is-invalid': submitted && f.opensAt.errors }"
+                    />
+                    <div *ngIf="submitted && f.opensAt.errors" class="invalid-feedback">
+                      <div *ngIf="f.opensAt.errors.required" class="error-color">
+                        Opening timings is required
+                      </div>
+                    </div>
+                  </div>
+      
+                  <div class="form-group col-sm-6">
+                    <label>Closes At</label>
+                    <input
+                      type="time"
+                      formControlName="closesAt"
+                      class="form-control"
+                      [ngClass]="{
+                        'is-invalid': submitted && f.closesAt.errors
+                      }"
+                    />
+                    <div
+                      *ngIf="submitted && f.closesAt.errors"
+                      class="invalid-feedback"
+                    >
+                      <div
+                        *ngIf="f.closesAt.errors.required"
+                        class="error-color"
+                      >
+                        Closing timings is required
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-sm-6">
+                      <label>About Store</label>
+                      <textarea
+                        formControlName="aboutStore"
+                        class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && f.aboutStore.errors }"
+                      ></textarea>
+                      <div *ngIf="submitted && f.aboutStore.errors" class="invalid-feedback">
+                        <div *ngIf="f.aboutStore.errors.required" class="error-color">
+                          About store is required
+                        </div>
+                      </div>
+                    </div>
+        
+                    <div class="form-group col-sm-6">
+                      <label>Store Category</label>
+                      <input
+                        type="text"
+                        formControlName="storeCategory"
+                        class="form-control"
+                        [ngClass]="{
+                          'is-invalid': submitted && f.storeCategory.errors
+                        }"
+                      />
+                      <div
+                        *ngIf="submitted && f.storeCategory.errors"
+                        class="invalid-feedback"
+                      >
+                        <div
+                          *ngIf="f.storeCategory.errors.required"
+                          class="error-color"
+                        >
+                          Store category is required
+                        </div>
+                      </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-sm-6">
+                      <div class="custom-control custom-switch">
+                        <input type="checkbox" formControlName="isPrePaid"
+                         class="custom-control-input form-control" id="customSwitch1" 
+                         [ngClass]="{ 'is-invalid': submitted && f.isPrePaid.errors }">
+                        <label class="custom-control-label" for="customSwitch1">Is PrePaid</label>
+                      </div>
+                      <div *ngIf="submitted && f.isPrePaid.errors" class="invalid-feedback">
+                        <div *ngIf="f.isPrePaid.errors.required" class="error-color">
+                          Is Pre-paid is required
+                        </div>
+                      </div>
+                    </div>
+                </div>
+      
+                <div class="form-group">
+                  <div class="center">
+                    <button type="submit" class="btn btn-login mt-4">SAVE DETAILS</button>
+                  </div>
+                </div>
+              </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- <div *ngIf="errorMessage" class="alert alert-danger alert-dismissible" [ngClass]="{ 'alert-danger': !requestedOTP && !otpRequestCountdown, 'alert-success': requestedOTP }" style="position: absolute; z-index: 10; top: 0vh; width: 100%;" id="otpError">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    {{ errorMessage }}
+  </div> -->
+  

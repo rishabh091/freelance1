@@ -5,7 +5,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import {
   UpdatePaymentModule,
   UserInfo,
@@ -28,7 +28,8 @@ export class PaymentComponent implements OnInit {
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private apiAuthService: ApiAuthService,
-    private auth: AuthService
+    private auth: AuthService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -61,7 +62,7 @@ export class PaymentComponent implements OnInit {
     this.apiAuthService
       .updatePayment(payload)
       .then((res) => {
-        this.auth.login();
+        this.router.navigate(['/signup/details/' + this.phoneNumber])
       })
       .catch((error) => {
         console.log(error);
