@@ -102,6 +102,8 @@ export class ProfileComponent implements OnInit {
 
     this.updateCategoryForm = this.formBuilder.group({
       isPrePaid: [false, Validators.required],
+      storeSubCategory: ['', Validators.required],
+      isFoodServedToTable: [false, Validators.required]
     });
 
     this.getUser();
@@ -110,6 +112,7 @@ export class ProfileComponent implements OnInit {
     this.getPaymentInfo();
     this.getStoreTimings();
     this.getAboutStore();
+    this.getCategory();
   }
 
   onCountryChange(): void {
@@ -209,10 +212,21 @@ export class ProfileComponent implements OnInit {
         this.paymentForm.controls['paymentGatewayId'].setValue(
           res.paymentGatewayID
         );
+        this.updateCategoryForm.controls['isPrePaid'].setValue(res.isPrePaid)
       })
       .catch((error) => {
         console.log(error);
       });
+  }
+
+  getCategory() {
+    const storeId = localStorage.getItem('storeId')
+    this.api.getCategory(new StoreIdSchema(storeId)).then((res: any) => {
+      this.updateCategoryForm.controls['storeSubCategory'].setValue(res['storeSubCatagory'])
+      this.updateCategoryForm.controls['isFoodServedToTable'].setValue(res['isFoodServedToTable'])
+    }).catch(error => {
+      console.log(error)
+    })
   }
 
   getStoreTimings(): void {
@@ -223,7 +237,6 @@ export class ProfileComponent implements OnInit {
         this.storeTimingsForm.controls['opensAt'].setValue(
           this.convert12To24(res.opensAt)
         );
-        console.log(this.convert12To24(res.closesAt));
         this.storeTimingsForm.controls['closesAt'].setValue(
           this.convert12To24(res.closesAt)
         );
@@ -465,7 +478,7 @@ export class ProfileComponent implements OnInit {
     const payload = new UpdateCategory(
       new UserInfo(phoneNumber),
       new UpdateCategoryModule(
-        'PIZZA',
+        this.updateCategoryForm.value.storeSubCategory,
         this.updateCategoryForm.value.isPrePaid,
         !this.updateCategoryForm.value.isPrePaid
       )

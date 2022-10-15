@@ -37,6 +37,8 @@ export class TableComponent implements OnInit {
     tableOpen: false,
   };
   public tableNumber: number;
+  public moveToTableNumber: number
+
   constructor(
     private formBuilder: FormBuilder,
     private api: ApiAuthService,
@@ -103,9 +105,6 @@ export class TableComponent implements OnInit {
       .getTableTransaction(payload)
       .then((res: any) => {
         this.tableTransactions = res.tableTransaction;
-        console.log(this.tableTransactions);
-
-        console.log(res);
       })
       .catch((error) => {
         console.log(error);
@@ -125,7 +124,6 @@ export class TableComponent implements OnInit {
       .getTableState(payload)
       .then((res: any) => {
         this.tableState = res.status;
-        console.log(res);
       })
       .catch((error) => {
         console.log(error);
@@ -153,14 +151,14 @@ export class TableComponent implements OnInit {
       });
   }
 
-  moveTableTransaction(fromTableNumber: number, toTableNumber: number) {
+  moveTableTransaction() {
     const phoneNumber = localStorage
       .getItem('phoneWithCountry')
       .replace('+', '');
     const payload = new TableOrderMove(
       new UserInfo(phoneNumber),
-      fromTableNumber,
-      toTableNumber
+      this.tableNumber,
+      this.moveToTableNumber
     );
 
     this.api

@@ -51,7 +51,7 @@ export class AddCategoryComponent implements OnInit {
 
   getCategory() {
     const storeId = localStorage.getItem('storeId')
-    this.api.getCategory(new StoreIdSchema(storeId)).then(res => {
+    this.api.getMenuCategory(new StoreIdSchema(storeId)).then(res => {
       this.categories = res['menuCategories']
     }).catch(error => { console.log(error) })
   }

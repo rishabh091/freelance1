@@ -35,14 +35,7 @@
 .sub-head {
   font-weight: bold;
 }
-.down-icon {
-  font-size: 30px;
-  color: #fec134;
-  font-weight: bold;
-}
-.down-icon:hover{
-    cursor:pointer;
-}
+
 
 .expandable {
   height: 0;
@@ -53,29 +46,7 @@
   margin-right: 3em;
 }
 
-.borderRight {
-  border-left: 1vh solid #fec134;
-  border-radius: 1vh;
-}
-.btn-background{
-  background-color:  #00a989;
-  color: white;
-}
-
-
-@keyframes rotate-animation {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(180deg);
-  }
-}
-@keyframes reverse-rotate {
-  from {
-    transform: rotate(180deg);
-  }
-  to {
-    transform: rotate(0deg);
-  }
+.item-name {
+  letter-spacing: 2px;
+  word-spacing: 5px;
 }

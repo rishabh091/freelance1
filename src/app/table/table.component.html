@@ -55,6 +55,12 @@
           </label>
         </div>
 
+        <div class="form-group center">
+          <div class="center mr-2" style="align-items: center;">Move to: </div>
+          <input type="number" class="form-control" [(ngModel)]="moveToTableNumber" style="width: 40%;">
+          <button type="button" class="btn btn-outline-success ml-3" (click)="moveTableTransaction()">Move</button>
+        </div>
+
         <div class="m-2 p-2" *ngFor="let trans of tableTransactions">
           <div class="text-center font-weight-bold text-uppercase m-2">
             {{ trans["user"] }}

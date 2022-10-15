@@ -110,7 +110,7 @@ export class ShowMenuComponent implements OnInit {
   getCategories() {
     const storeId = localStorage.getItem('storeId');
     this.api
-      .getCategory(new StoreIdSchema(storeId))
+      .getMenuCategory(new StoreIdSchema(storeId))
       .then((res) => {
         console.log(res);
       })

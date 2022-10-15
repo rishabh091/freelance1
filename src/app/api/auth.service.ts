@@ -103,7 +103,7 @@ export class AuthService {
     return this.httpClient.post(url, payload).toPromise()
   }
 
-  getCategory(payload: StoreIdSchema) {
+  getMenuCategory(payload: StoreIdSchema) {
     let url = environment.apiUrl + 'getmenucategories'
     return this.httpClient.post(url, payload).toPromise()
   }
@@ -221,6 +221,11 @@ export class AuthService {
 
   getStaff(payload: GetStaff) {
     let url = environment.apiUrl + 'getrestaurantstaff'
+    return this.httpClient.post(url, payload).toPromise()
+  }
+
+  getCategory(payload: StoreIdSchema) {
+    let url = environment.apiUrl + '/getcategory'
     return this.httpClient.post(url, payload).toPromise()
   }
 }

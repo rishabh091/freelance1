@@ -19,7 +19,7 @@ export class AuthService {
     authPromise.then(user => {
       let accessToken = user['_delegate'].accessToken
       localStorage.setItem('token', accessToken)
-      this.router.navigate(['/orders'])
+      this.router.navigate([''])
     })
   }
   /**

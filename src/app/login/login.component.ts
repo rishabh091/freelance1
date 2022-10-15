@@ -148,8 +148,8 @@ export class LoginComponent implements OnInit {
 
         const payload = new UserInfo(localStorage.getItem('phoneWithCountry').replace('+', ''));
         this.api.isUserRegisterd(payload).then((res) => {
-          localStorage.setItem('privilege', res['value']['isprivilegedUser']);
-          localStorage.setItem('storeId', res['value']['restaurantId']);
+          localStorage.setItem('privilege', res['isprivilegedUser']);
+          localStorage.setItem('storeId', res['restaurantId']);
         });
 
         this.auth.login();
