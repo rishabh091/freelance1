@@ -3,8 +3,9 @@
  */
 export enum Nav {
     NewOrder,
-    CompletedOrder,
-    DeliveredOrder
+    ReadyOrder,
+    DeliveredOrder,
+    CancelledOrder
 }
 
 export enum StarRating {

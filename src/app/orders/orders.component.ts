@@ -17,17 +17,29 @@ export class OrdersComponent implements OnInit {
 
   constructor(private element: ElementRef, private api: Api, private toaster: ServiceToasterService) {}
 
+  OrderTypes = {
+    NEW: 'new',
+    READY: 'ready',
+    DELIVERED: 'delivered',
+    CANCELED: 'canceled'
+  }
+
+  startTableNumber: number = 0
+  endTableNumber: number
+
   activeArray: any = []
+  activatedOrderType: string = this.OrderTypes.NEW
 
   ngOnInit(): void {
-    this.getOrderByType('new')
+    this.getOrderByType(this.activatedOrderType)
   }
 
   getOrderByType(type: string) {
+    this.activatedOrderType = type
     const phoneNumber = localStorage.getItem('phoneWithCountry').replace('+', '')
     const payload = new GetOrders(new UserInfo(phoneNumber), type)
 
-    this.api.getOrdersByType(payload).then(res => {
+    return this.api.getOrdersByType(payload).then(res => {
       this.activeArray = res['restaurantOrders']
     }).catch(error => { console.log(error) })
   }
@@ -43,11 +55,21 @@ export class OrdersComponent implements OnInit {
 
   changeData(type: string, index: Nav) {
     this.activeArray = this.getOrderByType(type)
+    this.startTableNumber = 0
+    this.endTableNumber = undefined
 
     let activeNav = this.element.nativeElement.querySelectorAll('.nav-active')
     activeNav[0].classList.remove('nav-active')
 
     let navButton = this.element.nativeElement.querySelectorAll('.nav-button')
     navButton[index].classList.add('nav-active')
+  }
+
+  applyFilter() {
+    if (this.startTableNumber == undefined || this.endTableNumber == undefined) { return }
+    
+    this.getOrderByType(this.activatedOrderType).then(() => {
+      this.activeArray = this.activeArray.filter((value) => { return value.table >= this.startTableNumber && value.table <= this.endTableNumber })
+    })
   }
 }

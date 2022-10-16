@@ -6,24 +6,40 @@
         <button
           type="button"
           class="btn btn-warning nav-active nav-button m-1"
-          (click)="changeData('new', NavEnum.NewOrder)"
+          (click)="changeData(OrderTypes.NEW, NavEnum.NewOrder)"
         >
-          New Orders
+          New
         </button>
         <button
           type="button"
           class="btn btn-warning nav-button m-1"
-          (click)="changeData('', NavEnum.CompletedOrder)"
+          (click)="changeData(OrderTypes.READY, NavEnum.ReadyOrder)"
         >
-          Completed Orders
+          Ready
         </button>
         <button
           type="button"
           class="btn btn-warning nav-button m-1"
-          (click)="changeData('delivered', NavEnum.DeliveredOrder)"
+          (click)="changeData(OrderTypes.DELIVERED, NavEnum.DeliveredOrder)"
         >
-          Delivered Orders
+          Delivered
         </button>
+
+        <button
+        type="button"
+        class="btn btn-warning nav-button m-1"
+        (click)="changeData(OrderTypes.CANCELED, NavEnum.CancelledOrder)"
+        >
+        Canceled
+      </button>
+      </div>
+
+      <div class="d-flex form-group">
+        <div class="center" style="align-items: center;">From: </div>
+        <input type="number" class="form-control ml-2 mr-2" style="width: 30%;" [(ngModel)]="startTableNumber">
+        <div class="center" style="align-items: center;">To: </div>
+        <input type="number" class="form-control ml-2 mr-2" style="width: 30%;" [(ngModel)]="endTableNumber">
+        <button type="button" class="btn btn-outline-info" (click)="applyFilter()">Apply</button>
       </div>
 
       <div *ngFor="let item of activeArray; let i = index">
@@ -40,7 +56,11 @@
             <div>Table Number: {{ item.table }}</div>
           </div>
 
-          <button type="button" class="btn btn-success rounded-0" style="width: 100%;" (click)="updateOrderStatus(item.orderid, 'delivered')">Mark as Delivered</button>
+          <div class="center">
+            <button *ngIf="activatedOrderType == OrderTypes.NEW" type="button" class="btn btn-success rounded-0" style="width: 100%;" (click)="updateOrderStatus(item.orderid, OrderTypes.READY)">Mark as Ready</button>
+            <button *ngIf="activatedOrderType == OrderTypes.READY" type="button" class="btn btn-success rounded-0" style="width: 100%;" (click)="updateOrderStatus(item.orderid, OrderTypes.DELIVERED)">Mark as Delivered</button>
+            <button type="button" class="btn btn-outline-danger rounded-0" style="width: 100%;" (click)="updateOrderStatus(item.orderid, OrderTypes.CANCELED)">Mark as Canceled</button>
+          </div>
         </div>
       </div>
     </div>
