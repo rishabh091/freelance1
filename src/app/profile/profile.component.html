@@ -1,10 +1,33 @@
 <div class="background-image">
   <div class="center">
     <div class="container bg-light m-3 p-5" style="border-radius: 1vh">
-      <div class="center heading m-2">PROFILE</div>
-      <div class="center">
-        <div class="sub-heading m-2 pb-4 mb-5">
-          Make your menu more interesting and add varities of dishes
+      <div class="row mb-5">
+        <div class="col-sm-6">
+          <div class="center heading m-2">PROFILE</div>
+          <div class="center">
+            <div class="sub-heading m-2 pb-4 mb-5">
+              Make your menu more interesting and add varities of dishes
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="text-center">
+            <image-cropper
+              *ngIf="!showProfilePic"
+              [imageChangedEvent]="imageChangedEvent"
+              [maintainAspectRatio]="true"
+              [aspectRatio]="4 / 3"
+              [resizeToWidth] =  92
+              [resizeToHeight] = 69
+              format="png"
+              (imageCropped)="imageCropped($event)"
+            ></image-cropper>
+            <img *ngIf="showProfilePic" [src]="profilePic" class="img-fluid" style="height: 30vh; width: 30vh">
+          </div>
+          <div class="center mt-3">
+            <input *ngIf="showProfilePic" type="file" class="form-control" (change)="onProfilePicUpload($event)">
+            <button *ngIf="!showProfilePic" type="button" class="btn btn-info" (click)="uploadProfilePic()">Upload Image</button>
+          </div>
         </div>
       </div>
 

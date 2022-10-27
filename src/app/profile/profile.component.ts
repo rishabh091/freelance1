@@ -28,6 +28,7 @@ import {
 import { StoreIdSchema } from '../interface/interface';
 import { ServiceToasterService } from '../service-toaster.service';
 import { ToasterComponent } from '../toaster/toaster.component';
+import { ImageCroppedEvent, LoadedImage } from 'ngx-image-cropper';
 
 @Component({
   selector: 'app-profile',
@@ -59,6 +60,11 @@ export class ProfileComponent implements OnInit {
 
   public updateCategoryForm: FormGroup;
   public updateCategorySubmitted = false;
+
+  public showProfilePic: boolean = true
+  public profilePic: string = "https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
+  public croppedImage: string
+  public imageChangedEvent: any
 
   constructor(
     private formBuilder: FormBuilder,
@@ -113,7 +119,42 @@ export class ProfileComponent implements OnInit {
     this.getStoreTimings();
     this.getAboutStore();
     this.getCategory();
+    this.getProfilePic()
   }
+
+  onProfilePicUpload(event) {
+    this.imageChangedEvent = event
+    this.showProfilePic = false
+  }
+
+  imageCropped(event: ImageCroppedEvent) {
+    this.croppedImage = event.base64;
+  }
+
+  dataURItoBlob(dataURI : any) {
+    const binary = atob(dataURI.split(',')[1]);
+    const array = [];
+    for (let i = 0; i < binary.length; i++) {
+      array.push(binary.charCodeAt(i));
+    }
+    return new Blob([new Uint8Array(array)], {
+      type: 'image/png'
+    });
+ }
+
+ uploadProfilePic() {
+  const imageBlob = this.dataURItoBlob(this.croppedImage );
+  const file:File = new File([imageBlob], "uploadImage", { type: 'image/png' });
+  const formData = new FormData();  
+  formData.append('restaurantImage', file);
+  formData.append('phoneNumber', localStorage.getItem('phoneWithCountry').replace('+', ''));
+  formData.append('imageType', "profile");
+  formData.append('imageDetail1', "1");
+  this.api.uploadImage(formData).then((res: any) => {
+    this.showProfilePic = true
+    this.toaster.success('Profile Picture Updated')
+  }).catch(error => { console.log(error) })
+ }
 
   onCountryChange(): void {
     this.states = State.getStatesOfCountry(
@@ -138,6 +179,15 @@ export class ProfileComponent implements OnInit {
       .catch((error) => {
         console.log(error);
       });
+  }
+
+  getProfilePic() {
+    const storeId = localStorage.getItem('storeId')
+    this.api.getStoreProfilePic(new StoreIdSchema(storeId)).then((res: any) => {
+      if (res.storeProfilePic1URL) {
+        this.profilePic = this.api.getImageUrl(res.storeProfilePic1URL)
+      }
+    }).catch(error => { console.log(error) })
   }
 
   getAddress(): void {

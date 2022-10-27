@@ -13,7 +13,8 @@ export const environment = {
     messagingSenderId: "1008267974994",
     appId: "1:1008267974994:web:23c81090ec62886ca5428b"
   },
-  apiUrl: 'https://api-v0.hiveezy.com/api/v1/restaurant/'
+  apiUrl: 'https://api-v0.hiveezy.com/api/v1/restaurant/',
+  imageUrl: 'https://media.hiveezy.com/images/uploadImage'
 };
 firebase.initializeApp(environment.firebaseConfig);
 

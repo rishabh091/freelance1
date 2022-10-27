@@ -26,6 +26,7 @@ import { AddCategoryComponent } from './add-category/add-category.component';
 import { StaffComponent } from './staff/staff.component';
 import { ToasterComponent } from './toaster/toaster.component';
 import { DetailsComponent } from './signup/details/details.component';
+import { ImageCropperModule } from 'ngx-image-cropper';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import { DetailsComponent } from './signup/details/details.component';
     AppRoutingModule,
     ReactiveFormsModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    ImageCropperModule
   ],
   providers: [],
   bootstrap: [AppComponent]

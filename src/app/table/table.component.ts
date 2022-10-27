@@ -164,7 +164,7 @@ export class TableComponent implements OnInit {
     this.api
       .moveTableTransactions(payload)
       .then((res) => {
-        console.log(res);
+        this.moveToTableNumber = 0
       })
       .catch((error) => {
         console.log(error);

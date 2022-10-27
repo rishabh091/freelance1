@@ -228,4 +228,18 @@ export class AuthService {
     let url = environment.apiUrl + '/getcategory'
     return this.httpClient.post(url, payload).toPromise()
   }
+
+  getStoreProfilePic(payload: StoreIdSchema) {
+    let url = environment.apiUrl + '/getstoreprofilepic'
+    return this.httpClient.post(url, payload).toPromise()
+  }
+
+  uploadImage(payload: FormData) {
+    let url = environment.imageUrl
+    return this.httpClient.post(url, payload).toPromise()
+  }
+
+  getImageUrl(url: string) {
+    return "https://media.hiveezy.com/" + url + '?' + Date.now()
+  }
 }
