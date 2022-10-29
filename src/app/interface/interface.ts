@@ -1,4 +1,5 @@
 import { StarRating } from "../enums/orders.enum";
+import { UserInfo } from "./auth.interface";
 
 export interface MenuItem {
     ItemID: number;
@@ -44,4 +45,22 @@ export class StoreIdSchema {
 	constructor(storeID: string) {
 		this.storeID = storeID
 	}
+}
+
+export class MenuItemImage {
+  userInfo: UserInfo
+  menuInfo: MenuImageInfo
+
+  constructor(userInfo: UserInfo, menuInfo: MenuImageInfo) {
+    this.userInfo = userInfo
+    this.menuInfo = menuInfo
+  }
+}
+
+export class MenuImageInfo {
+  menuItem: string
+
+  constructor(menuItem: string) {
+    this.menuItem = menuItem
+  }
 }

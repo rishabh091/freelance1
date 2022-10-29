@@ -8,9 +8,10 @@ import {
 import { AuthService as AuthApiService } from '../api/auth.service';
 import { UserInfo } from '../interface/auth.interface';
 import { SubMenuCategories } from '../interface/category.interface';
-import { StoreIdSchema } from '../interface/interface';
+import { MenuImageInfo, MenuItemImage, StoreIdSchema } from '../interface/interface';
 import { AddMenuItem, MenuInfo } from '../interface/item.interface';
 import { ServiceToasterService } from '../service-toaster.service';
+import { ImageCroppedEvent, LoadedImage } from 'ngx-image-cropper';
 
 @Component({
   selector: 'app-add-menu',
@@ -27,6 +28,10 @@ export class AddMenuComponent implements OnInit {
 
   categories: string[]
   subCategories: string[]
+
+  public croppedImage: string
+  public imageChangedEvent: any
+  public showProfilePic: boolean = true
 
   constructor(private formBuilder: FormBuilder, private api: AuthApiService, private toaster: ServiceToasterService) {}
  
@@ -56,6 +61,52 @@ export class AddMenuComponent implements OnInit {
       this.categories = res['menuCategories']
     }).catch(error => { console.log(error) })
   }
+
+  getItemImage() {
+    const phoneNumber = localStorage.getItem('phoneWithCode').replace('+', '')
+    const payload = new MenuItemImage(new UserInfo(phoneNumber), new MenuImageInfo(this.form.value.menuItem))
+    this.api.getMenuItemImage(payload).then((res: any) => {
+      console.log(res)
+      // if (res.storeProfilePic1URL) {
+      //   this.form.value.itemURL = this.api.getImageUrl(res.storeProfilePic1URL)
+      // }
+    }).catch(error => { console.log(error) })
+  }
+
+  onProfilePicUpload(event) {
+    this.imageChangedEvent = event
+    this.showProfilePic = false
+  }
+
+  imageCropped(event: ImageCroppedEvent) {
+    this.croppedImage = event.base64;
+  }
+
+  dataURItoBlob(dataURI : any) {
+    const binary = atob(dataURI.split(',')[1]);
+    const array = [];
+    for (let i = 0; i < binary.length; i++) {
+      array.push(binary.charCodeAt(i));
+    }
+    return new Blob([new Uint8Array(array)], {
+      type: 'image/png'
+    });
+ }
+
+ uploadProfilePic() {
+  const imageBlob = this.dataURItoBlob(this.croppedImage );
+  const file:File = new File([imageBlob], "uploadImage", { type: 'image/png' });
+  const formData = new FormData();  
+  formData.append('restaurantImage', file);
+  formData.append('phoneNumber', localStorage.getItem('phoneWithCountry').replace('+', ''));
+  formData.append('imageType', "menuitem");
+  formData.append('imageDetail1', this.form.value.menuItem);
+  this.api.uploadImage(formData).then((res: any) => {
+    this.showProfilePic = true
+    this.toaster.success('Profile Picture Updated')
+    this.getItemImage()
+  }).catch(error => { console.log(error) })
+ }
 
   getSubCategory() {
     const storeId = localStorage.getItem('storeId')

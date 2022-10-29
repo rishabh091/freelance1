@@ -8,7 +8,7 @@ import { AddStaff, GetStaff, RemoveStaff, UpdateStaff } from '../interface/staff
 import { CreateZone, RemoveZone, ZoneSchema } from '../interface/zone.interface';
 import { GetTableState, TableOrderMove, TableTransactions, UpdateTableState } from '../interface/table.interface';
 import { GetOrders, UpdateOrderStatus } from '../interface/orders.interface';
-import { StoreIdSchema } from '../interface/interface';
+import { MenuItemImage, StoreIdSchema } from '../interface/interface';
 
 @Injectable({
   providedIn: 'root'
@@ -231,6 +231,11 @@ export class AuthService {
 
   getStoreProfilePic(payload: StoreIdSchema) {
     let url = environment.apiUrl + '/getstoreprofilepic'
+    return this.httpClient.post(url, payload).toPromise()
+  }
+
+  getMenuItemImage(payload: MenuItemImage) {
+    let url = environment.apiUrl + '/getmenuitemimage'
     return this.httpClient.post(url, payload).toPromise()
   }
 
