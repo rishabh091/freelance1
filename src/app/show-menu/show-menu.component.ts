@@ -22,13 +22,14 @@ import {
   UpdateMenuItemDailyAvailability,
   UpdateMenuItemPrice,
 } from '../interface/category.interface';
-import { MenuItem, StoreIdSchema } from '../interface/interface';
+import { MenuImageInfo, MenuItem, MenuItemImage, StoreIdSchema } from '../interface/interface';
 import { MockResturantMenus, MockMenuGroups } from '../mock.menu'; // dummy data
 import { AuthService as Api } from '../api/auth.service';
 import {
   RemoveMenuItem,
   RemoveMenuItemModule,
 } from '../interface/item.interface';
+import { ImageCroppedEvent } from 'ngx-image-cropper';
 
 @Component({
   selector: 'app-show-menu',
@@ -73,6 +74,10 @@ export class ShowMenuComponent implements OnInit {
   public setSubCategoryName: string = '';
   public setItemName: string = '';
 
+  public croppedImage: string
+  public imageChangedEvent: any
+  public showProfilePic: boolean = true
+
   setMenuItems(items) {
     this.setCategoryName = items.menu;
     this.setSubCategoryName = items.subMenu;
@@ -106,6 +111,43 @@ export class ShowMenuComponent implements OnInit {
 
     this.getMenuItem();
   }
+
+  getImage(imgUrl: string) {
+    return this.api.getImageUrl(imgUrl)
+  }
+
+  onProfilePicUpload(event) {
+    this.imageChangedEvent = event
+    this.showProfilePic = false
+  }
+
+  imageCropped(event: ImageCroppedEvent) {
+    this.croppedImage = event.base64;
+  }
+
+  dataURItoBlob(dataURI : any) {
+    const binary = atob(dataURI.split(',')[1]);
+    const array = [];
+    for (let i = 0; i < binary.length; i++) {
+      array.push(binary.charCodeAt(i));
+    }
+    return new Blob([new Uint8Array(array)], {
+      type: 'image/png'
+    });
+ }
+
+ uploadItemPic() {
+  const imageBlob = this.dataURItoBlob(this.croppedImage );
+  const file:File = new File([imageBlob], "uploadImage", { type: 'image/png' });
+  const formData = new FormData();  
+  formData.append('restaurantImage', file);
+  formData.append('phoneNumber', localStorage.getItem('phoneWithCountry').replace('+', ''));
+  formData.append('imageType', "menuItem");
+  formData.append('imageDetail1', this.menuItemForm.value.ItemName);
+  this.api.uploadImage(formData).then((res: any) => {
+    this.showProfilePic = true
+  }).catch(error => { console.log(error) })
+ }
 
   getCategories() {
     const storeId = localStorage.getItem('storeId');
@@ -231,6 +273,7 @@ export class ShowMenuComponent implements OnInit {
       .updateMenuItemPrice(pricePayload)
       .then((res) => {
         console.log(res);
+        this.uploadItemPic()
         this.getMenuItem();
       })
       .catch((error) => {
