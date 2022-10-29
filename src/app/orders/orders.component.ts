@@ -1,75 +1,171 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
 import { AuthService } from '../auth/auth.service';
 import { AuthService as Api } from '../api/auth.service';
-import { Nav } from '../enums/orders.enum'
+import { Nav } from '../enums/orders.enum';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { GetOrders, UpdateOrderStatus } from '../interface/orders.interface';
 import { UserInfo } from '../interface/auth.interface';
 import { ServiceToasterService } from '../service-toaster.service';
+import { StoreIdSchema } from '../interface/interface';
+import { SubMenuCategories } from '../interface/category.interface';
+import {
 
+  CreateTableInfo,
+  ZoneSchema
+} from '../interface/zone.interface';
 @Component({
   selector: 'app-orders',
   templateUrl: './orders.component.html',
   styleUrls: ['./orders.component.css'],
 })
 export class OrdersComponent implements OnInit {
-  public NavEnum = Nav
+  public NavEnum = Nav;
 
-  constructor(private element: ElementRef, private api: Api, private toaster: ServiceToasterService) {}
+  constructor(
+    private element: ElementRef,
+    private api: Api,
+    private toaster: ServiceToasterService
+  ) {}
 
   OrderTypes = {
     NEW: 'new',
     READY: 'ready',
     DELIVERED: 'delivered',
-    CANCELED: 'canceled'
-  }
+    CANCELED: 'canceled',
+  };
 
-  startTableNumber: number = 0
-  endTableNumber: number
+  startTableNumber: number = 0;
+  endTableNumber: number;
 
-  activeArray: any = []
-  activatedOrderType: string = this.OrderTypes.NEW
+  activeArray: any = [];
+  activatedOrderType: string = this.OrderTypes.NEW;
+
+  categories: string[];
+  subCategories: string[];
+
+  categoryName : string = "";
+  subCategoryName : string = "";
+  zoneName: string = "";
+  
+  public zoneNames: CreateTableInfo[];
 
   ngOnInit(): void {
-    this.getOrderByType(this.activatedOrderType)
+    this.getOrderByType(this.activatedOrderType);
+    this.getCategory();
+    this.getZone();
+  }
+
+  getCategory() {
+    const storeId = localStorage.getItem('storeId');
+    this.api
+      .getMenuCategory(new StoreIdSchema(storeId))
+      .then((res: {}) => {
+        this.categories = res['menuCategories'];
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  getSubCategory() {
+    console.log(this.categoryName)
+    const storeId = localStorage.getItem('storeId');
+    let category = this.categoryName
+    //let category = this.categoryName
+    const payload = new SubMenuCategories(storeId, category);
+    this.api
+      .getSubCategory(payload)
+      .then((res) => {
+        this.subCategories = res['menuSubCategories'];
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+  getZone() {
+    const phoneNumber = localStorage
+      .getItem('phoneWithCountry')
+      .replace('+', '');
+    const payload = new ZoneSchema(new UserInfo(phoneNumber));
+    this.api
+      .getZone(payload)
+      .then((res: any) => {
+        this.zoneNames = res.zoneInfo;
+        console.log(this.zoneNames);
+        
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   getOrderByType(type: string) {
-    this.activatedOrderType = type
-    const phoneNumber = localStorage.getItem('phoneWithCountry').replace('+', '')
-    const payload = new GetOrders(new UserInfo(phoneNumber), type)
+    this.zoneName = "";
+    this.categoryName = "";
+    this.subCategoryName = "";
+    this.activatedOrderType = type;
+    const phoneNumber = localStorage
+      .getItem('phoneWithCountry')
+      .replace('+', '');
+    const payload = new GetOrders(new UserInfo(phoneNumber), type);
 
-    return this.api.getOrdersByType(payload).then(res => {
-      this.activeArray = res['restaurantOrders']
-    }).catch(error => { console.log(error) })
+    return this.api
+      .getOrdersByType(payload)
+      .then((res) => {
+        this.activeArray = res['restaurantOrders'];
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   updateOrderStatus(orderID: string, orderStatus: string) {
-    const phoneNumber = localStorage.getItem('phoneWithCountry').replace('+', '')
-    const payload = new UpdateOrderStatus(new UserInfo(phoneNumber), orderID, orderStatus)
+    const phoneNumber = localStorage
+      .getItem('phoneWithCountry')
+      .replace('+', '');
+    const payload = new UpdateOrderStatus(
+      new UserInfo(phoneNumber),
+      orderID,
+      orderStatus
+    );
 
-    this.api.updateOrderStatus(payload).then(res => {
-      this.toaster.success(`Order marked as ${orderStatus}`)
-    }).catch(error => { console.log(error) })
+    this.api
+      .updateOrderStatus(payload)
+      .then((res) => {
+        this.toaster.success(`Order marked as ${orderStatus}`);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   changeData(type: string, index: Nav) {
-    this.activeArray = this.getOrderByType(type)
-    this.startTableNumber = 0
-    this.endTableNumber = undefined
+    this.activeArray = this.getOrderByType(type);
+    this.startTableNumber = 0;
+    this.endTableNumber = undefined;
 
-    let activeNav = this.element.nativeElement.querySelectorAll('.nav-active')
-    activeNav[0].classList.remove('nav-active')
+    let activeNav = this.element.nativeElement.querySelectorAll('.nav-active');
+    activeNav[0].classList.remove('nav-active');
 
-    let navButton = this.element.nativeElement.querySelectorAll('.nav-button')
-    navButton[index].classList.add('nav-active')
+    let navButton = this.element.nativeElement.querySelectorAll('.nav-button');
+    navButton[index].classList.add('nav-active');
   }
 
   applyFilter() {
-    if (this.startTableNumber == undefined || this.endTableNumber == undefined) { return }
-    
+    if (
+      this.startTableNumber == undefined ||
+      this.endTableNumber == undefined
+    ) {
+      return;
+    }
+
     this.getOrderByType(this.activatedOrderType).then(() => {
-      this.activeArray = this.activeArray.filter((value) => { return value.table >= this.startTableNumber && value.table <= this.endTableNumber })
-    })
+      this.activeArray = this.activeArray.filter((value) => {
+        return (
+          value.table >= this.startTableNumber &&
+          value.table <= this.endTableNumber
+        );
+      });
+    });
   }
 }
