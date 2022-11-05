@@ -100,9 +100,6 @@ export class OrdersComponent implements OnInit {
   }
 
   getOrderByType(type: string) {
-    this.zoneName = "";
-    this.categoryName = "";
-    this.subCategoryName = "";
     this.activatedOrderType = type;
     const phoneNumber = localStorage
       .getItem('phoneWithCountry')
@@ -152,13 +149,6 @@ export class OrdersComponent implements OnInit {
   }
 
   applyFilter() {
-    if (
-      this.startTableNumber == undefined ||
-      this.endTableNumber == undefined
-    ) {
-      return;
-    }
-
     this.getOrderByType(this.activatedOrderType).then(() => {
       this.activeArray = this.activeArray.filter((value) => {
         return (

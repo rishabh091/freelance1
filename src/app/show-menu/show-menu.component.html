@@ -15,10 +15,15 @@
             <div class="text-center font-weight-bold text-uppercase bg-warning p-3 upper-rounded-corners" style="left: 4px;">{{ subCat }}</div>
             <div *ngFor="let item of menuItems[category][subCat];" class="p-3">
               <div class="d-flex justify-content-between">
-                <div>
-                  <span class="text-capitalize">{{ item.menuItemName }}</span>
-                  <span class="text-muted text-lowercase ml-1">({{ item.itemType[0] }})</span><br>
-                  <span class="text-success">₹ {{ item.basePrice }}</span>
+                <div class="d-flex">
+                  <div class="mr-3">
+                    <img [src]="getImage(item.imgURL)" class="img-fluid" style="height: 10vh; width: 10vh">
+                  </div>
+                  <div>
+                    <span class="text-capitalize">{{ item.menuItemName }}</span>
+                    <span class="text-muted text-lowercase ml-1">({{ item.itemType[0] }})</span><br>
+                    <span class="text-success">₹ {{ item.basePrice }}</span>
+                  </div>
                 </div>
                 <div class="d-flex pt-2">
                   <img src="../../assets/pencil.png" (click)="setMenuItems(item)" class="iconItem" data-toggle="modal" data-target="#updateMenuItem">
@@ -282,10 +287,22 @@
 
           <div class="form-group">
             <label>Display Image</label>
+            <image-cropper
+            *ngIf="!showProfilePic"
+            [imageChangedEvent]="imageChangedEvent"
+            [maintainAspectRatio]="true"
+            [aspectRatio]="4 / 3"
+            [resizeToWidth] =  92
+            [resizeToHeight] = 69
+            format="png"
+            style="height: 50vh;"
+            (imageCropped)="imageCropped($event)"
+          ></image-cropper>
             <input
               type="file"
               formControlName="DisplayImagePath"
               class="form-control"
+              (change)="onProfilePicUpload($event)"
             />
           </div>
           <div
@@ -396,6 +413,8 @@
               type="submit"
               class="btn btn-success rounded-0"
               style="width: 200px"
+              data-toggle="modal"
+              data-target="#updateMenuItem"
             >
               Save
             </button>

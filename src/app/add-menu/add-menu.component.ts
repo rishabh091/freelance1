@@ -93,19 +93,19 @@ export class AddMenuComponent implements OnInit {
     });
  }
 
- uploadProfilePic() {
+ uploadItemPic() {
   const imageBlob = this.dataURItoBlob(this.croppedImage );
   const file:File = new File([imageBlob], "uploadImage", { type: 'image/png' });
   const formData = new FormData();  
   formData.append('restaurantImage', file);
   formData.append('phoneNumber', localStorage.getItem('phoneWithCountry').replace('+', ''));
-  formData.append('imageType', "menuitem");
+  formData.append('imageType', "menuItem");
   formData.append('imageDetail1', this.form.value.menuItem);
   this.api.uploadImage(formData).then((res: any) => {
     this.showProfilePic = true
     this.toaster.success('Profile Picture Updated')
     this.getItemImage()
-  }).catch(error => { console.log(error) })
+  }).catch(error => { console.log(error); this.getItemImage(); })
  }
 
   getSubCategory() {
@@ -140,6 +140,7 @@ export class AddMenuComponent implements OnInit {
       this.weekDayAvailability))
 
       this.api.addMenuItem(payload).then(res => {
+        this.uploadItemPic()
         this.toaster.success('Item Added')
         this.form.reset()
         this.submitted = false
