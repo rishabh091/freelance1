@@ -30,6 +30,7 @@ import {
   RemoveMenuItemModule,
 } from '../interface/item.interface';
 import { ImageCroppedEvent } from 'ngx-image-cropper';
+import { ServiceToasterService } from '../service-toaster.service';
 
 @Component({
   selector: 'app-show-menu',
@@ -40,7 +41,9 @@ export class ShowMenuComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private auth: AuthService,
-    private api: Api
+    private api: Api,
+    public toasterService: ServiceToasterService
+
   ) {}
 
   public menuItemForm: FormGroup;

@@ -8,11 +8,7 @@ import { UserInfo } from '../interface/auth.interface';
 import { ServiceToasterService } from '../service-toaster.service';
 import { StoreIdSchema } from '../interface/interface';
 import { SubMenuCategories } from '../interface/category.interface';
-import {
-
-  CreateTableInfo,
-  ZoneSchema
-} from '../interface/zone.interface';
+import { CreateTableInfo, ZoneSchema } from '../interface/zone.interface';
 @Component({
   selector: 'app-orders',
   templateUrl: './orders.component.html',
@@ -43,10 +39,10 @@ export class OrdersComponent implements OnInit {
   categories: string[];
   subCategories: string[];
 
-  categoryName : string = "";
-  subCategoryName : string = "";
-  zoneName: string = "";
-  
+  categoryName: string = '';
+  subCategoryName: string = '';
+  zoneName: string = '';
+
   public zoneNames: CreateTableInfo[];
 
   ngOnInit(): void {
@@ -63,14 +59,14 @@ export class OrdersComponent implements OnInit {
         this.categories = res['menuCategories'];
       })
       .catch((error) => {
-        console.log(error);
+        this.toaster.failure('Unable to fetch category list! ');
       });
   }
 
   getSubCategory() {
-    console.log(this.categoryName)
+    console.log(this.categoryName);
     const storeId = localStorage.getItem('storeId');
-    let category = this.categoryName
+    let category = this.categoryName;
     //let category = this.categoryName
     const payload = new SubMenuCategories(storeId, category);
     this.api
@@ -79,7 +75,7 @@ export class OrdersComponent implements OnInit {
         this.subCategories = res['menuSubCategories'];
       })
       .catch((error) => {
-        console.log(error);
+        this.toaster.failure('Unable to fetch sub-category list! ');
       });
   }
   getZone() {
@@ -92,10 +88,9 @@ export class OrdersComponent implements OnInit {
       .then((res: any) => {
         this.zoneNames = res.zoneInfo;
         console.log(this.zoneNames);
-        
       })
       .catch((error) => {
-        console.log(error);
+        this.toaster.failure('Unable to fetch zone list! ');
       });
   }
 
@@ -112,7 +107,7 @@ export class OrdersComponent implements OnInit {
         this.activeArray = res['restaurantOrders'];
       })
       .catch((error) => {
-        console.log(error);
+        this.toaster.failure('Unable to fetch orders! ');
       });
   }
 
@@ -132,7 +127,7 @@ export class OrdersComponent implements OnInit {
         this.toaster.success(`Order marked as ${orderStatus}`);
       })
       .catch((error) => {
-        console.log(error);
+        this.toaster.failure('Unable to update status of the order! ');
       });
   }
 

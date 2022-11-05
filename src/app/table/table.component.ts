@@ -17,6 +17,7 @@ import {
   UpdateTableState,
 } from '../interface/table.interface';
 import { CreateTableInfo, ZoneSchema } from '../interface/zone.interface';
+import { ServiceToasterService } from '../service-toaster.service';
 
 @Component({
   selector: 'app-table',
@@ -42,7 +43,9 @@ export class TableComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private api: ApiAuthService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    public toasterService: ServiceToasterService
+
   ) {
     this.updateTableStateForm = this.formBuilder.group({
       zone: ['', Validators.required],

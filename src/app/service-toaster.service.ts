@@ -10,7 +10,8 @@ export class ServiceToasterService {
   text: string;
   successNote: boolean = false;
   errorNote: boolean = false;
-  
+  infoNote: boolean = false;
+
   success(text: string) {
     this.errorNote = true;
     this.text = text;
@@ -27,6 +28,16 @@ export class ServiceToasterService {
 
     setTimeout(() => {
       this.errorNote = false;
+      this.text = '';
+    }, 5000);
+  }
+
+  info(text: string) {
+    this.infoNote = true;
+    this.text = text;
+
+    setTimeout(() => {
+      this.infoNote = false;
       this.text = '';
     }, 5000);
   }

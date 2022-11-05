@@ -14,6 +14,7 @@ import {
   AddSubCategoryMenuInfo,
 } from '../interface/category.interface';
 import { StoreIdSchema } from '../interface/interface';
+import { ServiceToasterService } from '../service-toaster.service';
 
 @Component({
   selector: 'app-add-category',
@@ -33,7 +34,9 @@ export class AddCategoryComponent implements OnInit {
 
   categories: string[]
 
-  constructor(private formBuilder: FormBuilder, private api: ApiAuthService) {}
+  constructor(private formBuilder: FormBuilder, private api: ApiAuthService,
+    public toasterService: ServiceToasterService
+    ) {}
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({

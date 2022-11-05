@@ -1,27 +1,44 @@
-<div *ngIf="toasterService.successNote"
-class="bg-success m-5 p-2 success-note"
-style="bottom: 0; right: 0; position: fixed"
+<div
+  *ngIf="toasterService.successNote"
+  class="bg-success m-5 p-2 success-note"
+  style="bottom: 0; right: 0; position: fixed"
 >
-<img
-  class="img-siz"
-  src="https://cdn-icons-png.flaticon.com/512/190/190411.png"
-  alt=""
-/>
-<span class="text-light font-weight-bold ">
-  {{ toasterService.text }}
-</span>
+  <img
+    class="img-siz"
+    src="https://cdn-icons-png.flaticon.com/512/190/190411.png"
+    alt=""
+  />
+  <span class="text-light font-weight-bold">
+    {{ toasterService.text }}
+  </span>
 </div>
 
-<div *ngIf="toasterService.errorNote"
-class="bg-danger m-5 p-2 success-note"
-style="bottom: 0; right: 0; position: fixed"
+<div
+  *ngIf="toasterService.errorNote"
+  class="bg-danger m-5 p-2 success-note"
+  style="bottom: 0; right: 0; position: fixed"
 >
-<img
-class="img-siz"
-src="https://cdn-icons-png.flaticon.com/512/190/190406.png"
-alt=""
-/>
-<span class="text-light font-weight-bold">
-{{ toasterService.text }}
-</span>
+  <img
+    class="img-siz"
+    src="https://cdn-icons-png.flaticon.com/512/190/190406.png"
+    alt=""
+  />
+  <span class="text-light font-weight-bold">
+    {{ toasterService.text }}
+  </span>
+</div>
+
+<div
+  *ngIf="toasterService.infoNote"
+  class="bg-info m-5 p-2 success-note"
+  style="bottom: 0; right: 0; position: fixed"
+>
+  <img
+    class="img-siz"
+    src="https://cdn-icons-png.flaticon.com/512/277/277964.png"
+    alt=""
+  />
+  <span class="text-light font-weight-bold">
+    {{ toasterService.text }}
+  </span>
 </div>
