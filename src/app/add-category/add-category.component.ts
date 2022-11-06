@@ -5,6 +5,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { ImageCroppedEvent } from 'ngx-image-cropper';
 import { AuthService as ApiAuthService } from '../api/auth.service';
 import { UserInfo } from '../interface/auth.interface';
 import {
@@ -33,6 +34,10 @@ export class AddCategoryComponent implements OnInit {
   errorNote: boolean = false;
 
   categories: string[]
+
+  public croppedImage: string
+  public imageChangedEvent: any
+  public showProfilePic: boolean = true
 
   constructor(private formBuilder: FormBuilder, private api: ApiAuthService,
     public toasterService: ServiceToasterService
@@ -99,9 +104,41 @@ export class AddCategoryComponent implements OnInit {
       });
   }
 
-  addSubCategory(): void {
-    console.log('diuu');
+  onProfilePicUpload(event) {
+    this.imageChangedEvent = event
+    this.showProfilePic = false
+  }
 
+  imageCropped(event: ImageCroppedEvent) {
+    this.croppedImage = event.base64;
+  }
+
+  dataURItoBlob(dataURI : any) {
+    const binary = atob(dataURI.split(',')[1]);
+    const array = [];
+    for (let i = 0; i < binary.length; i++) {
+      array.push(binary.charCodeAt(i));
+    }
+    return new Blob([new Uint8Array(array)], {
+      type: 'image/png'
+    });
+ }
+
+ uploadItemPic() {
+  const imageBlob = this.dataURItoBlob(this.croppedImage );
+  const file:File = new File([imageBlob], "uploadImage", { type: 'image/png' });
+  const formData = new FormData();  
+  formData.append('restaurantImage', file);
+  formData.append('phoneNumber', localStorage.getItem('phoneWithCountry').replace('+', ''));
+  formData.append('imageType', "submenuImage");
+  formData.append('imageDetail1', this.subCategoryForm.value.menuCategory);
+  formData.append('imageDetail2', this.subCategoryForm.value.menuSubCategory);
+  this.api.uploadImage(formData).then((res: any) => {
+    this.showProfilePic = true
+  }).catch(error => { console.log(error); })
+ }
+
+  addSubCategory(): void {
     this.subCategorySubmitted = true;
     if (this.subCategoryForm.invalid) {
       return;
@@ -121,6 +158,7 @@ export class AddCategoryComponent implements OnInit {
       .addSubCategory(payload)
       .then((res: any) => {
         if (res.status == 'success') {
+          this.uploadItemPic()
           this.text = 'You have added the sub category successfully!';
           this.success(this.text);
         } else {
