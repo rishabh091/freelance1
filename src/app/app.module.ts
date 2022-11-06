@@ -27,6 +27,7 @@ import { StaffComponent } from './staff/staff.component';
 import { ToasterComponent } from './toaster/toaster.component';
 import { DetailsComponent } from './signup/details/details.component';
 import { ImageCropperModule } from 'ngx-image-cropper';
+import { QRCodeModule } from 'angularx-qrcode';
 
 @NgModule({
   declarations: [
@@ -56,6 +57,7 @@ import { ImageCropperModule } from 'ngx-image-cropper';
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
+    QRCodeModule,
     ImageCropperModule
   ],
   providers: [],

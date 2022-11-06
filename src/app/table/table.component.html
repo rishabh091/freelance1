@@ -102,6 +102,10 @@
             >
           </div>
         </div>
+
+        <div class="mt-4 mb-4 text-center">
+          <qrcode [qrdata]="qrCode" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
+        </div>
       </div>
       <!-- <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">

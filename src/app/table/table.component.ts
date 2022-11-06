@@ -39,6 +39,8 @@ export class TableComponent implements OnInit {
   public tableNumber: number;
   public moveToTableNumber: number
 
+  public qrCode: string = `https://hiveezy.com/store?storeid=${localStorage.getItem('storeId')}&table={tableNumber}`
+
   constructor(
     private formBuilder: FormBuilder,
     private api: ApiAuthService,
@@ -91,6 +93,9 @@ export class TableComponent implements OnInit {
     this.tableNumber = tableNumber;
     this.getTableTransaction(tableNumber);
     this.getTableState(tableNumber);
+
+    this.qrCode = this.qrCode.replace('{tableNumber}', tableNumber + '')
+    console.log(this.qrCode)
   }
 
   getTableTransaction(tableNumber: number) {
