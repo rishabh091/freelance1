@@ -8,6 +8,7 @@ import {
 import { ActivatedRoute } from '@angular/router';
 import { AuthService as ApiAuthService } from '../api/auth.service';
 import { UserInfo } from '../interface/auth.interface';
+import { StoreIdSchema } from '../interface/interface';
 import {
   GetTableInfo,
   GetTableState,
@@ -40,7 +41,9 @@ export class TableComponent implements OnInit {
   public tableNumber: number;
   public moveToTableNumber: number
 
-  public qrCode: string = `https://hiveezy.com/store?storeid=${localStorage.getItem('storeId')}&table={tableNumber}`
+  public isPrePaid: boolean = false
+
+  public qrCode: string = `https://hiveezy.com/store?storeid=${localStorage.getItem('storeId')}`
 
   constructor(
     private formBuilder: FormBuilder,
@@ -90,6 +93,19 @@ export class TableComponent implements OnInit {
   ngOnInit(): void {
     this.selectedZone = this.route.snapshot.paramMap.get('zone');
     this.getZone();
+    this.getPaymentInfo()
+  }
+
+  getPaymentInfo(): void {
+    const storeId = localStorage.getItem('storeId');
+    this.api
+      .getPaymentInfo(new StoreIdSchema(storeId))
+      .then((res: any) => {
+        this.isPrePaid = res.isPrePaid
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   getTableData(tableNumber: number) {
@@ -97,8 +113,9 @@ export class TableComponent implements OnInit {
     this.getTableTransaction(tableNumber);
     this.getTableState(tableNumber);
 
-    this.qrCode = this.qrCode.replace('{tableNumber}', tableNumber + '')
-    console.log(this.qrCode)
+    if (!this.isPrePaid) {
+      this.qrCode = this.qrCode + `&table=${tableNumber}`
+    }
   }
 
   getTableTransaction(tableNumber: number) {
