@@ -12,6 +12,7 @@ import { getAuth, RecaptchaVerifier } from 'firebase/auth';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AuthService } from '../auth/auth.service';
 import { Data } from '../countryCodes.data';
+import { ServiceToasterService } from '../service-toaster.service';
 
 @Component({
   selector: 'app-signup',
@@ -35,7 +36,9 @@ export class SignupComponent implements OnInit {
     private router: Router,
     private apiAuthService: ApiAuthService,
     private auth: AuthService,
-    public afAuth: AngularFireAuth
+    public afAuth: AngularFireAuth,
+    public toasterService: ServiceToasterService
+
   ) {
     this.windowRef = window;
   }

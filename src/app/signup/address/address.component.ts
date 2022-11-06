@@ -11,6 +11,7 @@ import { UpdateAddressModule, UserInfo, StoreAddress } from 'src/app/interface/a
 import { AuthService as ApiAuthService } from 'src/app/api/auth.service';
 import { AuthService } from 'src/app/auth/auth.service';
 import { Router } from '@angular/router';
+import { ServiceToasterService } from 'src/app/service-toaster.service';
 
 @Component({
   selector: 'app-address',
@@ -29,7 +30,9 @@ export class AddressComponent implements OnInit {
     private route: ActivatedRoute,
     private apiAuthService: ApiAuthService,
     private auth: AuthService,
-    private router: Router, 
+    private router: Router,
+    public toasterService: ServiceToasterService
+
     ) { }
 
   ngOnInit(): void {
