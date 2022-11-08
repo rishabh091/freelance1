@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { RegisterModule, UpdateAboutStore, UpdateAddressModule, UpdateContactInfoModule, UpdateName, UpdatePaymentModule, UpdateStoreTimings, UserInfo } from 'src/app/interface/auth.interface'
-import { AddCategory, AddSubCategory, RemoveMenuCategory, SubMenuCategories, UpdateCategory, UpdateItemCurrentAvailability, UpdateMenuItemDailyAvailability, UpdateMenuItemPrice } from '../interface/category.interface';
+import { AddCategory, AddSubCategory, CategoryImageInfo, RemoveMenuCategory, SubMenuCategories, UpdateCategory, UpdateItemCurrentAvailability, UpdateMenuItemDailyAvailability, UpdateMenuItemPrice } from '../interface/category.interface';
 import { AddMenuItem, RemoveMenuItemModule } from '../interface/item.interface';
 import { AddStaff, GetStaff, RemoveStaff, UpdateStaff } from '../interface/staff.interface';
 import { CreateZone, RemoveZone, ZoneSchema } from '../interface/zone.interface';
@@ -246,5 +246,10 @@ export class AuthService {
 
   getImageUrl(url: string) {
     return "https://media.hiveezy.com/" + url + '?' + Date.now()
+  }
+
+  getCategoryImage(payload: CategoryImageInfo) {
+    let url = environment.apiUrl + '/getmenuimage'
+    return this.httpClient.post(url, payload).toPromise()
   }
 }

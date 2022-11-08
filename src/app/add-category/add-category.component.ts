@@ -46,6 +46,7 @@ export class AddCategoryComponent implements OnInit {
   ngOnInit(): void {
     this.form = this.formBuilder.group({
       menuCategory: ['', Validators.required],
+      imageURL: ['', Validators.required]
     });
 
     this.subCategoryForm = this.formBuilder.group({
@@ -86,6 +87,7 @@ export class AddCategoryComponent implements OnInit {
       .addCategory(payload)
       .then((res: any) => {
         if (res.status == 'success') {
+          this.uploadItemPic(this.form.value.menuCategory)
           this.text = 'You have added the category successfully!';
           this.success(this.text);
         } else {
@@ -124,15 +126,17 @@ export class AddCategoryComponent implements OnInit {
     });
  }
 
- uploadItemPic() {
+ uploadItemPic(category: string, subCategory: any = undefined) {
   const imageBlob = this.dataURItoBlob(this.croppedImage );
   const file:File = new File([imageBlob], "uploadImage", { type: 'image/png' });
   const formData = new FormData();  
   formData.append('restaurantImage', file);
   formData.append('phoneNumber', localStorage.getItem('phoneWithCountry').replace('+', ''));
-  formData.append('imageType', "submenuImage");
-  formData.append('imageDetail1', this.subCategoryForm.value.menuCategory);
-  formData.append('imageDetail2', this.subCategoryForm.value.menuSubCategory);
+  formData.append('imageType', "menu");
+  formData.append('imageDetail1', category);
+  if (subCategory) {
+    formData.append('imageDetail2', subCategory);
+  }
   this.api.uploadImage(formData).then((res: any) => {
     this.showProfilePic = true
   }).catch(error => { console.log(error); })
@@ -158,7 +162,7 @@ export class AddCategoryComponent implements OnInit {
       .addSubCategory(payload)
       .then((res: any) => {
         if (res.status == 'success') {
-          this.uploadItemPic()
+          this.uploadItemPic(this.subCategoryForm.value.menuCategory, this.subCategoryForm.value.menuSubCategory)
           this.text = 'You have added the sub category successfully!';
           this.success(this.text);
         } else {

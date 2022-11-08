@@ -10,7 +10,9 @@ import { UserInfo } from '../interface/auth.interface';
 import {
   AddSubCategory,
   AddSubCategoryMenuInfo,
+  CategoryImageInfo,
   ItemDailyAvailability,
+  MenuCategoryImage,
   MenuInfo,
   MenuItemCurrentAvailability,
   MenuItemPrice,
@@ -199,10 +201,6 @@ export class ShowMenuComponent implements OnInit {
         for (let item of res['menuItems']) {
           this.menuItems[item.menu][item.subMenu].push(item);
         }
-
-        console.log(this.menuGroups);
-        console.log(this.subMenuGroups);
-        console.log(this.menuItems);
       })
       .catch((error) => {
         console.log(error);
@@ -325,10 +323,26 @@ export class ShowMenuComponent implements OnInit {
     );
   }
 
-  expand(event, index: number) {
-	const element = document.getElementById('menuDropdown' + index)
-	if (element.clientHeight) element.style.height = '0px'
-	else element.style.height = '100%'
+  expand(event, index: number, category: string) {
+    const element = document.getElementById('menuDropdown' + index)
+    if (element.clientHeight) element.style.height = '0px'
+    else element.style.height = '100%'
+
+    // console.log(this.menuGroups);
+    // console.log(this.subMenuGroups);
+    // console.log(this.menuItems);
+
+    if (element.clientHeight) {
+      const phoneNumber = localStorage.getItem('phoneWithCountry').replace('+', '');
+      let promises = this.subMenuGroups[category].map((subcat: string) => {
+        const payload = new CategoryImageInfo(new UserInfo(phoneNumber), new MenuCategoryImage(category, subcat))
+        return this.api.getCategoryImage(payload)
+      })
+  
+      Promise.all(promises).then((res: any) => {
+        console.log(res)
+      }).catch(error => { console.log(error) })
+    }
   }
 
   // updateCategory(): void {

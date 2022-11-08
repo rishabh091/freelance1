@@ -164,3 +164,23 @@ export class SubMenuCategories {
         this.menu = menu
     }
 }
+
+export class CategoryImageInfo {
+    userInfo: UserInfo
+    menuInfo: MenuCategoryImage
+
+    constructor(userInfo: UserInfo, menuInfo: MenuCategoryImage) {
+        this.userInfo = userInfo
+        this.menuInfo = menuInfo
+    }
+}
+
+export class MenuCategoryImage {
+    menuCategory: string
+    menuSubCategory: string
+
+    constructor(menuCategory: string, menuSubCategory: string) {
+        this.menuCategory = menuCategory
+        this.menuSubCategory = menuSubCategory
+    }
+}
