@@ -133,12 +133,11 @@ export class AddCategoryComponent implements OnInit {
   formData.append('restaurantImage', file);
   formData.append('phoneNumber', localStorage.getItem('phoneWithCountry').replace('+', ''));
   formData.append('imageType', "menu");
-  formData.append('imageDetail1', category);
-  if (subCategory) {
-    formData.append('imageDetail2', subCategory);
-  }
+  formData.append('imageDetail1', subCategory ? category: '');
+  formData.append('imageDetail2', subCategory ? subCategory: category);
+  this.showProfilePic = false
   this.api.uploadImage(formData).then((res: any) => {
-    this.showProfilePic = true
+    this.showProfilePic = false
   }).catch(error => { console.log(error); })
  }
 
