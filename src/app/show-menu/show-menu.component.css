@@ -94,3 +94,9 @@
   border-top-left-radius: 1em;
   border-top-right-radius: 1em;
 }
+
+.subcat-bg {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}

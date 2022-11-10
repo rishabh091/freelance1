@@ -83,6 +83,8 @@ export class ShowMenuComponent implements OnInit {
   public imageChangedEvent: any
   public showProfilePic: boolean = true
 
+  public subCategoryImage = {}
+
   setMenuItems(items) {
     this.setCategoryName = items.menu;
     this.setSubCategoryName = items.subMenu;
@@ -328,20 +330,20 @@ export class ShowMenuComponent implements OnInit {
     if (element.clientHeight) element.style.height = '0px'
     else element.style.height = '100%'
 
-    // console.log(this.menuGroups);
-    // console.log(this.subMenuGroups);
-    // console.log(this.menuItems);
+    console.log(this.menuGroups);
+    console.log(this.subMenuGroups);
+    console.log(this.menuItems);
 
     if (element.clientHeight) {
       const phoneNumber = localStorage.getItem('phoneWithCountry').replace('+', '');
-      let promises = this.subMenuGroups[category].map((subcat: string) => {
+      this.subMenuGroups[category].map((subcat: string) => {
         const payload = new CategoryImageInfo(new UserInfo(phoneNumber), new MenuCategoryImage(category, subcat))
-        return this.api.getCategoryImage(payload)
+        this.api.getCategoryImage(payload).then((res: any) => {
+          this.subCategoryImage[category + '-' + subcat] = res
+          console.log(this.subCategoryImage)
+          document.getElementById(category + '-' + subcat).style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.60), rgba(0, 0, 0, 0.60)), url(${this.getImage(res['imgURL'])})`
+        })
       })
-  
-      Promise.all(promises).then((res: any) => {
-        console.log(res)
-      }).catch(error => { console.log(error) })
     }
   }
 
