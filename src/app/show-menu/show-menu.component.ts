@@ -203,6 +203,8 @@ export class ShowMenuComponent implements OnInit {
         for (let item of res['menuItems']) {
           this.menuItems[item.menu][item.subMenu].push(item);
         }
+
+        this.getCategories()
       })
       .catch((error) => {
         console.log(error);
@@ -340,7 +342,6 @@ export class ShowMenuComponent implements OnInit {
         const payload = new CategoryImageInfo(new UserInfo(phoneNumber), new MenuCategoryImage(category, subcat))
         this.api.getCategoryImage(payload).then((res: any) => {
           this.subCategoryImage[category + '-' + subcat] = res
-          console.log(this.subCategoryImage)
           document.getElementById(category + '-' + subcat).style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.60), rgba(0, 0, 0, 0.60)), url(${this.getImage(res['imgURL'])})`
         })
       })
