@@ -160,8 +160,13 @@ export class ShowMenuComponent implements OnInit {
     const storeId = localStorage.getItem('storeId');
     this.api
       .getMenuCategory(new StoreIdSchema(storeId))
-      .then((res) => {
-        console.log(res);
+      .then((res: any) => {
+        for (let obj of res['menuCategories']) {
+          let element = document.getElementById(obj.menu)
+          if (element) {
+            element.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.60), rgba(0, 0, 0, 0.60)), url(${this.getImage(obj['imgURL'])})`
+          }
+        }
       })
       .catch((error) => {
         console.log(error);
@@ -339,10 +344,14 @@ export class ShowMenuComponent implements OnInit {
     if (element.clientHeight) {
       const phoneNumber = localStorage.getItem('phoneWithCountry').replace('+', '');
       this.subMenuGroups[category].map((subcat: string) => {
-        const payload = new CategoryImageInfo(new UserInfo(phoneNumber), new MenuCategoryImage(category, subcat))
+        const payload = new CategoryImageInfo(new UserInfo(phoneNumber), new MenuCategoryImage(category, subcat['subMenu']))
         this.api.getCategoryImage(payload).then((res: any) => {
-          this.subCategoryImage[category + '-' + subcat] = res
-          document.getElementById(category + '-' + subcat).style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.60), rgba(0, 0, 0, 0.60)), url(${this.getImage(res['imgURL'])})`
+          this.subCategoryImage[category + '-' + subcat['subMenu']] = res
+          console.log(this.menuItems[category][subcat['subMenu']])
+          let element = document.getElementById(category + '-' + subcat['subMenu'])
+          if (element) {
+            element.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.60), rgba(0, 0, 0, 0.60)), url(${this.getImage(res['imgURL'])})`
+          }
         })
       })
     }
