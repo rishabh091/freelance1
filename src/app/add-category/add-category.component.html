@@ -1,7 +1,7 @@
 <div class="background-image">
   <div class="center">
-    <div class="container bg-light m-3 p-3" style="border-radius: 1vh">
-      <div class="center heading m-2">ADD CATEGORY TO THE MENU</div>
+    <div class="container m-3 p-3" style="border-radius: 1vh; background-color: #dbb300;">
+      <div class="center heading m-2 text-light">ADD CATEGORY TO THE MENU</div>
       <div class="register-form mt-5">
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
           <div class="form-group">
@@ -52,8 +52,8 @@
       </div>
     </div>
 
-    <div class="container bg-light m-3 p-3" style="border-radius: 1vh">
-      <div class="center heading m-2">ADD SUB-CATEGORY TO CATEGORY</div>
+    <div class="container m-3 p-3" style="border-radius: 1vh;background-color: #dbb300;">
+      <div class="center heading text-light m-2">ADD SUB-CATEGORY TO CATEGORY</div>
       <div class="register-form mt-5">
         <form
           [formGroup]="subCategoryForm"
@@ -64,7 +64,7 @@
             <label>Menu Category</label>
             <select class="form-control" formControlName="menuCategory">
               <option value="">--Select a category--</option>
-              <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
+              <option *ngFor="let category of categories" [value]="category.menu">{{ category.menu }}</option>
             </select>
           </div>
           <div

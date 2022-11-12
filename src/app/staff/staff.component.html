@@ -1,7 +1,7 @@
 <div class="background-image">
   <div class="center">
-    <div class="container bg-light m-3 p-3" style="border-radius: 1vh">
-      <div class="center heading m-2">STAFF</div>
+    <div class="container mt-4 m-3 p-3" style="border-radius: 1vh; background-color: #dbb300;">
+      <div class="center heading m-2 text-light font-weight-bold">STAFF</div>
       <div class="center">
         <div class="sub-heading m-2 pb-4 mb-5">
           khf shfdd iurddrig dg rdihgi df kfsjf h fufgur ug rugu gfd
@@ -30,7 +30,7 @@
               <th>Actions</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody class="bg-light">
             <tr *ngFor="let st of staff; let i = index" class="text-center">
               <td class="text-uppercase">{{ i + 1 }}</td>
               <td class="text-uppercase">{{ st.name }}</td>
@@ -307,6 +307,7 @@
                 type="submit"
                 class="btn btn-warning rounded-0"
                 style="width: 200px; margin-bottom: 20px; margin-top: 20px"
+
               >
                 UPDATE
               </button>
@@ -338,6 +339,8 @@
           class="btn btn-warning rounded-0"
           (click)="removeStaff(1)"
           style="width: 200px; margin-bottom: 20px; margin-top: 20px"
+
+
         >
           REMOVE
         </button>

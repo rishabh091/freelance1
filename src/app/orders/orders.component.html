@@ -60,8 +60,8 @@
               (change)="getSubCategory()"
             >
               <option value="">--Select Category--</option>
-              <option *ngFor="let category of categories" [value]="category">
-                {{ category }}
+              <option *ngFor="let category of categories" [value]="category.menu">
+                {{ category.menu }}
               </option>
             </select>
           </div>
@@ -69,8 +69,8 @@
           <div class="col-lg-4 p-2">
             <select class="form-control" [(ngModel)]="subCategoryName">
               <option value="">--Select SubCategory--</option>
-              <option *ngFor="let sub of subCategories" [value]="sub">
-                {{ sub }}
+              <option *ngFor="let sub of subCategories" [value]="sub.submenu">
+                {{ sub.submenu }}
               </option>
             </select>
           </div>

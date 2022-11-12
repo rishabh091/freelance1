@@ -33,7 +33,7 @@ export class AddCategoryComponent implements OnInit {
   successNote: boolean = false;
   errorNote: boolean = false;
 
-  categories: string[]
+  categories: any
 
   public croppedImage: string
   public imageChangedEvent: any
@@ -61,7 +61,8 @@ export class AddCategoryComponent implements OnInit {
   getCategory() {
     const storeId = localStorage.getItem('storeId')
     this.api.getMenuCategory(new StoreIdSchema(storeId)).then(res => {
-      this.categories = res['menuCategories']
+      this.categories = res['menuCategories'];
+      
     }).catch(error => { console.log(error) })
   }
 

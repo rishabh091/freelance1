@@ -1,12 +1,17 @@
 <div class="background-image">
   <div class="center">
-    <div class="container bg-light m-3 p-3" style="border-radius: 1vh">
-      <div class="center heading m-2">ZONES</div>
+    <div
+      class="container m-3 p-3"
+      style="border-radius: 1vh; background-color: #dbb300"
+    >
+      <div class="center heading m-2 text-light">ZONES</div>
 
-      <div class="addButton">
+      <div class="mb-3"
+      style="text-align: right"
+      >
         <button
           type="button"
-          class="btn btn-warning float-right"
+          class="btn btn-warning text-light font-weight-bold"
           data-toggle="modal"
           data-target="#addZone"
         >
@@ -17,9 +22,13 @@
       <div class="zones">
         <div *ngFor="let z of zone; let i = index">
           <div class="zone font-weight-bold" (click)="goToTables(z)">
-            <div class="zoneName">{{z.zone}}</div>
-            <div (click)="removeZone($event,i)" >
-              <img  class="deleteIcon mt-3" src="../../assets/delete.png" alt="">
+            <div class="zoneName mt-2">{{ z.zone }}</div>
+            <div (click)="removeZone($event, i)">
+              <img
+                class="deleteIcon mt-3"
+                src="../../assets/delete.png"
+                alt=""
+              />
             </div>
           </div>
         </div>
@@ -27,9 +36,6 @@
     </div>
   </div>
 </div>
-
-
-
 
 <div class="modal" id="addZone">
   <div class="modal-dialog modal-dialog-centered">
@@ -61,11 +67,16 @@
 
             <div class="form-group">
               <label>Start Table</label>
-              <input type="number" formControlName="startTableNumber" class="form-control" />
-
+              <input
+                type="number"
+                formControlName="startTableNumber"
+                class="form-control"
+              />
             </div>
             <div
-              *ngIf="addZoneSubmitted && addZoneControls.startTableNumber.errors"
+              *ngIf="
+                addZoneSubmitted && addZoneControls.startTableNumber.errors
+              "
               class="text-danger"
             >
               <div *ngIf="addZoneControls.startTableNumber.errors.required">
@@ -75,8 +86,11 @@
 
             <div class="form-group">
               <label>End Table Number</label>
-              <input type="number" formControlName="endTableNumber" class="form-control" />
-
+              <input
+                type="number"
+                formControlName="endTableNumber"
+                class="form-control"
+              />
             </div>
             <div
               *ngIf="addZoneSubmitted && addZoneControls.endTableNumber.errors"

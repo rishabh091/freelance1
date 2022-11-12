@@ -1,5 +1,5 @@
 .background-image {
-  background-color: #424c5a;
+  background-color: #f1d246;
 
   background-repeat: repeat;
   background-attachment: fixed;
@@ -51,10 +51,10 @@ label {
 }
 
 .error-color {
-  color: #ff9393;
+  color: red;
 }
 
 .form-control.is-invalid,
 .was-validated .form-control:invalid {
-  border-color: #ff9393;
+  border-color: red;
 }

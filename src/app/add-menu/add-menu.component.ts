@@ -26,8 +26,8 @@ export class AddMenuComponent implements OnInit {
   weekDayAvailability: boolean[] = [false, false, false, false, false, false, false]
   weekDayAvailabilityError = true
 
-  categories: string[]
-  subCategories: string[]
+  categories: any
+  subCategories:any
 
   public croppedImage: string
   public imageChangedEvent: any

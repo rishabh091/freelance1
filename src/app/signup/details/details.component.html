@@ -8,7 +8,7 @@
     </div>
     <div class="center heading m-2">Restaurant Details</div>
     <div class="center">
-      <div class="container m-3 p-3" style="background-color: #4c5462">
+      <div class="container m-3 p-3" style="background-color: #dbb300">
         <div class="center"></div>
         <div class="register-form mt-3">
             <form [formGroup]="form" (ngSubmit)="onSubmit()">
@@ -91,9 +91,9 @@
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="form-group col-sm-6">
-                      <div class="custom-control custom-switch">
+                <div class="row ">
+                    <div class="form-group center mt-2">
+                      <div class="custom-control custom-switch ">
                         <input type="checkbox" formControlName="isPrePaid"
                          class="custom-control-input form-control" id="customSwitch1" 
                          [ngClass]="{ 'is-invalid': submitted && f.isPrePaid.errors }">

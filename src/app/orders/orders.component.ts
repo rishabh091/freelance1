@@ -36,8 +36,8 @@ export class OrdersComponent implements OnInit {
   activeArray: any = [];
   activatedOrderType: string = this.OrderTypes.NEW;
 
-  categories: string[];
-  subCategories: string[];
+  categories: any
+  subCategories: any
 
   categoryName: string = '';
   subCategoryName: string = '';
