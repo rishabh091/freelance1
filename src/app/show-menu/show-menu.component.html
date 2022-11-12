@@ -77,72 +77,6 @@
   </div>
 </div>
 
-<!-- <div class="modal" id="updateCategory">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">
-          UPDATE<span class="text-warning"> CATEGORY</span>
-        </h4>
-        <button type="button" class="close" data-dismiss="modal">
-          &times;
-        </button>
-      </div>
-      <div class="modal-body">
-        <form [formGroup]="updateCategoryForm" (ngSubmit)="updateCategory()">
-          <div class="form-group">
-            <label>Item Category</label>
-            <input
-              type="text"
-              formControlName="storeSubCategory"
-              class="form-control"
-              [ngClass]="{
-                'is-invalid':
-                  updateCategorySubmitted &&
-                  updateCategoryFormControls.storeSubCategory.errors
-              }"
-            />
-            <div
-              *ngIf="
-                updateCategorySubmitted &&
-                updateCategoryFormControls.storeSubCategory.errors
-              "
-              class="text-danger"
-            >
-              <div
-                *ngIf="
-                  updateCategoryFormControls.storeSubCategory.errors.required
-                "
-              >
-                Category Name is required
-              </div>
-            </div>
-          </div>
-
-          <div class="d-flex justify-content-around mt-4 mb-4">
-            <button
-              type="button"
-              class="btn rounded-0 btn-outline-warning font-weight-bold"
-              data-dismiss="modal"
-              style="width: 20vh"
-            >
-              CANCEL
-            </button>
-            <button
-              type="submit"
-              class="btn btn-warning rounded-0 font-weight-bold"
-              (click)="updateCategory()"
-              style="width: 20vh; color: white"
-            >
-              UPDATE
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-</div> -->
-
 <div class="modal" id="deleteSubCategory">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
@@ -179,62 +113,6 @@
     </div>
   </div>
 </div>
-<!-- 
-<div class="modal" id="updateSubCategory">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">
-          UPDATE<span class="text-warning"> SUB CATEGORY</span>
-        </h4>
-        <button type="button" class="close" data-dismiss="modal">
-          &times;
-        </button>
-      </div>
-      <div class="modal-body">
-        <form [formGroup]="updateCategoryForm" (ngSubmit)="updateCategory()">
-          <div class="form-group">
-            <label>Is PrePaid? </label>
-
-            <select class="form-control" formControlName="isPrePaid">
-              <option value="" disabled>--Select--</option>
-              <option value="true">True</option>
-              <option value="false">False</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label for=""> isFoodServedToTable ? </label>
-            <select class="form-control" formControlName="isFoodServedToTable">
-              <option value="" disabled>--Select--</option>
-              <option value="true">True</option>
-              <option value="false">False</option>
-            </select>
-          </div>
-
-          <div class="d-flex justify-content-around mt-4 mb-4">
-            <button
-              type="button"
-              class="btn rounded-0 btn-outline-warning font-weight-bold"
-              data-dismiss="modal"
-              style="width: 20vh"
-            >
-              CANCEL
-            </button>
-            <button
-              type="submit"
-              class="btn btn-warning rounded-0 font-weight-bold"
-              (click)="updateCategory()"
-              style="width: 20vh; color: white"
-            >
-              UPDATE
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-</div> -->
 
 <div class="modal" id="updateMenuItem">
   <div class="modal-dialog modal-dialog-centered">
@@ -262,22 +140,6 @@
           <div *ngIf="submitted && f.ItemName.errors" class="text-danger mb-5">
             <div *ngIf="f.ItemName.errors.required">Item Name is required</div>
           </div>
-
-          <!-- <div class="form-group">
-            <label>Item Type</label>
-            <select class="form-control" formControlName="ItemType">
-              <option value="">--Select--</option>
-              <option value="veg">Veg</option>
-              <option value="nonveg">Non-Veg</option>
-              <option value="egg">Egg</option>
-              <option value="vegan">Vegan</option>
-              <option value="alchoholic">Alcholic</option>
-              <option value="nonalchoholic">Non-Alcholic</option>
-            </select>
-          </div>
-          <div *ngIf="submitted && f.ItemType.errors" class="text-danger mb-5">
-            <div *ngIf="f.ItemType.errors.required">Item type is required</div>
-          </div> -->
 
           <div class="form-group">
             <label>Price</label>
@@ -313,102 +175,6 @@
           >
             Image is required
           </div>
-          <!-- 
-          <div class="form-group">
-            <label>Available From</label>
-            <input
-              type="time"
-              formControlName="availableFrom"
-              class="form-control"
-            />
-          </div>
-          <div
-            *ngIf="submitted && f.availableFrom.errors"
-            class="text-danger mb-5"
-          >
-            Available From is required
-          </div>
-
-          <div class="form-group">
-            <label>Available Till</label>
-            <input
-              type="time"
-              formControlName="availableTill"
-              class="form-control"
-            />
-          </div>
-          <div
-            *ngIf="submitted && f.availableTill.errors"
-            class="text-danger mb-5"
-          >
-            Available Till is required
-          </div>
-
-          <div class="form-group">
-            <label>Week Day Availablitiy</label>
-            <div>
-              <input
-                type="checkbox"
-                [(ngModel)]="weekDayAvailability[0]"
-                [ngModelOptions]="{ standalone: true }"
-              />
-              Sunday
-            </div>
-            <div>
-              <input
-                type="checkbox"
-                [(ngModel)]="weekDayAvailability[1]"
-                [ngModelOptions]="{ standalone: true }"
-              />
-              Monday
-            </div>
-            <div>
-              <input
-                type="checkbox"
-                [(ngModel)]="weekDayAvailability[2]"
-                [ngModelOptions]="{ standalone: true }"
-              />
-              Tuesday
-            </div>
-            <div>
-              <input
-                type="checkbox"
-                [(ngModel)]="weekDayAvailability[3]"
-                [ngModelOptions]="{ standalone: true }"
-              />
-              Wednesday
-            </div>
-            <div>
-              <input
-                type="checkbox"
-                [(ngModel)]="weekDayAvailability[4]"
-                [ngModelOptions]="{ standalone: true }"
-              />
-              Thrusday
-            </div>
-            <div>
-              <input
-                type="checkbox"
-                [(ngModel)]="weekDayAvailability[5]"
-                [ngModelOptions]="{ standalone: true }"
-              />
-              Friday
-            </div>
-            <div>
-              <input
-                type="checkbox"
-                [(ngModel)]="weekDayAvailability[6]"
-                [ngModelOptions]="{ standalone: true }"
-              />
-              Satday
-            </div>
-          </div>
-          <div
-            *ngIf="submitted && weekDayAvailabilityError"
-            class="text-danger mb-5"
-          >
-            You need to select atleast 1 day
-          </div> -->
 
           <div class="form-group text-right">
             <button

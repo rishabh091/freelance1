@@ -64,7 +64,6 @@ export class OrdersComponent implements OnInit {
   }
 
   getSubCategory() {
-    console.log(this.categoryName);
     const storeId = localStorage.getItem('storeId');
     let category = this.categoryName;
     //let category = this.categoryName
@@ -144,13 +143,22 @@ export class OrdersComponent implements OnInit {
   }
 
   applyFilter() {
-    this.getOrderByType(this.activatedOrderType).then(() => {
-      this.activeArray = this.activeArray.filter((value) => {
-        return (
-          value.table >= this.startTableNumber &&
-          value.table <= this.endTableNumber
-        );
+    console.log(this.categoryName)
+    console.log(this.subCategoryName)
+    console.log(this.zoneName)
+
+    if (this.startTableNumber && this.endTableNumber) {
+      this.getOrderByType(this.activatedOrderType).then(() => {
+        this.activeArray = this.activeArray.filter((value) => {
+          return (
+            value.table >= this.startTableNumber &&
+            value.table <= this.endTableNumber
+          );
+        });
       });
-    });
+    }
+    if (this.categoryName) {
+      console.log(this.activeArray)
+    }
   }
 }

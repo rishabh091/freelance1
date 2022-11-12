@@ -230,20 +230,10 @@ export class ShowMenuComponent implements OnInit {
 
   editProduct(): void {
     this.submitted = true;
+    console.log(this.menuItemForm)
     if (this.menuItemForm.invalid) {
       return;
     }
-
-    // this.weekDayAvailability.map((available) => {
-    //   if (available) this.weekDayAvailabilityError = false;
-    // });
-    // this.menuItemForm.value.availableFrom = this.convertToSeconds(
-    //   this.menuItemForm.value.availableFrom
-    // );
-    // this.menuItemForm.value.availableTill = this.convertToSeconds(
-    //   this.menuItemForm.value.availableTill
-    // );
-
     const phoneNumber = localStorage
       .getItem('phoneWithCountry')
       .replace('+', '');
@@ -256,28 +246,6 @@ export class ShowMenuComponent implements OnInit {
         this.menuItemForm.value.Price
       )
     );
-
-    // const currentAvailabilityPayload = new UpdateItemCurrentAvailability(
-    //   new UserInfo(phoneNumber),
-    //   new MenuItemCurrentAvailability(
-    //     this.category,
-    //     this.subCategory,
-    //     this.menuItemForm.value.ItemName,
-    //     this.menuItemForm.value.AvailableNow
-    //   )
-    // );
-
-    // const dailyAvailabilityPayload = new UpdateMenuItemDailyAvailability(
-    //   new UserInfo(phoneNumber),
-    //   new ItemDailyAvailability(
-    //     this.category,
-    //     this.subCategory,
-    //     this.menuItemForm.value.ItemName,
-    //     this.menuItemForm.value.availableFrom,
-    //     this.menuItemForm.value.availableTill,
-    //     this.weekDayAvailability
-    //   )
-    // );
 
     this.api
       .updateMenuItemPrice(pricePayload)
@@ -336,10 +304,6 @@ export class ShowMenuComponent implements OnInit {
     const element = document.getElementById('menuDropdown' + index)
     if (element.clientHeight) element.style.height = '0px'
     else element.style.height = '100%'
-
-    console.log(this.menuGroups);
-    console.log(this.subMenuGroups);
-    console.log(this.menuItems);
 
     if (element.clientHeight) {
       const phoneNumber = localStorage.getItem('phoneWithCountry').replace('+', '');

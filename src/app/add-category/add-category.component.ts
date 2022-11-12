@@ -38,6 +38,7 @@ export class AddCategoryComponent implements OnInit {
   public croppedImage: string
   public imageChangedEvent: any
   public showProfilePic: boolean = true
+  public showSubProfilePic: boolean = true
 
   constructor(private formBuilder: FormBuilder, private api: ApiAuthService,
     public toasterService: ServiceToasterService
@@ -107,9 +108,10 @@ export class AddCategoryComponent implements OnInit {
       });
   }
 
-  onProfilePicUpload(event) {
+  onProfilePicUpload(event, isSubcat: boolean) {
     this.imageChangedEvent = event
-    this.showProfilePic = false
+    this.showProfilePic = isSubcat
+    this.showSubProfilePic = !isSubcat
   }
 
   imageCropped(event: ImageCroppedEvent) {
