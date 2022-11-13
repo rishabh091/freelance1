@@ -77,7 +77,7 @@
           <div class="col-lg-4 p-2">
             <select class="form-control" [(ngModel)]="zoneName">
               <option value="">--Select Zone--</option>
-              <option *ngFor="let zone of zoneNames" [value]="zone">
+              <option *ngFor="let zone of zoneNames" [value]="zone.zone">
                 {{ zone.zone }}
               </option>
             </select>

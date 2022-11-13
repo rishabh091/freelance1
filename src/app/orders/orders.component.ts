@@ -143,10 +143,6 @@ export class OrdersComponent implements OnInit {
   }
 
   applyFilter() {
-    console.log(this.categoryName)
-    console.log(this.subCategoryName)
-    console.log(this.zoneName)
-
     if (this.startTableNumber && this.endTableNumber) {
       this.getOrderByType(this.activatedOrderType).then(() => {
         this.activeArray = this.activeArray.filter((value) => {
@@ -155,10 +151,23 @@ export class OrdersComponent implements OnInit {
             value.table <= this.endTableNumber
           );
         });
+
+        this.applySubFilter()
       });
     }
-    if (this.categoryName) {
-      console.log(this.activeArray)
+    else {
+      this.getOrderByType(this.activatedOrderType).then(() => {
+        this.applySubFilter()
+      })
+    }
+  }
+
+  applySubFilter() {
+    if (this.categoryName && this.subCategoryName) {
+      this.activeArray = this.activeArray.filter(value => { return value.subMenu == this.subCategoryName })
+    }
+    if (this.zoneName) {
+      this.activeArray = this.activeArray.filter(value => { return value.zone == this.zoneName })
     }
   }
 }
