@@ -19,8 +19,8 @@ export class AuthService {
     authPromise.then(user => {
       let accessToken = user['_delegate'].accessToken
       localStorage.setItem('token', accessToken)
-      this.router.navigate([''])
-    })
+      this.router.navigate(['/'])
+    }).catch(error => { console.log(error) })
   }
   /**
    * Will delete authentication
@@ -38,8 +38,8 @@ export class AuthService {
    * Check if user is logged in or not
    */
   isLoggedIn() {
-    const token = localStorage.getItem('token')
+    // const token = localStorage.getItem('token')
     const storeId = localStorage.getItem('storeId')
-    return token && storeId
+    return storeId
   }
 }

@@ -20,6 +20,9 @@ import { UserInfo } from '../interface/auth.interface';
 import { AuthService as Api } from '../api/auth.service';
 import { ServiceToasterService } from '../service-toaster.service';
 import { Data } from '../countryCodes.data';
+import { first } from 'rxjs/operators';
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -43,7 +46,8 @@ export class LoginComponent implements OnInit {
     public afAuth: AngularFireAuth,
     private auth: AuthService,
     private api: Api,
-    public toasterService: ServiceToasterService
+    public toasterService: ServiceToasterService,
+    private router: Router
   ) {
     this.windowRef = window;
   }
@@ -150,9 +154,17 @@ export class LoginComponent implements OnInit {
         this.api.isUserRegisterd(payload).then((res) => {
           localStorage.setItem('privilege', res['isprivilegedUser']);
           localStorage.setItem('storeId', res['restaurantId']);
+          console.log('before navigate')
+          this.router.navigate(['/orders'])
+          console.log('after navigate')
         });
 
-        this.auth.login();
+        const authPromise = this.afAuth.authState.pipe(first()).toPromise()
+        authPromise.then(user => {
+          let accessToken = user['_delegate'].accessToken
+          localStorage.setItem('token', accessToken)
+          this.router.navigate(['/orders'])
+        }).catch(error => { console.log(error) })
       })
       .catch((error) => {
         this.form.enable();
