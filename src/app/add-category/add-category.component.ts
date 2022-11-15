@@ -90,6 +90,7 @@ export class AddCategoryComponent implements OnInit {
       .then((res: any) => {
         if (res.status == 'success') {
           this.uploadItemPic(this.form.value.menuCategory)
+          this.showProfilePic = true
           this.text = 'You have added the category successfully!';
           this.success(this.text);
         } else {
