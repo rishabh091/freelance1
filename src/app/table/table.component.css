@@ -1,6 +1,5 @@
 .background-image {
   background: #f1d246;
-
   background-repeat: repeat;
   background-attachment: fixed;
   /* background-size: cover; */
@@ -51,7 +50,7 @@ label {
 }
 .zones {
   display: flex;
-  justify-content: start;
+  justify-content: center;
   flex-wrap: wrap;
   background-color: white;
 }

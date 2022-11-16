@@ -95,9 +95,12 @@ export class StaffComponent implements OnInit {
     this.api
       .addStaff(payload)
       .then((res: any) => {
-        if (res.status == 'success') {
+        if (res.status == 'user added sucessfully') {
+          this.addStaffForm.reset()
+          this.addStaffSubmitted = false
+
           this.toasterService.success('You have added the staff successfully!');
-          this.getStaff()
+          this.getStaff();
         } else {
           this.toasterService.failure(res.status);
           this.getStaff()
@@ -126,7 +129,7 @@ export class StaffComponent implements OnInit {
       new UpdateStoreStaff(
         this.updateStaffForm.value.name,
         this.updateStaffForm.value.role[0],
-        this.updateStaffForm.value.phoneNumber,
+        this.updateStaffForm.value.phoneNumber+'',
         this.updateStaffForm.value.emailAddress
       )
     );

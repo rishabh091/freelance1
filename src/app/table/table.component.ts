@@ -109,11 +109,10 @@ export class TableComponent implements OnInit {
   }
 
   getTableData(tableNumber: number) {
-    this.tableNumber = tableNumber;
-    this.getTableTransaction(tableNumber);
-    this.getTableState(tableNumber);
-
     if (!this.isPrePaid) {
+      this.tableNumber = tableNumber;
+      this.getTableTransaction(tableNumber);
+      this.getTableState(tableNumber);
       this.qrCode = this.qrCode + `&table=${tableNumber}`
     }
   }

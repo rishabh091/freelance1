@@ -90,7 +90,6 @@ export class AddCategoryComponent implements OnInit {
       .then((res: any) => {
         if (res.status == 'success') {
           this.uploadItemPic(this.form.value.menuCategory)
-          this.showProfilePic = true
           this.text = 'You have added the category successfully!';
           this.success(this.text);
         } else {
@@ -139,9 +138,9 @@ export class AddCategoryComponent implements OnInit {
   formData.append('imageType', "menu");
   formData.append('imageDetail1', subCategory ? category: '');
   formData.append('imageDetail2', subCategory ? subCategory: category);
-  this.showProfilePic = false
+  this.showProfilePic = true
+  this.showSubProfilePic = true
   this.api.uploadImage(formData).then((res: any) => {
-    this.showProfilePic = false
   }).catch(error => { console.log(error); })
  }
 

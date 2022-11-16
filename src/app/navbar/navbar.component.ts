@@ -10,7 +10,7 @@ export class NavbarComponent implements OnInit, AfterContentChecked {
 
   public showNav: boolean = true
 
-  constructor(private auth: AuthService) { }
+  constructor(public auth: AuthService) { }
   ngAfterContentChecked(): void {
     const urls = location.href.split('/')
     const url = urls.pop()

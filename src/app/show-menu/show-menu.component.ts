@@ -94,6 +94,11 @@ export class ShowMenuComponent implements OnInit {
     this.menuItemForm.controls['Price'].setValue(items.basePrice);
     this.menuItemForm.controls['DisplayImagePath'].setValue(items.imgURL);
   }
+
+  checkPrivilage() {
+    return localStorage.getItem('privilege').toLowerCase() == 'true'
+  }
+
   ngOnInit(): void {
     this.menuItemForm = this.formBuilder.group({
       ItemName: ['', Validators.required],

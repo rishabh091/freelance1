@@ -42,4 +42,8 @@ export class AuthService {
     const storeId = localStorage.getItem('storeId')
     return storeId
   }
+
+  checkPrivilage() {
+    return localStorage.getItem('privilege').toLowerCase() == 'true'
+  }
 }

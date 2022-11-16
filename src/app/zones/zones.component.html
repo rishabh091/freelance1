@@ -23,8 +23,9 @@
         <div *ngFor="let z of zone; let i = index">
           <div class="zone font-weight-bold" (click)="goToTables(z)">
             <div class="zoneName mt-2">{{ z.zone }}</div>
-            <div (click)="removeZone($event, i)">
+            <div >
               <img
+              (click)="removeZone($event, i)"
                 class="deleteIcon mt-3"
                 src="../../assets/delete.png"
                 alt=""
