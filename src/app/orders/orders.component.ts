@@ -30,8 +30,8 @@ export class OrdersComponent implements OnInit {
     CANCELED: 'canceled',
   };
 
-  startTableNumber: number = 0;
-  endTableNumber: number;
+  // startTableNumber: number = 0;
+  // endTableNumber: number;
 
   activeArray: any = [];
   activatedOrderType: string = this.OrderTypes.NEW;
@@ -132,34 +132,26 @@ export class OrdersComponent implements OnInit {
 
   changeData(type: string, index: Nav) {
     this.activeArray = this.getOrderByType(type);
-    this.startTableNumber = 0;
-    this.endTableNumber = undefined;
-
-    let activeNav = this.element.nativeElement.querySelectorAll('.nav-active');
-    activeNav[0].classList.remove('nav-active');
-
-    let navButton = this.element.nativeElement.querySelectorAll('.nav-button');
-    navButton[index].classList.add('nav-active');
+    // this.startTableNumber = 0;
+    // this.endTableNumber = undefined;
   }
 
   applyFilter() {
-    if (this.startTableNumber && this.endTableNumber) {
-      this.getOrderByType(this.activatedOrderType).then(() => {
-        this.activeArray = this.activeArray.filter((value) => {
-          return (
-            value.table >= this.startTableNumber &&
-            value.table <= this.endTableNumber
-          );
-        });
+    // if (this.startTableNumber && this.endTableNumber) {
+    //   this.getOrderByType(this.activatedOrderType).then(() => {
+    //     this.activeArray = this.activeArray.filter((value) => {
+    //       return (
+    //         value.table >= this.startTableNumber &&
+    //         value.table <= this.endTableNumber
+    //       );
+    //     });
 
-        this.applySubFilter()
-      });
-    }
-    else {
-      this.getOrderByType(this.activatedOrderType).then(() => {
-        this.applySubFilter()
-      })
-    }
+    //     this.applySubFilter()
+    //   });
+    // }
+    this.getOrderByType(this.activatedOrderType).then(() => {
+      this.applySubFilter()
+    })
   }
 
   applySubFilter() {
