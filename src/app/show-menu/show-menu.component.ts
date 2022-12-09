@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewChecked, AfterViewInit, Component, OnInit } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -39,7 +39,7 @@ import { ServiceToasterService } from '../service-toaster.service';
   templateUrl: './show-menu.component.html',
   styleUrls: ['./show-menu.component.css'],
 })
-export class ShowMenuComponent implements OnInit {
+export class ShowMenuComponent implements OnInit, AfterViewChecked {
   constructor(
     private formBuilder: FormBuilder,
     private auth: AuthService,
@@ -47,6 +47,14 @@ export class ShowMenuComponent implements OnInit {
     public toasterService: ServiceToasterService
 
   ) {}
+  ngAfterViewChecked(): void {
+    for (let obj of this.menuGroups) {
+      let element = document.getElementById(obj.menu.toLowerCase())
+      if (element) {
+        element.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.60), rgba(0, 0, 0, 0.60)), url(${this.getImage(obj['imgURL'])})`
+      }
+    }
+  }
 
   public menuItemForm: FormGroup;
   public submitted: boolean = false;
@@ -161,23 +169,6 @@ export class ShowMenuComponent implements OnInit {
   }).catch(error => { console.log(error) })
  }
 
-  getCategories() {
-    const storeId = localStorage.getItem('storeId');
-    this.api
-      .getMenuCategory(new StoreIdSchema(storeId))
-      .then((res: any) => {
-        for (let obj of res['menuCategories']) {
-          let element = document.getElementById(obj.menu)
-          if (element) {
-            element.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.60), rgba(0, 0, 0, 0.60)), url(${this.getImage(obj['imgURL'])})`
-          }
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
-
   getSubCategories(category: string) {
     const storeId = localStorage.getItem('storeId');
     this.api
@@ -192,19 +183,16 @@ export class ShowMenuComponent implements OnInit {
 
   getMenuItem() {
     const storeId = localStorage.getItem('storeId');
-    this.api
-      .getMenuItems(new StoreIdSchema(storeId))
-      .then((res) => {
-        this.menuGroups = res['menuItems'].map((obj) => {
-          return obj.menu;
-        });
-        this.menuGroups = [...new Set(this.menuGroups)];
+    const payload = new StoreIdSchema(storeId)
+    this.api.getMenuCategory(payload).then((categoryResponse: any) => {
+      this.menuGroups = categoryResponse['menuCategories']
 
-        for (let menu of this.menuGroups) {
-          this.subMenuGroups[menu] = [];
-          this.menuItems[menu] = {};
-        }
+      for (let obj of this.menuGroups) {
+        this.subMenuGroups[obj.menu] = [];
+        this.menuItems[obj.menu] = {};
+      }
 
+      this.api.getMenuItems(payload).then((res) => {
         for (let item of res['menuItems']) {
           this.subMenuGroups[item.menu] = [];
           this.getSubCategories(item.menu);
@@ -213,10 +201,9 @@ export class ShowMenuComponent implements OnInit {
         for (let item of res['menuItems']) {
           this.menuItems[item.menu][item.subMenu].push(item);
         }
-
-        this.getCategories()
       })
-      .catch((error) => {
+    })
+    .catch((error) => {
         console.log(error);
       });
   }

@@ -3,22 +3,22 @@
     <div
       *ngFor="let category of menuGroups; let i = index"
       class="rounded-border text-white mb-3 subcat-bg"
-      id="{{ category }}"
+      id="{{ category.menu.toLowerCase() }}"
     >
       <div
         class="d-flex justify-content-between"
-        (click)="expand($event, i, category)"
+        (click)="expand($event, i, category.menu)"
       >
         <div
           class="p-3 rounded-border text-uppercase category"
           style="letter-spacing: 4px; font-size: 1.2rem"
         >
-          {{ category }}
+          {{ category.menu }}
         </div>
         <div class="center pr-3" *ngIf="checkPrivilage()">
           <img
             src="../../assets/delete.png"
-            (click)="setCategory(category)"
+            (click)="setCategory(category.menu)"
             class="icon"
             data-toggle="modal"
             data-target="#deleteCategory"
@@ -30,19 +30,19 @@
         <div class="p-3">
           <hr class="border" />
           <div
-            *ngFor="let subCat of subMenuGroups[category]; let i = index"
+            *ngFor="let subCat of subMenuGroups[category.menu]; let i = index"
             class="rounded-border bg-light text-dark mt-2 mb-5"
           >
             <div
               class="text-center font-weight-bold text-uppercase p-3 upper-rounded-corners subcat-bg text-light center"
               s
               style="left: 4px; height: 20vh"
-              id="{{ category + '-' + subCat.subMenu }}"
+              id="{{ category.menu + '-' + subCat.subMenu }}"
             >
               {{ subCat.subMenu }}
             </div>
             <div
-              *ngFor="let item of menuItems[category][subCat.subMenu]"
+              *ngFor="let item of menuItems[category.menu][subCat.subMenu]"
               class="p-3"
             >
               <div class="d-flex justify-content-between">
