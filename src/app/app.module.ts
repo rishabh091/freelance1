@@ -28,6 +28,8 @@ import { ToasterComponent } from './toaster/toaster.component';
 import { DetailsComponent } from './signup/details/details.component';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { QRCodeModule } from 'angularx-qrcode';
+import { ShowSubcategoryComponent } from './show-menu/show-subcategory/show-subcategory.component';
+import { ShowProdsComponent } from './show-menu/show-prods/show-prods.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +48,9 @@ import { QRCodeModule } from 'angularx-qrcode';
     AddCategoryComponent,
     StaffComponent,
     ToasterComponent,
-    DetailsComponent
+    DetailsComponent,
+    ShowSubcategoryComponent,
+    ShowProdsComponent
   ],
   imports: [
     AngularFireModule.initializeApp(environment.firebaseConfig),

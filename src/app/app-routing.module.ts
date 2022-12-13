@@ -15,10 +15,14 @@ import { ProfileComponent } from './profile/profile.component';
 import { AddCategoryComponent } from './add-category/add-category.component';
 import { StaffComponent } from './staff/staff.component';
 import { DetailsComponent } from './signup/details/details.component';
+import { ShowSubcategoryComponent } from './show-menu/show-subcategory/show-subcategory.component';
+import { ShowProdsComponent } from './show-menu/show-prods/show-prods.component';
 
 const routes: Routes = [
   { path: 'orders', component: OrdersComponent, canActivate: [AuthGuard] },
   { path: 'showMenu', component: ShowMenuComponent, canActivate: [AuthGuard] },
+  { path: 'showMenu/subcat/:category', component: ShowSubcategoryComponent, canActivate: [AuthGuard] },
+  { path: 'showMenu/prod/:subcategory/:category', component: ShowProdsComponent, canActivate: [AuthGuard] },
   { path: 'addMenu', component: AddMenuComponent, canActivate: [AuthGuard] },
   { path: 'addCategory', component: AddCategoryComponent, canActivate: [AuthGuard] },
   { path: '', component: LoginComponent, canActivate: [AuthLoginGuard] },

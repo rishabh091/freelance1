@@ -1,0 +1,14 @@
+<div class="background-image pt-5 pb-5">
+    <div class="container p-2">
+        <div class="d-flex justify-content-around" style="flex-wrap: wrap;">
+            <div *ngFor="let subcat of subCategories; let i = index">
+              <div class="border m-3 bg-light p-2" style="cursor: pointer; width: 40vh;" (click)="moveToProduct(subcat.subMenu)">
+                <img [src]="getImage(subcat.imgURL)" class="img-fluid shadow" alt="category image" style="height: 20vh; width: 100%; object-fit: cover;">
+                <div class="p-3 text-uppercase" style="letter-spacing: 4px; font-size: 1.2rem">
+                  <div>{{ subcat.subMenu }}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+    </div>
+</div>

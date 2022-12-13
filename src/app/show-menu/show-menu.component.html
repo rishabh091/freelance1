@@ -1,87 +1,19 @@
 <div class="background-image pt-5 pb-5">
   <div class="container p-2">
-    <div
-      *ngFor="let category of menuGroups; let i = index"
-      class="rounded-border text-white mb-3 subcat-bg"
-      id="{{ category.menu.toLowerCase() }}"
-    >
-      <div
-        class="d-flex justify-content-between"
-        (click)="expand($event, i, category.menu)"
-      >
-        <div
-          class="p-3 rounded-border text-uppercase category"
-          style="letter-spacing: 4px; font-size: 1.2rem"
-        >
-          {{ category.menu }}
-        </div>
-        <div class="center pr-3" *ngIf="checkPrivilage()">
-          <img
+    <div class="d-flex justify-content-around" style="flex-wrap: wrap;">
+      <div *ngFor="let category of menuGroups; let i = index">
+        <div class="border m-3 bg-light p-2" style="cursor: pointer; width: 40vh;">
+          <img [src]="getImage(category.imgURL)" class="img-fluid shadow" alt="category image" style="height: 20vh; width: 100%; object-fit: cover;" (click)="moveToSubcategory($event, category.menu)">
+          <div class="p-3 text-uppercase d-flex justify-content-between" style="letter-spacing: 4px; font-size: 1.2rem">
+            <div (click)="moveToSubcategory($event, category.menu)">{{ category.menu }}</div>
+            <img
+            *ngIf="checkPrivilage()"
             src="../../assets/delete.png"
-            (click)="setCategory(category.menu)"
+            (click)="setCategory($event, category.menu)"
             class="icon"
             data-toggle="modal"
             data-target="#deleteCategory"
           />
-        </div>
-      </div>
-
-      <div class="custom-dropdown" id="{{ 'menuDropdown' + i }}">
-        <div class="p-3">
-          <hr class="border" />
-          <div
-            *ngFor="let subCat of subMenuGroups[category.menu]; let i = index"
-            class="rounded-border bg-light text-dark mt-2 mb-5"
-          >
-            <div
-              class="text-center font-weight-bold text-uppercase p-3 upper-rounded-corners subcat-bg text-light center"
-              s
-              style="left: 4px; height: 20vh"
-              id="{{ category.menu + '-' + subCat.subMenu }}"
-            >
-              {{ subCat.subMenu }}
-            </div>
-            <div
-              *ngFor="let item of menuItems[category.menu][subCat.subMenu]"
-              class="p-3"
-            >
-              <div class="d-flex justify-content-between">
-                <div class="d-flex">
-                  <div class="mr-3">
-                    <img
-                      [src]="getImage(item.imgURL)"
-                      class="img-fluid"
-                      style="height: 10vh; width: 10vh"
-                    />
-                  </div>
-                  <div>
-                    <span class="text-capitalize">{{ item.menuItemName }}</span>
-                    <span class="text-muted text-lowercase ml-1"
-                      >({{ item.itemType[0] }})</span
-                    ><br />
-                    <span class="text-success">₹ {{ item.basePrice }}</span>
-                  </div>
-                </div>
-                <div class="d-flex pt-2">
-                  <img
-                    src="../../assets/pencil.png"
-                    (click)="setMenuItems(item)"
-                    class="iconItem"
-                    data-toggle="modal"
-                    data-target="#updateMenuItem"
-                    *ngIf="checkPrivilage()"
-                  />
-                  <img
-                    src="../../assets/delete.png"
-                    (click)="setMenuItems(item)"
-                    class="iconItem"
-                    data-toggle="modal"
-                    data-target="#deleteMenuItem"
-                    *ngIf="checkPrivilage()"
-                  />
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </div>
@@ -119,158 +51,6 @@
             style="width: 20vh; color: white"
             data-dismiss="modal"
 
-          >
-            DELETE
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="modal" id="deleteSubCategory">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <!-- Modal Header -->
-      <div class="modal-header">
-        <h4 class="modal-title">
-          DELETE<span class="text-warning"> SUB-CATEGORY</span>
-        </h4>
-        <button type="button" class="close" data-dismiss="modal">
-          &times;
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="text-center">
-          Are you sure you want to delete {{ setSubCategoryName }}?
-        </div>
-        <div class="d-flex justify-content-around mt-4 mb-4">
-          <button
-            class="btn rounded-0 btn-outline-warning font-weight-bold"
-            data-dismiss="modal"
-            style="width: 20vh"
-          >
-            CANCEL
-          </button>
-          <button
-            class="btn btn-warning rounded-0 font-weight-bold"
-            style="width: 20vh; color: white"
-          >
-            DELETE
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="modal" id="updateMenuItem">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <!-- Modal Header -->
-      <div class="modal-header">
-        <h4 class="modal-title">
-          UPDATE<span class="text-warning"> MENU ITEM</span>
-        </h4>
-        <button type="button" class="close" data-dismiss="modal">
-          &times;
-        </button>
-      </div>
-      <div class="modal-body">
-        <form [formGroup]="menuItemForm" (ngSubmit)="editProduct()">
-          <div class="form-group">
-            <label>Item Name</label>
-            <input
-              type="text"
-              formControlName="ItemName"
-              class="form-control"
-            />
-          </div>
-          <div *ngIf="submitted && f.ItemName.errors" class="text-danger mb-5">
-            <div *ngIf="f.ItemName.errors.required">Item Name is required</div>
-          </div>
-
-          <div class="form-group">
-            <label>Price</label>
-            <input type="number" formControlName="Price" class="form-control" />
-          </div>
-          <div *ngIf="submitted && f.Price.errors" class="text-danger mb-5">
-            <div *ngIf="f.Price.errors.required">Price is required</div>
-          </div>
-
-          <div class="form-group">
-            <label>Display Image</label>
-            <image-cropper
-              *ngIf="!showProfilePic"
-              [imageChangedEvent]="imageChangedEvent"
-              [maintainAspectRatio]="true"
-              [aspectRatio]="4 / 3"
-              [resizeToWidth]="92"
-              [resizeToHeight]="69"
-              format="png"
-              style="height: 50vh"
-              (imageCropped)="imageCropped($event)"
-            ></image-cropper>
-            <input
-              type="file"
-              formControlName="DisplayImagePath"
-              class="form-control"
-              (change)="onProfilePicUpload($event)"
-            />
-          </div>
-          <div
-            *ngIf="submitted && f.DisplayImagePath.errors"
-            class="text-danger mb-5"
-          >
-            Image is required
-          </div>
-
-          <div class="form-group text-right">
-            <button
-              type="submit"
-              class="btn btn-success rounded-0"
-              style="width: 200px"
-              data-toggle="modal"
-              data-target="#updateMenuItem"
-            >
-              Save
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="modal" id="deleteMenuItem">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <!-- Modal Header -->
-      <div class="modal-header">
-        <h4 class="modal-title">
-          DELETE<span class="text-warning"> MENU ITEM</span>
-        </h4>
-        <button type="button" class="close" data-dismiss="modal">
-          &times;
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="text-center">
-          Are you sure you want to delete {{ setItemName }}?
-        </div>
-        <div class="d-flex justify-content-around mt-4 mb-4">
-          <button
-            class="btn rounded-0 btn-outline-warning font-weight-bold"
-            data-dismiss="modal"
-            style="width: 20vh"
-          >
-            CANCEL
-          </button>
-          <button
-            class="btn btn-warning rounded-0 font-weight-bold"
-            style="width: 20vh; color: white"
-            (click)="removeMenuItem()"
-            data-dismiss="modal"
           >
             DELETE
           </button>
