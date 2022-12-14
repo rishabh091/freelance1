@@ -1,44 +1,66 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService as ApiAuthService } from 'src/app/api/auth.service';
 import { AuthService } from 'src/app/auth/auth.service';
-import { AboutStore, StoreTimings, UpdateAboutStore, UpdateStoreTimings, UserInfo } from 'src/app/interface/auth.interface';
-import { UpdateCategory, UpdateCategoryModule } from 'src/app/interface/category.interface';
+import {
+  AboutStore,
+  StoreTimings,
+  UpdateAboutStore,
+  UpdateStoreTimings,
+  UserInfo,
+} from 'src/app/interface/auth.interface';
+import {
+  UpdateCategory,
+  UpdateCategoryModule,
+} from 'src/app/interface/category.interface';
 import { ServiceToasterService } from 'src/app/service-toaster.service';
 
 @Component({
   selector: 'app-details',
   templateUrl: './details.component.html',
-  styleUrls: ['./details.component.css']
+  styleUrls: ['./details.component.css'],
 })
 export class DetailsComponent implements OnInit {
+  public form: FormGroup;
+  public submitted = false;
+  private phoneNumber: string;
 
-  public form: FormGroup
-	public submitted = false
-	private phoneNumber: string
+  public spinner:boolean =  false;
 
-  constructor(private route: ActivatedRoute, private formBuilder: FormBuilder, 
-		private api: ApiAuthService, private router: Router, private auth: AuthService,
-		private toaster: ServiceToasterService) { }
+  constructor(
+    private route: ActivatedRoute,
+    private formBuilder: FormBuilder,
+    private api: ApiAuthService,
+    private router: Router,
+    private auth: AuthService,
+    private toaster: ServiceToasterService
+  ) {}
 
   ngOnInit(): void {
-		this.form = this.formBuilder.group({
+    this.form = this.formBuilder.group({
       opensAt: ['', Validators.required],
       closesAt: ['', Validators.required],
       aboutStore: ['', Validators.required],
-			storeCategory: ['', Validators.required],
-      isPrePaid: [false, Validators.required]
+      storeCategory: ['', Validators.required],
+      isPrePaid: [false, Validators.required],
     });
 
-		this.phoneNumber = this.route.snapshot.paramMap.get('phoneNumber').replace('+', '')
+    this.phoneNumber = this.route.snapshot.paramMap
+      .get('phoneNumber')
+      .replace('+', '');
   }
 
-	get f(): { [key: string]: AbstractControl } {
+  get f(): { [key: string]: AbstractControl } {
     return this.form.controls;
   }
 
-	convert24To12(timeString: string) {
+  convert24To12(timeString: string) {
     const [hourString, minute] = timeString.split(':');
     const hour = +hourString % 24;
     return (hour % 12 || 12) + ':' + minute + (hour < 12 ? ' AM' : ' PM');
@@ -65,42 +87,54 @@ export class DetailsComponent implements OnInit {
     return `${hours}:${minutes}`;
   }
 
-	onSubmit(): void {
-		if (this.form.invalid) {
-			this.submitted = true
-		}
+  onSubmit(): void {
+    if (this.form.invalid) {
+      this.submitted = true;
+    }
 
-		const updateCategoryPayload = new UpdateCategory(new UserInfo(this.phoneNumber), 
-		new UpdateCategoryModule(this.form.controls['storeCategory'].value,
-		this.form.controls['isPrePaid'].value,
-		!this.form.controls['isPrePaid'].value))
-
-		const updateAboutStorePayload = new UpdateAboutStore(
+    const updateCategoryPayload = new UpdateCategory(
       new UserInfo(this.phoneNumber),
-      new AboutStore(this.form.controls['aboutStore'].value))
+      new UpdateCategoryModule(
+        this.form.controls['storeCategory'].value,
+        this.form.controls['isPrePaid'].value,
+        !this.form.controls['isPrePaid'].value
+      )
+    );
 
-		const updateStoreTimingsPayload = new UpdateStoreTimings(
+    const updateAboutStorePayload = new UpdateAboutStore(
+      new UserInfo(this.phoneNumber),
+      new AboutStore(this.form.controls['aboutStore'].value)
+    );
+
+    const updateStoreTimingsPayload = new UpdateStoreTimings(
       new UserInfo(this.phoneNumber),
       new StoreTimings(
         this.convert24To12(this.form.controls['opensAt'].value),
-        this.convert24To12(this.form.controls['closesAt'].value)))
+        this.convert24To12(this.form.controls['closesAt'].value)
+      )
+    );
 
-		const promises = [this.api.updateCategory(updateCategoryPayload), this.api.updateStoreTimings(updateStoreTimingsPayload),
-		this.api.updateStoreAbout(updateAboutStorePayload)]
+    const promises = [
+      this.api.updateCategory(updateCategoryPayload),
+      this.api.updateStoreTimings(updateStoreTimingsPayload),
+      this.api.updateStoreAbout(updateAboutStorePayload),
+    ];
 
-		Promise.all(promises).then((result: any[]) => {
-      const payload = new UserInfo(this.phoneNumber);
-      this.api.isUserRegisterd(payload).then((res) => {
-        localStorage.setItem('privilege', res['isprivilegedUser']);
-        localStorage.setItem('storeId', res['restaurantId']);
-        this.router.navigate(['/orders'])
+    Promise.all(promises)
+      .then((result: any[]) => {
+        const payload = new UserInfo(this.phoneNumber);
+        this.api.isUserRegisterd(payload).then((res) => {
+          this.toaster.success('');
+          localStorage.setItem('privilege', res['isprivilegedUser']);
+          localStorage.setItem('storeId', res['restaurantId']);
+          this.router.navigate(['/orders']);
+        });
+
+        this.auth.login();
+      })
+      .catch((error) => {
+        console.log(error);
+        this.toaster.failure('Some error occur please try again later.');
       });
-
-      this.auth.login()
-		}).catch(error => { 
-			console.log(error)
-			this.toaster.failure('Some error occur please try again later.') 
-		})
-	}
-
+  }
 }

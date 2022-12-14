@@ -31,6 +31,8 @@ export class SignupComponent implements OnInit {
   private otpCheckInterval: any;
   countryData = new Data();
 
+  public spinner:boolean =  false;
+
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
@@ -38,7 +40,6 @@ export class SignupComponent implements OnInit {
     private auth: AuthService,
     public afAuth: AngularFireAuth,
     public toasterService: ServiceToasterService
-
   ) {
     this.windowRef = window;
   }
@@ -102,14 +103,14 @@ export class SignupComponent implements OnInit {
         this.otpRequestCountdown = 60;
         this.form.disable();
         this.errorMessage = 'OTP sent !!';
+        this.toasterService.info(this.errorMessage);
         this.windowRef.confirmationResult = confirmationResult;
       })
       .catch((error) => {
         this.form.enable();
         this.otpRequestCountdown = 0;
         this.requestedOTP = false;
-
-        this.errorMessage = 'Failed to get OTP, too many attempts';
+        this.toasterService.failure(error);
       });
   }
 
@@ -132,13 +133,18 @@ export class SignupComponent implements OnInit {
           this.form.value.storeName,
           this.form.value.emailAddress,
           new UserInfo(
-            (this.form.value.countryCode + this.form.value.phoneNumber + '').replace('+', '')
+            (
+              this.form.value.countryCode +
+              this.form.value.phoneNumber +
+              ''
+            ).replace('+', '')
           )
         );
 
         this.apiAuthService
           .register(payload)
           .then((res) => {
+            this.toasterService.success('');
             this.router.navigate([
               '/signup/address/' +
                 this.form.value.countryCode +
@@ -146,6 +152,7 @@ export class SignupComponent implements OnInit {
             ]);
           })
           .catch((error) => {
+            this.toasterService.failure(error);
             console.log(error);
           });
       })
@@ -154,7 +161,7 @@ export class SignupComponent implements OnInit {
         this.requestedOTP = false;
         this.otpRequestCountdown = 0;
 
-        this.errorMessage = 'Invalid OTP';
+        this.toasterService.failure(error);
       });
   }
 }

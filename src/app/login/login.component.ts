@@ -37,6 +37,8 @@ export class LoginComponent implements OnInit {
   public errorMessage: string = '';
   public storeId: string;
 
+  public spinner:boolean =  false;
+
   windowRef: any;
   otpCheckInterval: any;
   countryData = new Data();
@@ -121,15 +123,14 @@ export class LoginComponent implements OnInit {
         this.errorMessage = '';
         this.otpRequestCountdown = 60;
         this.form.disable();
-        this.toasterService.success('OTP sent !!');
+        this.toasterService.info('OTP sent !!');
         this.windowRef.confirmationResult = confirmationResult;
       })
       .catch((error) => {
         this.form.enable();
         this.otpRequestCountdown = 0;
         this.requestedOTP = false;
-
-        this.toasterService.failure('Failed to get OTP, too many attempts');
+        this.toasterService.failure(error);
       });
   }
 
@@ -144,34 +145,40 @@ export class LoginComponent implements OnInit {
     this.windowRef.confirmationResult
       .confirm(this.otp)
       .then((result) => {
+        this.toasterService.success('Login successful');
         this.form.disable();
         clearInterval(this.otpCheckInterval);
         localStorage.setItem('phone', this.form.value.phone);
-        localStorage.setItem('phoneWithCountry', this.form.value.countryCode + this.form.value.phone)
+        localStorage.setItem(
+          'phoneWithCountry',
+          this.form.value.countryCode + this.form.value.phone
+        );
 
-
-        const payload = new UserInfo(localStorage.getItem('phoneWithCountry').replace('+', ''));
+        const payload = new UserInfo(
+          localStorage.getItem('phoneWithCountry').replace('+', '')
+        );
         this.api.isUserRegisterd(payload).then((res) => {
           localStorage.setItem('privilege', res['isprivilegedUser']);
           localStorage.setItem('storeId', res['restaurantId']);
-          console.log('before navigate')
-          this.router.navigate(['/orders'])
-          console.log('after navigate')
+          this.router.navigate(['/orders']);
         });
 
-        const authPromise = this.afAuth.authState.pipe(first()).toPromise()
-        authPromise.then(user => {
-          let accessToken = user['_delegate'].accessToken
-          localStorage.setItem('token', accessToken)
-          this.router.navigate(['/orders'])
-        }).catch(error => { console.log(error) })
+        const authPromise = this.afAuth.authState.pipe(first()).toPromise();
+        authPromise
+          .then((user) => {
+            let accessToken = user['_delegate'].accessToken;
+            localStorage.setItem('token', accessToken);
+            this.router.navigate(['/orders']);
+          })
+          .catch((error) => {
+            this.toasterService.failure(error);
+          });
       })
       .catch((error) => {
         this.form.enable();
         this.requestedOTP = false;
         this.otpRequestCountdown = 0;
-
-        this.toasterService.failure('Invalid OTP');
+        this.toasterService.failure(error);
       });
   }
 }

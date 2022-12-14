@@ -13,6 +13,7 @@ import {
 } from 'src/app/interface/auth.interface';
 import { AuthService as ApiAuthService } from 'src/app/api/auth.service';
 import { AuthService } from 'src/app/auth/auth.service';
+import { ServiceToasterService } from '../../service-toaster.service';
 
 @Component({
   selector: 'app-payment',
@@ -24,21 +25,26 @@ export class PaymentComponent implements OnInit {
   public submitted = false;
   private phoneNumber: string;
 
+  public spinner:boolean =  false;
+
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private apiAuthService: ApiAuthService,
     private auth: AuthService,
-    private router: Router
+    private router: Router,
+    public toasterService: ServiceToasterService
   ) {}
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
       acceptedCurrency: ['', Validators.required],
-      paymentGatewayID: ['', Validators.required]
+      paymentGatewayID: ['', Validators.required],
     });
 
-    this.phoneNumber = this.route.snapshot.paramMap.get('phoneNumber').replace('+', '')
+    this.phoneNumber = this.route.snapshot.paramMap
+      .get('phoneNumber')
+      .replace('+', '');
   }
 
   get f(): { [key: string]: AbstractControl } {
@@ -62,10 +68,11 @@ export class PaymentComponent implements OnInit {
     this.apiAuthService
       .updatePayment(payload)
       .then((res) => {
-        this.router.navigate(['/signup/details/' + this.phoneNumber])
+        this.toasterService.success('');
+        this.router.navigate(['/signup/details/' + this.phoneNumber]);
       })
       .catch((error) => {
-        console.log(error);
+        this.toasterService.failure(error);
       });
   }
 }

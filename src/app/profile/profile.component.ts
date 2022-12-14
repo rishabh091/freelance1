@@ -61,10 +61,13 @@ export class ProfileComponent implements OnInit {
   public updateCategoryForm: FormGroup;
   public updateCategorySubmitted = false;
 
-  public showProfilePic: boolean = true
-  public profilePic: string = "https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
-  public croppedImage: string
-  public imageChangedEvent: any
+  public showProfilePic: boolean = true;
+  public profilePic: string =
+    'https://cdn-icons-png.flaticon.com/512/3135/3135715.png';
+  public croppedImage: string;
+  public imageChangedEvent: any;
+
+  public spinner:boolean =  false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -109,7 +112,7 @@ export class ProfileComponent implements OnInit {
     this.updateCategoryForm = this.formBuilder.group({
       isPrePaid: [false, Validators.required],
       storeSubCategory: ['', Validators.required],
-      isFoodServedToTable: [false, Validators.required]
+      isFoodServedToTable: [false, Validators.required],
     });
 
     this.getUser();
@@ -119,42 +122,52 @@ export class ProfileComponent implements OnInit {
     this.getStoreTimings();
     this.getAboutStore();
     this.getCategory();
-    this.getProfilePic()
+    this.getProfilePic();
   }
 
   onProfilePicUpload(event) {
-    this.imageChangedEvent = event
-    this.showProfilePic = false
+    this.imageChangedEvent = event;
+    this.showProfilePic = false;
   }
 
   imageCropped(event: ImageCroppedEvent) {
     this.croppedImage = event.base64;
   }
 
-  dataURItoBlob(dataURI : any) {
+  dataURItoBlob(dataURI: any) {
     const binary = atob(dataURI.split(',')[1]);
     const array = [];
     for (let i = 0; i < binary.length; i++) {
       array.push(binary.charCodeAt(i));
     }
     return new Blob([new Uint8Array(array)], {
-      type: 'image/png'
+      type: 'image/png',
     });
- }
+  }
 
- uploadProfilePic() {
-  const imageBlob = this.dataURItoBlob(this.croppedImage );
-  const file:File = new File([imageBlob], "uploadImage", { type: 'image/png' });
-  const formData = new FormData();  
-  formData.append('restaurantImage', file);
-  formData.append('phoneNumber', localStorage.getItem('phoneWithCountry').replace('+', ''));
-  formData.append('imageType', "profile");
-  formData.append('imageDetail1', "1");
-  this.api.uploadImage(formData).then((res: any) => {
-    this.showProfilePic = true
-    this.toaster.success('Profile Picture Updated')
-  }).catch(error => { console.log(error) })
- }
+  uploadProfilePic() {
+    const imageBlob = this.dataURItoBlob(this.croppedImage);
+    const file: File = new File([imageBlob], 'uploadImage', {
+      type: 'image/png',
+    });
+    const formData = new FormData();
+    formData.append('restaurantImage', file);
+    formData.append(
+      'phoneNumber',
+      localStorage.getItem('phoneWithCountry').replace('+', '')
+    );
+    formData.append('imageType', 'profile');
+    formData.append('imageDetail1', '1');
+    this.api
+      .uploadImage(formData)
+      .then((res: any) => {
+        this.showProfilePic = true;
+        this.toaster.success('Profile Picture Updated');
+      })
+      .catch((error) => {
+        this.toaster.failure(error);
+      });
+  }
 
   onCountryChange(): void {
     this.states = State.getStatesOfCountry(
@@ -177,17 +190,22 @@ export class ProfileComponent implements OnInit {
         this.userInfoForm.controls['storeName'].setValue(res.storename);
       })
       .catch((error) => {
-        console.log(error);
+        this.toaster.failure(error);
       });
   }
 
   getProfilePic() {
-    const storeId = localStorage.getItem('storeId')
-    this.api.getStoreProfilePic(new StoreIdSchema(storeId)).then((res: any) => {
-      if (res.storeProfilePic1URL) {
-        this.profilePic = this.api.getImageUrl(res.storeProfilePic1URL)
-      }
-    }).catch(error => { console.log(error) })
+    const storeId = localStorage.getItem('storeId');
+    this.api
+      .getStoreProfilePic(new StoreIdSchema(storeId))
+      .then((res: any) => {
+        if (res.storeProfilePic1URL) {
+          this.profilePic = this.api.getImageUrl(res.storeProfilePic1URL);
+        }
+      })
+      .catch((error) => {
+        this.toaster.failure(error);
+      });
   }
 
   getAddress(): void {
@@ -230,7 +248,7 @@ export class ProfileComponent implements OnInit {
         );
       })
       .catch((error) => {
-        console.log(error);
+        this.toaster.failure(error);
       });
   }
 
@@ -247,7 +265,7 @@ export class ProfileComponent implements OnInit {
         );
       })
       .catch((error) => {
-        console.log(error);
+        this.toaster.failure(error);
       });
   }
 
@@ -262,21 +280,28 @@ export class ProfileComponent implements OnInit {
         this.paymentForm.controls['paymentGatewayId'].setValue(
           res.paymentGatewayID
         );
-        this.updateCategoryForm.controls['isPrePaid'].setValue(res.isPrePaid)
+        this.updateCategoryForm.controls['isPrePaid'].setValue(res.isPrePaid);
       })
       .catch((error) => {
-        console.log(error);
+        this.toaster.failure(error);
       });
   }
 
   getCategory() {
-    const storeId = localStorage.getItem('storeId')
-    this.api.getCategory(new StoreIdSchema(storeId)).then((res: any) => {
-      this.updateCategoryForm.controls['storeSubCategory'].setValue(res['storeSubCatagory'])
-      this.updateCategoryForm.controls['isFoodServedToTable'].setValue(res['isFoodServedToTable'])
-    }).catch(error => {
-      console.log(error)
-    })
+    const storeId = localStorage.getItem('storeId');
+    this.api
+      .getCategory(new StoreIdSchema(storeId))
+      .then((res: any) => {
+        this.updateCategoryForm.controls['storeSubCategory'].setValue(
+          res['storeSubCatagory']
+        );
+        this.updateCategoryForm.controls['isFoodServedToTable'].setValue(
+          res['isFoodServedToTable']
+        );
+      })
+      .catch((error) => {
+        this.toaster.failure(error);
+      });
   }
 
   getStoreTimings(): void {
@@ -292,7 +317,7 @@ export class ProfileComponent implements OnInit {
         );
       })
       .catch((error) => {
-        console.log(error);
+        this.toaster.failure(error);
       });
   }
 
@@ -331,7 +356,7 @@ export class ProfileComponent implements OnInit {
         this.aboutStoreForm.controls['aboutStore'].setValue(res.aboutstore);
       })
       .catch((error) => {
-        console.log(error);
+        this.toaster.failure(error);
       });
   }
 

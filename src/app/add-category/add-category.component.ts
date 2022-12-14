@@ -33,21 +33,25 @@ export class AddCategoryComponent implements OnInit {
   successNote: boolean = false;
   errorNote: boolean = false;
 
-  categories: any
+  categories: any;
 
-  public croppedImage: string
-  public imageChangedEvent: any
-  public showProfilePic: boolean = true
-  public showSubProfilePic: boolean = true
+  public croppedImage: string;
+  public imageChangedEvent: any;
+  public showProfilePic: boolean = true;
+  public showSubProfilePic: boolean = true;
 
-  constructor(private formBuilder: FormBuilder, private api: ApiAuthService,
+  public spinner:boolean =  false;
+
+  constructor(
+    private formBuilder: FormBuilder,
+    private api: ApiAuthService,
     public toasterService: ServiceToasterService
-    ) {}
+  ) {}
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
       menuCategory: ['', Validators.required],
-      imageURL: ['', Validators.required]
+      imageURL: ['', Validators.required],
     });
 
     this.subCategoryForm = this.formBuilder.group({
@@ -56,15 +60,21 @@ export class AddCategoryComponent implements OnInit {
       imageURL: ['', Validators.required],
     });
 
-    this.getCategory()
+    this.getCategory();
   }
 
   getCategory() {
-    const storeId = localStorage.getItem('storeId')
-    this.api.getMenuCategory(new StoreIdSchema(storeId)).then(res => {
-      this.categories = res['menuCategories'];
-      
-    }).catch(error => { console.log(error) })
+    const storeId = localStorage.getItem('storeId');
+    this.api
+      .getMenuCategory(new StoreIdSchema(storeId))
+      .then((res) => {
+        this.categories = res['menuCategories'];
+        this.toasterService.success('');
+      })
+      .catch((error) => {
+        this.toasterService.failure(error);
+        console.log(error);
+      });
   }
 
   get f(): { [key: string]: AbstractControl } {
@@ -80,7 +90,9 @@ export class AddCategoryComponent implements OnInit {
     if (this.form.invalid) {
       return;
     }
-    const phoneNumber = localStorage.getItem('phoneWithCountry').replace('+', '');
+    const phoneNumber = localStorage
+      .getItem('phoneWithCountry')
+      .replace('+', '');
     const payload = new AddCategory(
       new UserInfo(phoneNumber),
       new AddCategoryMenuInfo(this.form.value.menuCategory)
@@ -89,60 +101,68 @@ export class AddCategoryComponent implements OnInit {
       .addCategory(payload)
       .then((res: any) => {
         if (res.status == 'success') {
-          this.uploadItemPic(this.form.value.menuCategory)
+          this.uploadItemPic(this.form.value.menuCategory);
           this.text = 'You have added the category successfully!';
-          this.success(this.text);
-        } else {
-          this.text = res.status;
-          this.failure(this.text);
+          this.toasterService.success(this.text);
         }
 
-        this.form.reset()
-        this.submitted = false
+        this.form.reset();
+        this.submitted = false;
 
-        this.getCategory()
+        this.getCategory();
       })
       .catch((error) => {
-        this.text = 'Error in adding the category!';
-        this.failure(this.text);
+        this.toasterService.failure(error);
       });
   }
 
   onProfilePicUpload(event, isSubcat: boolean) {
-    this.imageChangedEvent = event
-    this.showProfilePic = isSubcat
-    this.showSubProfilePic = !isSubcat
+    this.imageChangedEvent = event;
+    this.showProfilePic = isSubcat;
+    this.showSubProfilePic = !isSubcat;
   }
 
   imageCropped(event: ImageCroppedEvent) {
     this.croppedImage = event.base64;
   }
 
-  dataURItoBlob(dataURI : any) {
+  dataURItoBlob(dataURI: any) {
     const binary = atob(dataURI.split(',')[1]);
     const array = [];
     for (let i = 0; i < binary.length; i++) {
       array.push(binary.charCodeAt(i));
     }
     return new Blob([new Uint8Array(array)], {
-      type: 'image/png'
+      type: 'image/png',
     });
- }
+  }
 
- uploadItemPic(category: string, subCategory: any = undefined) {
-  const imageBlob = this.dataURItoBlob(this.croppedImage );
-  const file:File = new File([imageBlob], "uploadImage", { type: 'image/png' });
-  const formData = new FormData();  
-  formData.append('restaurantImage', file);
-  formData.append('phoneNumber', localStorage.getItem('phoneWithCountry').replace('+', ''));
-  formData.append('imageType', "menu");
-  formData.append('imageDetail1', subCategory ? category: '');
-  formData.append('imageDetail2', subCategory ? subCategory: category);
-  this.showProfilePic = true
-  this.showSubProfilePic = true
-  this.api.uploadImage(formData).then((res: any) => {
-  }).catch(error => { console.log(error); })
- }
+  uploadItemPic(category: string, subCategory: any = undefined) {
+    const imageBlob = this.dataURItoBlob(this.croppedImage);
+    const file: File = new File([imageBlob], 'uploadImage', {
+      type: 'image/png',
+    });
+    const formData = new FormData();
+    formData.append('restaurantImage', file);
+    formData.append(
+      'phoneNumber',
+      localStorage.getItem('phoneWithCountry').replace('+', '')
+    );
+    formData.append('imageType', 'menu');
+    formData.append('imageDetail1', subCategory ? category : '');
+    formData.append('imageDetail2', subCategory ? subCategory : category);
+    this.showProfilePic = true;
+    this.showSubProfilePic = true;
+    this.api
+      .uploadImage(formData)
+      .then((res: any) => {
+        this.toasterService.success('');
+      })
+      .catch((error) => {
+        this.toasterService.failure(error);
+        console.log(error);
+      });
+  }
 
   addSubCategory(): void {
     this.subCategorySubmitted = true;
@@ -150,7 +170,9 @@ export class AddCategoryComponent implements OnInit {
       return;
     }
 
-    const phoneNumber = localStorage.getItem('phoneWithCountry').replace('+', '');
+    const phoneNumber = localStorage
+      .getItem('phoneWithCountry')
+      .replace('+', '');
     const payload = new AddSubCategory(
       new UserInfo(phoneNumber),
       new AddSubCategoryMenuInfo(
@@ -164,19 +186,18 @@ export class AddCategoryComponent implements OnInit {
       .addSubCategory(payload)
       .then((res: any) => {
         if (res.status == 'success') {
-          this.uploadItemPic(this.subCategoryForm.value.menuCategory, this.subCategoryForm.value.menuSubCategory)
+          this.uploadItemPic(
+            this.subCategoryForm.value.menuCategory,
+            this.subCategoryForm.value.menuSubCategory
+          );
           this.text = 'You have added the sub category successfully!';
-          this.success(this.text);
-        } else {
-          this.failure(res.status);
+          this.toasterService.success(this.text);
         }
-
-        this.subCategoryForm.reset()
-        this.subCategorySubmitted = false
+        this.subCategoryForm.reset();
+        this.subCategorySubmitted = false;
       })
       .catch((error) => {
-        this.text = 'Error in adding the sub-category!';
-        this.failure(this.text);
+        this.toasterService.failure(error);
       });
   }
 
@@ -185,25 +206,5 @@ export class AddCategoryComponent implements OnInit {
     this.subCategorySubmitted = false;
     this.form.reset();
     this.subCategoryForm.reset();
-  }
-
-  success(text: string) {
-    this.successNote = true;
-    this.text = text;
-
-    setTimeout(() => {
-      this.successNote = false;
-      this.text = '';
-    }, 5000);
-  }
-
-  failure(text: string) {
-    this.errorNote = true;
-    this.text = text;
-
-    setTimeout(() => {
-      this.errorNote = false;
-      this.text = '';
-    }, 5000);
   }
 }

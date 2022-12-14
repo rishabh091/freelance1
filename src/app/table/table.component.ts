@@ -39,18 +39,21 @@ export class TableComponent implements OnInit {
     tableOpen: false,
   };
   public tableNumber: number;
-  public moveToTableNumber: number
+  public moveToTableNumber: number;
 
-  public isPrePaid: boolean = false
+  public isPrePaid: boolean = false;
 
-  public qrCode: string = `https://hiveezy.com/store?storeid=${localStorage.getItem('storeId')}`
+  public qrCode: string = `https://hiveezy.com/store?storeid=${localStorage.getItem(
+    'storeId'
+  )}`;
+  public spinner:boolean =  false;
+
 
   constructor(
     private formBuilder: FormBuilder,
     private api: ApiAuthService,
     private route: ActivatedRoute,
     public toasterService: ServiceToasterService
-
   ) {
     this.updateTableStateForm = this.formBuilder.group({
       zone: ['', Validators.required],
@@ -82,7 +85,7 @@ export class TableComponent implements OnInit {
         }
       })
       .catch((error) => {
-        console.log(error);
+        this.toasterService.failure(error);
       });
   }
 
@@ -93,7 +96,7 @@ export class TableComponent implements OnInit {
   ngOnInit(): void {
     this.selectedZone = this.route.snapshot.paramMap.get('zone');
     this.getZone();
-    this.getPaymentInfo()
+    this.getPaymentInfo();
   }
 
   getPaymentInfo(): void {
@@ -101,10 +104,10 @@ export class TableComponent implements OnInit {
     this.api
       .getPaymentInfo(new StoreIdSchema(storeId))
       .then((res: any) => {
-        this.isPrePaid = res.isPrePaid
+        this.isPrePaid = res.isPrePaid;
       })
       .catch((error) => {
-        console.log(error);
+        this.toasterService.failure(error);
       });
   }
 
@@ -113,7 +116,7 @@ export class TableComponent implements OnInit {
       this.tableNumber = tableNumber;
       this.getTableTransaction(tableNumber);
       this.getTableState(tableNumber);
-      this.qrCode = this.qrCode + `&table=${tableNumber}`
+      this.qrCode = this.qrCode + `&table=${tableNumber}`;
     }
   }
 
@@ -131,7 +134,7 @@ export class TableComponent implements OnInit {
         this.tableTransactions = res.tableTransaction;
       })
       .catch((error) => {
-        console.log(error);
+        this.toasterService.failure(error);
       });
   }
 
@@ -150,7 +153,7 @@ export class TableComponent implements OnInit {
         this.tableState = res.status;
       })
       .catch((error) => {
-        console.log(error);
+        this.toasterService.failure(error);
       });
   }
 
@@ -169,9 +172,10 @@ export class TableComponent implements OnInit {
         this.getTableTransaction(tableNumber);
         this.getTableState(tableNumber);
         console.log(res);
+        this.toasterService.success('Updated table state');
       })
       .catch((error) => {
-        console.log(error);
+        this.toasterService.failure(error);
       });
   }
 
@@ -188,10 +192,11 @@ export class TableComponent implements OnInit {
     this.api
       .moveTableTransactions(payload)
       .then((res) => {
-        this.moveToTableNumber = 0
+        this.moveToTableNumber = 0;
+        this.toasterService.success('Table moved!');
       })
       .catch((error) => {
-        console.log(error);
+        this.toasterService.failure(error);
       });
   }
 }

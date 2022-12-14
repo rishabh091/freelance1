@@ -17,6 +17,8 @@ import { CreateTableInfo, ZoneSchema } from '../interface/zone.interface';
 export class OrdersComponent implements OnInit {
   public NavEnum = Nav;
 
+  public spinner:boolean =  false;
+
   constructor(
     private element: ElementRef,
     private api: Api,
@@ -36,8 +38,8 @@ export class OrdersComponent implements OnInit {
   activeArray: any = [];
   activatedOrderType: string = this.OrderTypes.NEW;
 
-  categories: any
-  subCategories: any
+  categories: any;
+  subCategories: any;
 
   categoryName: string = '';
   subCategoryName: string = '';
@@ -59,7 +61,7 @@ export class OrdersComponent implements OnInit {
         this.categories = res['menuCategories'];
       })
       .catch((error) => {
-        this.toaster.failure('Unable to fetch category list! ');
+        this.toaster.failure(error);
       });
   }
 
@@ -74,7 +76,7 @@ export class OrdersComponent implements OnInit {
         this.subCategories = res['menuSubCategories'];
       })
       .catch((error) => {
-        this.toaster.failure('Unable to fetch sub-category list! ');
+        this.toaster.failure(error);
       });
   }
   getZone() {
@@ -89,7 +91,7 @@ export class OrdersComponent implements OnInit {
         console.log(this.zoneNames);
       })
       .catch((error) => {
-        this.toaster.failure('Unable to fetch zone list! ');
+        this.toaster.failure(error);
       });
   }
 
@@ -106,7 +108,7 @@ export class OrdersComponent implements OnInit {
         this.activeArray = res['restaurantOrders'];
       })
       .catch((error) => {
-        this.toaster.failure('Unable to fetch orders! ');
+        this.toaster.failure(error);
       });
   }
 
@@ -123,10 +125,10 @@ export class OrdersComponent implements OnInit {
     this.api
       .updateOrderStatus(payload)
       .then((res) => {
-        this.toaster.success(`Order marked as ${orderStatus}`);
+        this.toaster.info(`Order marked as ${orderStatus}`);
       })
       .catch((error) => {
-        this.toaster.failure('Unable to update status of the order! ');
+        this.toaster.failure(error);
       });
   }
 
@@ -150,16 +152,20 @@ export class OrdersComponent implements OnInit {
     //   });
     // }
     this.getOrderByType(this.activatedOrderType).then(() => {
-      this.applySubFilter()
-    })
+      this.applySubFilter();
+    });
   }
 
   applySubFilter() {
     if (this.categoryName && this.subCategoryName) {
-      this.activeArray = this.activeArray.filter(value => { return value.subMenu == this.subCategoryName })
+      this.activeArray = this.activeArray.filter((value) => {
+        return value.subMenu == this.subCategoryName;
+      });
     }
     if (this.zoneName) {
-      this.activeArray = this.activeArray.filter(value => { return value.zone == this.zoneName })
+      this.activeArray = this.activeArray.filter((value) => {
+        return value.zone == this.zoneName;
+      });
     }
   }
 }

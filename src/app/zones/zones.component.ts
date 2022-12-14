@@ -28,6 +28,7 @@ export class ZonesComponent implements OnInit {
   public addZoneForm: FormGroup;
   public addZoneSubmitted = false;
 
+  public spinner:boolean =  false;
   constructor(
     public router: Router,
     private formBuilder: FormBuilder,
@@ -60,7 +61,7 @@ export class ZonesComponent implements OnInit {
         this.zone = res.zoneInfo;
       })
       .catch((error) => {
-        console.log(error);
+        this.toaster.failure(error)
       });
   }
 
@@ -117,7 +118,7 @@ export class ZonesComponent implements OnInit {
       .removeZone(payload)
       .then((res) => {
         this.getZone()
-        console.log(res);
+        this.toaster.success('')
       })
       .catch((error) => {
         this.toaster.failure(error);

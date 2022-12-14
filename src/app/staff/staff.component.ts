@@ -5,7 +5,7 @@ import {
   RemoveStaff,
   StoreStaff,
   UpdateStaff,
-  UpdateStoreStaff
+  UpdateStoreStaff,
 } from '../interface/staff.interface';
 import {
   AbstractControl,
@@ -34,6 +34,8 @@ export class StaffComponent implements OnInit {
 
   countryData = new Data();
 
+  public spinner:boolean =  false;
+
   constructor(
     private formBuilder: FormBuilder,
     private api: AuthApiService,
@@ -45,7 +47,7 @@ export class StaffComponent implements OnInit {
       name: ['', Validators.required],
       role: ['', Validators.required],
       emailAddress: ['', Validators.required],
-      countryCode : ['', Validators.required],
+      countryCode: ['', Validators.required],
       phoneNumber: ['', Validators.required],
     });
 
@@ -56,7 +58,7 @@ export class StaffComponent implements OnInit {
       phoneNumber: ['', Validators.required],
     });
 
-    this.getStaff()
+    this.getStaff();
   }
 
   get addStaffFunction(): { [key: string]: AbstractControl } {
@@ -67,27 +69,36 @@ export class StaffComponent implements OnInit {
   }
 
   getStaff(): void {
-    const phoneNumber = localStorage.getItem('phoneWithCountry').replace('+', '')
-    const payload = new GetStaff(new UserInfo(phoneNumber))
+    const phoneNumber = localStorage
+      .getItem('phoneWithCountry')
+      .replace('+', '');
+    const payload = new GetStaff(new UserInfo(phoneNumber));
 
-    this.api.getStaff(payload).then((res: any) => {
-      this.staff = res.storestaff
-    }).catch(error => {
-      this.toasterService.failure('Something went wrong')
-    })
+    this.api
+      .getStaff(payload)
+      .then((res: any) => {
+        this.staff = res.storestaff;
+      })
+      .catch((error) => {
+        this.toasterService.failure(error);
+      });
   }
 
   addStaff(): void {
     this.addStaffSubmitted = true;
     if (this.addStaffForm.invalid) return;
 
-    const phoneNumber = localStorage.getItem('phoneWithCountry').replace('+', '');
+    const phoneNumber = localStorage
+      .getItem('phoneWithCountry')
+      .replace('+', '');
     const payload = new AddStaff(
       new UserInfo(phoneNumber),
       new StoreStaff(
         this.addStaffForm.value.name,
         this.addStaffForm.value.role,
-        this.addStaffForm.value.countryCode + this.addStaffForm.value.phoneNumber + '',
+        this.addStaffForm.value.countryCode +
+          this.addStaffForm.value.phoneNumber +
+          '',
         this.addStaffForm.value.emailAddress
       )
     );
@@ -96,14 +107,10 @@ export class StaffComponent implements OnInit {
       .addStaff(payload)
       .then((res: any) => {
         if (res.status == 'user added sucessfully') {
-          this.addStaffForm.reset()
-          this.addStaffSubmitted = false
-
+          this.addStaffForm.reset();
+          this.addStaffSubmitted = false;
           this.toasterService.success('You have added the staff successfully!');
           this.getStaff();
-        } else {
-          this.toasterService.failure(res.status);
-          this.getStaff()
         }
       })
       .catch((error) => {
@@ -112,24 +119,28 @@ export class StaffComponent implements OnInit {
   }
 
   editStaff(index: number): void {
-    const staff = this.staff[index]
-    this.updateStaffForm.controls['name'].setValue(staff.name)
-    this.updateStaffForm.controls['role'].setValue(staff.role)
-    this.updateStaffForm.controls['phoneNumber'].setValue(staff.phoneNumber.replace('+', ''))
-    this.updateStaffForm.controls['emailAddress'].setValue(staff.emailAddress)
+    const staff = this.staff[index];
+    this.updateStaffForm.controls['name'].setValue(staff.name);
+    this.updateStaffForm.controls['role'].setValue(staff.role);
+    this.updateStaffForm.controls['phoneNumber'].setValue(
+      staff.phoneNumber.replace('+', '')
+    );
+    this.updateStaffForm.controls['emailAddress'].setValue(staff.emailAddress);
   }
 
   updateStaff(): void {
     this.updateStaffSubmitted = true;
     if (this.updateStaffForm.invalid) return;
 
-    const phoneNumber = localStorage.getItem('phoneWithCountry').replace('+', '');
+    const phoneNumber = localStorage
+      .getItem('phoneWithCountry')
+      .replace('+', '');
     const payload = new UpdateStaff(
       new UserInfo(phoneNumber),
       new UpdateStoreStaff(
         this.updateStaffForm.value.name,
         this.updateStaffForm.value.role[0],
-        this.updateStaffForm.value.phoneNumber+'',
+        this.updateStaffForm.value.phoneNumber + '',
         this.updateStaffForm.value.emailAddress
       )
     );
@@ -138,7 +149,7 @@ export class StaffComponent implements OnInit {
       .updateStaff(payload)
       .then((res: any) => {
         this.toasterService.success('You have updated the staff successfully!');
-        this.getStaff()
+        this.getStaff();
       })
       .catch((error) => {
         this.toasterService.failure('Error in updating the staff!');
@@ -147,7 +158,9 @@ export class StaffComponent implements OnInit {
 
   removeStaff(index: number): void {
     const staff = this.staff[index];
-    const phoneNumber = localStorage.getItem('phoneWithCountry').replace('+', '');
+    const phoneNumber = localStorage
+      .getItem('phoneWithCountry')
+      .replace('+', '');
 
     const payload = new RemoveStaff(
       new UserInfo(phoneNumber),
@@ -162,10 +175,8 @@ export class StaffComponent implements OnInit {
     this.api
       .removeStaff(payload)
       .then((res: any) => {
-        this.toasterService.success(
-          'You have removed the staff successfully!'
-        );
-        this.getStaff()
+        this.toasterService.success('You have removed the staff successfully!');
+        this.getStaff();
       })
       .catch((error) => {
         this.toasterService.failure('Error in removing the staff!');
