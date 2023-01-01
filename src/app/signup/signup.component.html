@@ -77,6 +77,26 @@
                 </div>
               </div>
             </div>
+
+            <div class="form-group col-sm-6">
+              <label>Select Store Categroy</label>
+              <select class="form-control" 
+                formControlName="storeCategory"
+                [ngClass]="{ 'is-invalid': submitted && f.storeCategory.errors }">
+                <option selected value="">-- Select Store Category --</option>
+                <option value="restaurant">Restaurant</option>
+                <option value="hotel">Hotel</option>
+                <option value="hospital">Hospital</option>                
+              </select>
+              <div
+              *ngIf="submitted && f.storeCategory.errors"
+              class="invalid-feedback"
+            >
+              <div *ngIf="f.storeCategory.errors.required" class="error-color">
+                Store Category is required
+              </div>
+            </div>
+            </div>
           </div>
           <div class="row mt-3">
             <div class="form-group col-sm-6">
@@ -85,7 +105,6 @@
               <select
                 class="form-control"
                 formControlName="countryCode"
-                class="form-control"
                 [ngClass]="{ 'is-invalid': submitted && f.countryCode.errors }"
               >
                 <option selected value="">-- Select Country Code --</option>

@@ -2,11 +2,11 @@ import { UserInfo } from './auth.interface'
 
 export class AddCategory {
     userInfo: UserInfo
-    menuinfo: AddCategoryMenuInfo
+    menuInfo: AddCategoryMenuInfo
 
     constructor(userInfo: UserInfo, menuInfo: AddCategoryMenuInfo) {
         this.userInfo = userInfo
-        this.menuinfo = menuInfo
+        this.menuInfo = menuInfo
     }
 }
 export class AddCategoryMenuInfo {
@@ -41,11 +41,11 @@ export class AddSubCategoryMenuInfo {
 
 export class UpdateCategory {
     userInfo: UserInfo
-    storeinfo: UpdateCategoryModule
+    storeInfo: UpdateCategoryModule
 
     constructor(userInfo: UserInfo, storeInfo: UpdateCategoryModule) {
         this.userInfo = userInfo
-        this.storeinfo = storeInfo
+        this.storeInfo = storeInfo
     }
 }
 

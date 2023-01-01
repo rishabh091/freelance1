@@ -46,9 +46,7 @@ export class DetailsComponent implements OnInit {
     this.form = this.formBuilder.group({
       opensAt: ['', Validators.required],
       closesAt: ['', Validators.required],
-      aboutStore: ['', Validators.required],
-      storeCategory: ['', Validators.required],
-      isPrePaid: [false, Validators.required],
+      aboutStore: ['', Validators.required]
     });
 
     this.phoneNumber = this.route.snapshot.paramMap
@@ -92,15 +90,6 @@ export class DetailsComponent implements OnInit {
       this.submitted = true;
     }
 
-    const updateCategoryPayload = new UpdateCategory(
-      new UserInfo(this.phoneNumber),
-      new UpdateCategoryModule(
-        this.form.controls['storeCategory'].value,
-        this.form.controls['isPrePaid'].value,
-        !this.form.controls['isPrePaid'].value
-      )
-    );
-
     const updateAboutStorePayload = new UpdateAboutStore(
       new UserInfo(this.phoneNumber),
       new AboutStore(this.form.controls['aboutStore'].value)
@@ -115,7 +104,6 @@ export class DetailsComponent implements OnInit {
     );
 
     const promises = [
-      this.api.updateCategory(updateCategoryPayload),
       this.api.updateStoreTimings(updateStoreTimingsPayload),
       this.api.updateStoreAbout(updateAboutStorePayload),
     ];

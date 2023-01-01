@@ -31,11 +31,11 @@ export class UpdateStoreStaff {
 
 export class AddStaff {
     userInfo: UserInfo
-    storestaff: StoreStaff
+    storeUser: StoreStaff
 
     constructor(userInfo: UserInfo, storestaff: StoreStaff) {
         this.userInfo = userInfo
-        this.storestaff = storestaff
+        this.storeUser = storestaff
     }
 }
 

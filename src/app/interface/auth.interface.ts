@@ -2,38 +2,41 @@ export class RegisterModule {
   userName: string;
   storeName: string;
   emailAddress: string;
+  storeCatagory: string;
   userInfo: UserInfo;
 
   constructor(
     userName: string,
     storeName: string,
     emailAddress: string,
+    storeCatagory: string,
     userInfo: UserInfo
   ) {
     this.userName = userName;
     this.storeName = storeName;
     this.emailAddress = emailAddress;
+    this.storeCatagory = storeCatagory;
     this.userInfo = userInfo;
   }
 }
 
 export class UpdateAddressModule {
   userInfo: UserInfo;
-  storeaddress: StoreAddress;
+  storeAddress: StoreAddress;
 
   constructor(userInfo: UserInfo, storeaddress: StoreAddress) {
     this.userInfo = userInfo;
-    this.storeaddress = storeaddress;
+    this.storeAddress = storeaddress;
   }
 }
 
 export class UpdateContactInfoModule {
 	userInfo: UserInfo
-	storeinfo: UpdateContactInfo
+	storeInfo: UpdateContactInfo
 
 	constructor(userInfo: UserInfo, storeinfo: UpdateContactInfo) {
 		this.userInfo = userInfo
-		this.storeinfo = storeinfo
+		this.storeInfo = storeinfo
 	}
 }
 
@@ -56,12 +59,12 @@ export class UserInfo {
 }
 
 export class StoreAddress {
-  storeaddressBuilding: string;
-  storeaddressStreet: string;
-  storeaddressCity: string;
-  storeaddressPinCode: string;
-  storeaddressState: string;
-  storeaddressCountry: string;
+  storeAddressBuilding: string;
+  storeAddressStreet: string;
+  storeAddressCity: string;
+  storeAddressPinCode: string;
+  storeAddressState: string;
+  storeAddressCountry: string;
 
   constructor(
     storeaddressBuilding: string,
@@ -71,12 +74,12 @@ export class StoreAddress {
     storeaddressState: string,
     storeaddressCountry: string
   ) {
-    this.storeaddressBuilding = storeaddressBuilding;
-    this.storeaddressCity = storeaddressCity;
-    this.storeaddressCountry = storeaddressCountry;
-    this.storeaddressPinCode = storeaddressPinCode;
-    this.storeaddressState = storeaddressState;
-    this.storeaddressStreet = storeaddressStreet;
+    this.storeAddressBuilding = storeaddressBuilding;
+    this.storeAddressCity = storeaddressCity;
+    this.storeAddressCountry = storeaddressCountry;
+    this.storeAddressPinCode = storeaddressPinCode;
+    this.storeAddressState = storeaddressState;
+    this.storeAddressStreet = storeaddressStreet;
   }
 }
 
@@ -93,11 +96,11 @@ export class StorePayment {
 
 export class UpdatePaymentModule {
     userInfo: UserInfo;
-    storepaymentinfo: StorePayment;
+    storePaymentInfo: StorePayment;
   
     constructor(userInfo: UserInfo, storePayment: StorePayment) {
       this.userInfo = userInfo;
-      this.storepaymentinfo = storePayment;
+      this.storePaymentInfo = storePayment;
     }
 }
 
@@ -113,11 +116,11 @@ export class UpdateName {
 
 export class UpdateStoreTimings {
 	userInfo: UserInfo
-	storeinfo: StoreTimings
+	storeInfo: StoreTimings
 
 	constructor(userInfo: UserInfo, storeinfo: StoreTimings) {
 		this.userInfo = userInfo
-		this.storeinfo = storeinfo
+		this.storeInfo = storeinfo
 	}
 }
 
@@ -133,11 +136,11 @@ export class StoreTimings {
 
 export class UpdateAboutStore {
 	userInfo: UserInfo
-	storeinfo: AboutStore
+	storeInfo: AboutStore
 
 	constructor(userInfo: UserInfo, storeinfo: AboutStore) {
 		this.userInfo = userInfo
-		this.storeinfo = storeinfo
+		this.storeInfo = storeinfo
 	}
 }
 

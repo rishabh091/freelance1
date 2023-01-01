@@ -72,45 +72,6 @@
                         </div>
                       </div>
                     </div>
-        
-                    <div class="form-group col-sm-6">
-                      <label>Store Category</label>
-                      <input
-                        type="text"
-                        formControlName="storeCategory"
-                        class="form-control"
-                        [ngClass]="{
-                          'is-invalid': submitted && f.storeCategory.errors
-                        }"
-                      />
-                      <div
-                        *ngIf="submitted && f.storeCategory.errors"
-                        class="invalid-feedback"
-                      >
-                        <div
-                          *ngIf="f.storeCategory.errors.required"
-                          class="error-color"
-                        >
-                          Store category is required
-                        </div>
-                      </div>
-                    </div>
-                </div>
-
-                <div class="row ">
-                    <div class="form-group center mt-2">
-                      <div class="custom-control custom-switch ">
-                        <input type="checkbox" formControlName="isPrePaid"
-                         class="custom-control-input form-control" id="customSwitch1" 
-                         [ngClass]="{ 'is-invalid': submitted && f.isPrePaid.errors }">
-                        <label class="custom-control-label" for="customSwitch1">Is PrePaid</label>
-                      </div>
-                      <div *ngIf="submitted && f.isPrePaid.errors" class="invalid-feedback">
-                        <div *ngIf="f.isPrePaid.errors.required" class="error-color">
-                          Is Pre-paid is required
-                        </div>
-                      </div>
-                    </div>
                 </div>
       
                 <div class="form-group">

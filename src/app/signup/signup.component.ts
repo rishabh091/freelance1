@@ -51,6 +51,7 @@ export class SignupComponent implements OnInit {
       storeName: ['', Validators.required],
       emailAddress: ['', Validators.required],
       countryCode: ['', Validators.required],
+      storeCategory: ['', Validators.required]
     });
   }
 
@@ -132,6 +133,7 @@ export class SignupComponent implements OnInit {
           this.form.value.userName,
           this.form.value.storeName,
           this.form.value.emailAddress,
+          this.form.value.storeCategory,
           new UserInfo(
             (
               this.form.value.countryCode +

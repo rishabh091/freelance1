@@ -159,7 +159,7 @@ export class LoginComponent implements OnInit {
         );
         this.api.isUserRegisterd(payload).then((res) => {
           localStorage.setItem('privilege', res['isprivilegedUser']);
-          localStorage.setItem('storeId', res['restaurantId']);
+          localStorage.setItem('storeId', res['storeID']);
           this.router.navigate(['/orders']);
         });
 
