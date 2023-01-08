@@ -48,11 +48,9 @@ export class StoreIdSchema {
 }
 
 export class MenuItemImage {
-  userInfo: UserInfo
   menuInfo: MenuImageInfo
 
-  constructor(userInfo: UserInfo, menuInfo: MenuImageInfo) {
-    this.userInfo = userInfo
+  constructor(menuInfo: MenuImageInfo) {
     this.menuInfo = menuInfo
   }
 }

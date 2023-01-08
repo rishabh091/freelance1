@@ -215,13 +215,14 @@ export class ProfileComponent implements OnInit {
     this.api
       .getAddress(payload)
       .then((res: any) => {
+        console.log(res)
         const countryObject = this.countries.filter((value) => {
-          return value.name === res.storeaddress.storeaddressCountry;
+          return value.name === res.storeAddress.storeAddressCountry;
         });
 
         this.states = State.getStatesOfCountry(countryObject[0].isoCode);
         const stateObject = this.states.filter((value) => {
-          return value.name === res.storeaddress.storeaddressState;
+          return value.name === res.storeAddress.storeAddressState;
         });
 
         this.cities = City.getCitiesOfState(
@@ -229,18 +230,18 @@ export class ProfileComponent implements OnInit {
           stateObject[0].isoCode
         );
         const cityObject = this.cities.filter((value) => {
-          return value.name === res.storeaddress.storeaddressCity;
+          return value.name === res.storeAddress.storeAddressCity;
         });
 
         this.addressForm.controls['storeaddressBuilding'].setValue(
-          res.storeaddress.storeaddressBuilding
-        );
+          res.storeAddress.storeaddressBuilding
+        )
         this.addressForm.controls['storeaddressStreet'].setValue(
-          res.storeaddress.storeaddressStreet
+          res.storeAddress.storeAddressStreet
         );
         this.addressForm.controls['storeaddressCity'].setValue(cityObject[0]);
         this.addressForm.controls['storeaddressPinCode'].setValue(
-          res.storeaddress.storeaddressPinCode
+          res.storeAddress.storeAddressPinCode
         );
         this.addressForm.controls['storeaddressState'].setValue(stateObject[0]);
         this.addressForm.controls['storeaddressCountry'].setValue(

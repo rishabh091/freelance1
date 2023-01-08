@@ -26,7 +26,7 @@ export class ShowSubcategoryComponent implements OnInit {
       .getSubCategory(new SubMenuCategories(storeId, category))
       .then((res) => {
         console.log(res)
-        this.subCategories = res['menuSubCategories'];
+        this.subCategories = res['subMenu'];
       })
       .catch((error) => {
         console.log(error);

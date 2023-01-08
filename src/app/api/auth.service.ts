@@ -120,17 +120,17 @@ export class AuthService {
   }
 
   getMenuCategory(payload: StoreIdSchema) {
-    let url = environment.apiUrlNoAuth + 'getmenucategories'
+    let url = environment.apiUrlStore + 'getmenucategories'
     return this.httpClient.post(url, payload, this.getUIDHeaders(localStorage.getItem('phoneWithCountry').replace('+', ''))).toPromise()
   }
 
   getSubCategory(payload: SubMenuCategories) {
-    let url = environment.apiUrlNoAuth + 'getmenusubcategories'
+    let url = environment.apiUrlStore + 'getmenusubcategories'
     return this.httpClient.post(url, payload, this.getUIDHeaders(localStorage.getItem('phoneWithCountry').replace('+', ''))).toPromise()
   }
 
   getAddress(payload: StoreIdSchema) {
-    let url = environment.apiUrlNoAuth + 'getstoreaddress'
+    let url = environment.apiUrlStore + 'getstoreaddress'
     return this.httpClient.post(url, payload, this.getUIDHeaders(localStorage.getItem('phoneWithCountry').replace('+', ''))).toPromise()
   }
 
@@ -145,7 +145,7 @@ export class AuthService {
   }
 
   getPaymentInfo(payload: StoreIdSchema) {
-    let url = environment.apiUrlNoAuth + 'getpaymentinfo'
+    let url = environment.apiUrlStore + 'getpaymentinfo'
     return this.httpClient.post(url, payload, this.getUIDHeaders(localStorage.getItem('phoneWithCountry').replace('+', ''))).toPromise()
   }
 
@@ -155,7 +155,7 @@ export class AuthService {
   }
 
   getStoreTimings(payload: StoreIdSchema) {
-    let url = environment.apiUrlNoAuth + 'getstoretimings'
+    let url = environment.apiUrlStore + 'getstoretimings'
     return this.httpClient.post(url, payload, this.getUIDHeaders(localStorage.getItem('phoneWithCountry').replace('+', ''))).toPromise()
   }
 
@@ -165,7 +165,7 @@ export class AuthService {
   }
 
   getStoreAbout(payload: StoreIdSchema) {
-    let url = environment.apiUrlNoAuth + 'getaboutstore'
+    let url = environment.apiUrlStore + 'getaboutstore'
     return this.httpClient.post(url, payload, this.getUIDHeaders(localStorage.getItem('phoneWithCountry').replace('+', ''))).toPromise()
   }
 
@@ -190,7 +190,7 @@ export class AuthService {
   }
 
   getMenuItems(payload: StoreIdSchema) {
-    let url = environment.apiUrl + 'getmenuitems'
+    let url = environment.apiUrlStore + 'getmenuitems'
     return this.httpClient.post(url, payload, this.getUIDHeaders(localStorage.getItem('phoneWithCountry').replace('+', ''))).toPromise()
   }
 
@@ -241,12 +241,12 @@ export class AuthService {
   }
 
   getCategory(payload: StoreIdSchema) {
-    let url = environment.apiUrlNoAuth + 'getstorecategory'
+    let url = environment.apiUrlStore + 'getstorecategory'
     return this.httpClient.post(url, payload, this.getUIDHeaders(localStorage.getItem('phoneWithCountry').replace('+', ''))).toPromise()
   }
 
   getStoreProfilePic(payload: StoreIdSchema) {
-    let url = environment.apiUrlNoAuth + 'getstoreprofilepic'
+    let url = environment.apiUrlStore + 'getstoreprofilepic'
     return this.httpClient.post(url, payload, this.getUIDHeaders(localStorage.getItem('phoneWithCountry').replace('+', ''))).toPromise()
   }
 

@@ -87,7 +87,6 @@ export class AddMenuComponent implements OnInit {
   getItemImage() {
     const phoneNumber = localStorage.getItem('phoneWithCode').replace('+', '');
     const payload = new MenuItemImage(
-      new UserInfo(phoneNumber),
       new MenuImageInfo(this.form.value.menuItem)
     );
     this.api
@@ -158,7 +157,7 @@ export class AddMenuComponent implements OnInit {
     this.api
       .getSubCategory(payload)
       .then((res) => {
-        this.subCategories = res['menuSubCategories'];
+        this.subCategories = res['subMenu'];
       })
       .catch((error) => {
         this.toaster.failure(error)
