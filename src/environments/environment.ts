@@ -15,7 +15,6 @@ export const environment = {
   },
   apiUrl: 'https://api-v0.hiveezy.com/api/v1/storeuser/',
   apiUrlStore: 'https://api-v0.hiveezy.com/api/v1/store/',
-  apiUrlNoAuth: 'https://api-v0.hiveezy.com/api/v1/no-auth/',
   imageUrl: 'https://media.hiveezy.com/images/uploadImage'
 };
 firebase.initializeApp(environment.firebaseConfig);
