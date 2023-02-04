@@ -17,6 +17,7 @@ import { StaffComponent } from './staff/staff.component';
 import { DetailsComponent } from './signup/details/details.component';
 import { ShowSubcategoryComponent } from './show-menu/show-subcategory/show-subcategory.component';
 import { ShowProdsComponent } from './show-menu/show-prods/show-prods.component';
+import { AddOrderComponent } from './add-order/add-order.component';
 
 const routes: Routes = [
   { path: 'orders', component: OrdersComponent, canActivate: [AuthGuard] },
@@ -25,6 +26,7 @@ const routes: Routes = [
   { path: 'showMenu/prod/:subcategory/:category', component: ShowProdsComponent, canActivate: [AuthGuard] },
   { path: 'addMenu', component: AddMenuComponent, canActivate: [AuthGuard] },
   { path: 'addCategory', component: AddCategoryComponent, canActivate: [AuthGuard] },
+  { path: 'addOrder', component: AddOrderComponent, canActivate: [AuthGuard] },
   { path: '', component: LoginComponent, canActivate: [AuthLoginGuard] },
   { path: 'signup', component: SignupComponent, canActivate: [AuthLoginGuard] },
   { path: 'signup/address/:phoneNumber', component: AddressComponent, canActivate: [AuthLoginGuard] },

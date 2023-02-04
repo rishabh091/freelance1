@@ -1,0 +1,106 @@
+<div *ngIf="spinner" class="spinner">
+  <div
+    style="height: 3em; width: 3em"
+    class="spinner-border spinner-border-sm"
+  ></div>
+</div>
+<div class="background-image">
+  <div class="center">
+    <div
+      class="container m-3 p-3"
+      style="border-radius: 1vh; background-color: #dbb300"
+    >
+      <div class="center heading m-2 text-light">CREATE ORDER</div>
+      <div class="center">
+        <div class="sub-heading m-2 pb-4 mb-5">
+          Make your menu more interesting and add varities of dishes
+        </div>
+      </div>
+      <div class="register-form">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+          <div class="form-group">
+            <label>Table Number</label>
+            <input
+              type="text"
+              formControlName="tableNumber"
+              class="form-control"
+            />
+          </div>
+          <div
+            *ngIf="submitted && f.tableNumber.errors"
+            class="text-danger mb-2"
+          >
+            Table Number is required
+          </div>
+
+          <div class="form-group">
+            <label>Table Code</label>
+            <input
+              type="text"
+              formControlName="tableCode"
+              class="form-control"
+            />
+          </div>
+          <div *ngIf="submitted && f.tableCode.errors" class="text-danger mb-2">
+            Table Code is required
+          </div>
+
+          <div class="mb-5">
+            <label>Items</label>
+
+            <div class="form-group row">
+              <div class="col-sm">
+                <div>Item Name</div>
+                <select
+                  class="form-control"
+                  [(ngModel)]="itemName"
+                  [ngModelOptions]="{ standalone: true }"
+                >
+                  <option value="">--Select--</option>
+                  <option *ngFor="let sub of menuItem" [value]="sub">
+                    {{ sub }}
+                  </option>
+                </select>
+              </div>
+
+              <div class="col-sm">
+                <div>Item Count</div>
+                <input
+                  type="text"
+                  [(ngModel)]="itemCount"
+                  [ngModelOptions]="{ standalone: true }"
+                  class="form-control"
+                />
+              </div>
+
+              <div class="col-sm-1 img-center mt-4 mr-4">
+                <img
+                  src="../../assets/icons8-add-100 (1).png"
+                  alt=""
+                  class="img"
+                />
+                <img
+                  src="../../assets/icons8-minus-100 (1).png"
+                  alt=""
+                  class="img"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group center">
+            <button
+              type="submit"
+              class="btn btn-success rounded-0"
+              style="width: 200px"
+            >
+              Save
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-toaster></app-toaster>

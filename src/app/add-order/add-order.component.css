@@ -1,0 +1,44 @@
+.background-image {
+  background: #f1d246;
+
+  background-repeat: repeat;
+  background-attachment: fixed;
+  /* background-size: cover; */
+  /* background-size: 100% 100%; */
+  min-height: 100vh;
+}
+.center {
+  display: flex;
+  justify-content: center;
+}
+.space-around {
+  display: flex;
+  /* justify-content: space-around; */
+  flex-wrap: wrap;
+}
+.heading {
+  font-size: xx-large;
+  font-weight: bold;
+}
+.sub-heading {
+  font-size: large;
+  color: grey;
+  border-bottom: 2px dashed grey;
+  text-align: center;
+}
+label {
+  font-weight: bold;
+}
+
+.img {
+  height: 5vh;
+  width: 5vh;
+}
+.img:hover {
+  cursor: pointer;
+}
+.img-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

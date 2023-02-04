@@ -30,6 +30,7 @@ import { ImageCropperModule } from 'ngx-image-cropper';
 import { QRCodeModule } from 'angularx-qrcode';
 import { ShowSubcategoryComponent } from './show-menu/show-subcategory/show-subcategory.component';
 import { ShowProdsComponent } from './show-menu/show-prods/show-prods.component';
+import { AddOrderComponent } from './add-order/add-order.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { ShowProdsComponent } from './show-menu/show-prods/show-prods.component'
     ToasterComponent,
     DetailsComponent,
     ShowSubcategoryComponent,
-    ShowProdsComponent
+    ShowProdsComponent,
+    AddOrderComponent
   ],
   imports: [
     AngularFireModule.initializeApp(environment.firebaseConfig),
