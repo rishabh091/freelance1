@@ -48,43 +48,49 @@
           <div class="mb-5">
             <label>Items</label>
 
-            <div class="form-group row">
-              <div class="col-sm">
-                <div>Item Name</div>
-                <select
-                  class="form-control"
-                  [(ngModel)]="itemName"
-                  [ngModelOptions]="{ standalone: true }"
-                >
-                  <option value="">--Select--</option>
-                  <option *ngFor="let sub of menuItem" [value]="sub">
-                    {{ sub }}
-                  </option>
-                </select>
+            <div class="form-group">
+              <div class="row" *ngFor="let item of orderArray; let i=index;">
+                <div class="col-sm">
+                  <div>Item Name</div>
+                  <select
+                    class="form-control"
+                    [(ngModel)]="itemName"
+                    [ngModelOptions]="{ standalone: true }"
+                  >
+                    <option value="">--Select--</option>
+                    <option *ngFor="let sub of menuItem" [value]="sub">
+                      {{ sub }}
+                    </option>
+                  </select>
+                </div>
+  
+                <div class="col-sm">
+                  <div>Item Count</div>
+                  <input
+                    type="text"
+                    [(ngModel)]="itemCount"
+                    [ngModelOptions]="{ standalone: true }"
+                    class="form-control"
+                  />
+                </div>
+
+
+                <div *ngIf="i == orderArray.length - 1" class="col-sm-1 img-center mt-4 mr-4">
+                  <img
+                    src="../../assets/icons8-add-100 (1).png"
+                    alt=""
+                    class="img"
+                    (click)="addItem(i)"
+                  />
+                  <img
+                    src="../../assets/icons8-minus-100 (1).png"
+                    alt=""
+                    class="img"
+                    (click)="removeItem(i)"
+                  />
+                </div>
               </div>
 
-              <div class="col-sm">
-                <div>Item Count</div>
-                <input
-                  type="text"
-                  [(ngModel)]="itemCount"
-                  [ngModelOptions]="{ standalone: true }"
-                  class="form-control"
-                />
-              </div>
-
-              <div class="col-sm-1 img-center mt-4 mr-4">
-                <img
-                  src="../../assets/icons8-add-100 (1).png"
-                  alt=""
-                  class="img"
-                />
-                <img
-                  src="../../assets/icons8-minus-100 (1).png"
-                  alt=""
-                  class="img"
-                />
-              </div>
             </div>
           </div>
 

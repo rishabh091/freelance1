@@ -19,6 +19,7 @@ export class AddOrderComponent implements OnInit {
   submitted = false;
 
   menuItem=['abc','jd','dsh','djsk'];
+  orderArray = [0];
 
   itemName=[];
   itemCount=[]
@@ -37,6 +38,16 @@ export class AddOrderComponent implements OnInit {
 
   get f(): { [key: string]: AbstractControl } {
     return this.form.controls;
+  }
+
+  addItem(index: number) {
+    this.orderArray.push(++index);
+  }
+  
+  removeItem(index: number) {
+    if (index) {
+      this.orderArray.pop();
+    }
   }
 
   onSubmit(): void {

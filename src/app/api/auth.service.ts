@@ -18,7 +18,8 @@ export class AuthService {
   constructor(private httpClient: HttpClient) { }
 
   getUIDHeaders(phoneNumber: string) {
-    return {headers: new HttpHeaders({uid: phoneNumber})}
+    const authToken = localStorage.getItem('token')
+    return {headers: new HttpHeaders({uid: phoneNumber, 'Authorization': `Bearer ${authToken}` })}
   }
 
   register(payload: RegisterModule) {
