@@ -108,21 +108,21 @@ export class DetailsComponent implements OnInit {
       this.api.updateStoreAbout(updateAboutStorePayload),
     ];
 
-    Promise.all(promises)
+    this.auth.login().then(token => {
+      Promise.all(promises)
       .then((result: any[]) => {
         const payload = new UserInfo(this.phoneNumber);
         this.api.isUserRegisterd(payload).then((res) => {
-          this.toaster.success('');
           localStorage.setItem('privilege', res['isprivilegedUser']);
           localStorage.setItem('storeId', res['restaurantId']);
-          this.router.navigate(['/orders']);
+          this.toaster.success('');
+          this.router.navigate(['/']);
         });
-
-        this.auth.login();
       })
       .catch((error) => {
         console.log(error);
         this.toaster.failure('Some error occur please try again later.');
       });
+    })
   }
 }

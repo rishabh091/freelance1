@@ -14,13 +14,14 @@ export class AuthService {
   /**
    * Will save a secret into localstorage which can be used to detect authentication
    */
-  login() {
-    const authPromise = this.afAuth.authState.pipe(first()).toPromise()
-    authPromise.then(user => {
-      let accessToken = user['_delegate'].accessToken
-      localStorage.setItem('token', accessToken)
-      this.router.navigate(['/'])
-    }).catch(error => { console.log(error) })
+  async login() {
+    const currentUser = getAuth().currentUser
+    if (currentUser) {
+      const token = await currentUser.getIdToken(true);
+      localStorage.setItem('token', token);
+      return token;
+    }
+    return null
   }
   /**
    * Will delete authentication
