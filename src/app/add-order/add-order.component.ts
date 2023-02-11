@@ -32,7 +32,7 @@ export class AddOrderComponent implements OnInit {
   ngOnInit(): void {
     this.form = this.formBuilder.group({
       tableNumber: ['', Validators.required],
-      tableCode: ['', [Validators.required]],
+      // tableCode: ['', [Validators.required]],
     });
   }
 
@@ -55,6 +55,24 @@ export class AddOrderComponent implements OnInit {
     if (this.form.invalid) {
       return;
     }
+
+    const items = []
+    for (let i in this.itemName) {
+      items.push({menuItemName: this.itemName[i], itemCount: this.itemCount[i]})
+    }
+
+    const payload = {
+      tableNumber: this.form.value.tableNumber,
+      menuItems: {
+        items: items
+      }
+    }
+
+    this.api.createOrder(payload).then(res => {
+      console.log(res)
+    }).catch(error => {
+      console.log(error)
+    })
   }
 
   onReset(): void {

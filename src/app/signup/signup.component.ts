@@ -126,6 +126,7 @@ export class SignupComponent implements OnInit {
     this.windowRef.confirmationResult
       .confirm(this.otp)
       .then((result) => {
+        this.auth.login();
         this.form.disable();
         clearInterval(this.otpCheckInterval);
 

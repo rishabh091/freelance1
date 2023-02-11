@@ -33,7 +33,7 @@
             Table Number is required
           </div>
 
-          <div class="form-group">
+          <!-- <div class="form-group">
             <label>Table Code</label>
             <input
               type="text"
@@ -43,7 +43,7 @@
           </div>
           <div *ngIf="submitted && f.tableCode.errors" class="text-danger mb-2">
             Table Code is required
-          </div>
+          </div> -->
 
           <div class="mb-5">
             <label>Items</label>
@@ -54,7 +54,7 @@
                   <div>Item Name</div>
                   <select
                     class="form-control"
-                    [(ngModel)]="itemName"
+                    [(ngModel)]="itemName[i]"
                     [ngModelOptions]="{ standalone: true }"
                   >
                     <option value="">--Select--</option>
@@ -68,7 +68,7 @@
                   <div>Item Count</div>
                   <input
                     type="text"
-                    [(ngModel)]="itemCount"
+                    [(ngModel)]="itemCount[i]"
                     [ngModelOptions]="{ standalone: true }"
                     class="form-control"
                   />

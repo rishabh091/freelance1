@@ -154,25 +154,30 @@ export class LoginComponent implements OnInit {
           this.form.value.countryCode + this.form.value.phone
         );
 
-        const payload = new UserInfo(
-          localStorage.getItem('phoneWithCountry').replace('+', '')
-        );
-        this.api.isUserRegisterd(payload).then((res) => {
-          localStorage.setItem('privilege', res['isprivilegedUser']);
-          localStorage.setItem('storeId', res['storeID']);
-          this.router.navigate(['/orders']);
-        });
 
-        const authPromise = this.afAuth.authState.pipe(first()).toPromise();
-        authPromise
-          .then((user) => {
-            let accessToken = user['_delegate'].accessToken;
-            localStorage.setItem('token', accessToken);
+        this.auth.login().then((value) => {
+          const payload = new UserInfo(
+            localStorage.getItem('phoneWithCountry').replace('+', '')
+          );
+          this.api.isUserRegisterd(payload).then((res) => {
+            localStorage.setItem('privilege', res['isprivilegedUser']);
+            localStorage.setItem('storeId', res['storeID']);
             this.router.navigate(['/orders']);
-          })
-          .catch((error) => {
-            this.toasterService.failure(error);
           });
+        }).catch(error => {
+          console.log(error)
+        })
+
+        // const authPromise = this.afAuth.authState.pipe(first()).toPromise();
+        // authPromise
+        //   .then((user) => {
+        //     let accessToken = user['_delegate'].accessToken;
+        //     localStorage.setItem('token', accessToken);
+        //     this.router.navigate(['/orders']);
+        //   })
+        //   .catch((error) => {
+        //     this.toasterService.failure(error);
+        //   });
       })
       .catch((error) => {
         this.form.enable();

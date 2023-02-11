@@ -28,12 +28,14 @@ export class AuthService {
       storeName: payload.storeName,
       storeCategory: payload.storeCatagory
     }
+    const authToken = localStorage.getItem('token')
     const headers = {
       headers: new HttpHeaders({
         uid: payload.userInfo.phoneNumber,
         username: payload.userName,
         phonenumber: payload.userInfo.phoneNumber,
-        emailaddress: payload.emailAddress
+        emailaddress: payload.emailAddress,
+        Authorization: `Bearer ${authToken}`
       })
     }
     return this.httpClient.post(url, body, headers).toPromise()
@@ -42,6 +44,11 @@ export class AuthService {
   updateAddress(payload: UpdateAddressModule) {
     let url = environment.apiUrl + 'updatestoreaddress'
     return this.httpClient.post(url, {storeAddress: payload.storeAddress}, this.getUIDHeaders()).toPromise()
+  }
+
+  createOrder(payload) {
+    let url = environment.apiUrl + 'postpaidorder'
+    return this.httpClient.post(url, payload, this.getUIDHeaders()).toPromise()
   }
 
   updatePayment(payload: UpdatePaymentModule) {

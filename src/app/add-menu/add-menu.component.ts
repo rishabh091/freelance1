@@ -130,10 +130,10 @@ export class AddMenuComponent implements OnInit {
     });
     const formData = new FormData();
     formData.append('restaurantImage', file);
-    formData.append(
-      'phoneNumber',
-      localStorage.getItem('phoneWithCountry').replace('+', '')
-    );
+    // formData.append(
+    //   'phoneNumber',
+    //   localStorage.getItem('phoneWithCountry').replace('+', '')
+    // );
     formData.append('imageType', 'menuItem');
     formData.append('imageDetail1', this.form.value.menuItem);
     this.api
