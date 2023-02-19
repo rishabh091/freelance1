@@ -30,7 +30,7 @@ export class AddressComponent implements OnInit {
   public cities: any[];
   private phoneNumber: string;
 
-  public spinner:boolean =  false;
+  public spinner:boolean =  true;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -55,6 +55,7 @@ export class AddressComponent implements OnInit {
     this.phoneNumber = this.route.snapshot.paramMap
       .get('phoneNumber')
       .replace('+', '');
+    this.spinner = false;
   }
 
   get f(): { [key: string]: AbstractControl } {

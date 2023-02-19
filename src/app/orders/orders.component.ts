@@ -17,7 +17,7 @@ import { CreateTableInfo, ZoneSchema } from '../interface/zone.interface';
 export class OrdersComponent implements OnInit {
   public NavEnum = Nav;
 
-  public spinner:boolean =  false;
+  public spinner:boolean =  true;
 
   constructor(
     private element: ElementRef,
@@ -105,9 +105,11 @@ export class OrdersComponent implements OnInit {
     return this.api
       .getOrdersByType(payload)
       .then((res) => {
+        this.spinner = false;
         this.activeArray = res['restaurantOrders'];
       })
       .catch((error) => {
+        this.spinner = false;
         this.toaster.failure(error);
       });
   }

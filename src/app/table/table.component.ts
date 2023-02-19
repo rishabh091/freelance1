@@ -46,7 +46,7 @@ export class TableComponent implements OnInit {
   public qrCode: string = `https://hiveezy.com/store?storeid=${localStorage.getItem(
     'storeId'
   )}`;
-  public spinner:boolean =  false;
+  public spinner:boolean =  true;
 
 
   constructor(
@@ -71,6 +71,7 @@ export class TableComponent implements OnInit {
     this.api
       .getZone(payload)
       .then((res: any) => {
+        this.spinner = false;
         this.allZones = res.zoneInfo;
         this.selectedZoneObject = this.allZones.filter((zone: any) => {
           return zone.zone == this.selectedZone;
@@ -85,6 +86,7 @@ export class TableComponent implements OnInit {
         }
       })
       .catch((error) => {
+        this.spinner = false;
         this.toasterService.failure(error);
       });
   }

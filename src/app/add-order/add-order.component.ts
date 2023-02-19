@@ -7,6 +7,7 @@ import {
 } from '@angular/forms';
 import { ServiceToasterService } from '../service-toaster.service';
 import { AuthService as AuthApiService } from '../api/auth.service';
+import { StoreIdSchema } from '../interface/interface';
 
 @Component({
   selector: 'app-add-order',
@@ -14,11 +15,11 @@ import { AuthService as AuthApiService } from '../api/auth.service';
   styleUrls: ['./add-order.component.css'],
 })
 export class AddOrderComponent implements OnInit {
-  public spinner: boolean = false;
+  public spinner: boolean = true;
   form: FormGroup;
   submitted = false;
 
-  menuItem=['abc','jd','dsh','djsk'];
+  menuItem;
   orderArray = [0];
 
   itemName=[];
@@ -34,6 +35,17 @@ export class AddOrderComponent implements OnInit {
       tableNumber: ['', Validators.required],
       // tableCode: ['', [Validators.required]],
     });
+    this.getItems();
+  }
+
+  getItems() {
+    this.api.getMenuItems(new StoreIdSchema(localStorage.getItem('storeId'))).then(res => {
+      this.menuItem = res['menuItems'];
+      this.spinner = false;
+    }).catch(error => {
+      console.log(error)
+      this.spinner = false;
+    })
   }
 
   get f(): { [key: string]: AbstractControl } {

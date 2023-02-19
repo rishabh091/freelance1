@@ -40,7 +40,7 @@ export class AddCategoryComponent implements OnInit {
   public showProfilePic: boolean = true;
   public showSubProfilePic: boolean = true;
 
-  public spinner:boolean =  false;
+  public spinner:boolean =  true;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -68,10 +68,12 @@ export class AddCategoryComponent implements OnInit {
     this.api
       .getMenuCategory(new StoreIdSchema(storeId))
       .then((res) => {
+        this.spinner = false;
         this.categories = res['menuCategories'];
         this.toasterService.success('');
       })
       .catch((error) => {
+        this.spinner = false;
         this.toasterService.failure(error);
         console.log(error);
       });

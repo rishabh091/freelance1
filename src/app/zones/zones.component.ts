@@ -28,7 +28,7 @@ export class ZonesComponent implements OnInit {
   public addZoneForm: FormGroup;
   public addZoneSubmitted = false;
 
-  public spinner:boolean =  false;
+  public spinner:boolean =  true;
   constructor(
     public router: Router,
     private formBuilder: FormBuilder,
@@ -58,9 +58,11 @@ export class ZonesComponent implements OnInit {
     this.api
       .getZone(payload)
       .then((res: any) => {
+        this.spinner = false;
         this.zone = res.zoneInfo;
       })
       .catch((error) => {
+        this.spinner = false;
         this.toaster.failure(error)
       });
   }

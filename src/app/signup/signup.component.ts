@@ -31,7 +31,7 @@ export class SignupComponent implements OnInit {
   private otpCheckInterval: any;
   countryData = new Data();
 
-  public spinner:boolean =  false;
+  public spinner:boolean =  true;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -53,6 +53,8 @@ export class SignupComponent implements OnInit {
       countryCode: ['', Validators.required],
       storeCategory: ['', Validators.required]
     });
+
+    this.spinner = false;
   }
 
   get f(): { [key: string]: AbstractControl } {

@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit {
   public errorMessage: string = '';
   public storeId: string;
 
-  public spinner:boolean =  false;
+  public spinner:boolean =  true;
 
   windowRef: any;
   otpCheckInterval: any;
@@ -72,6 +72,8 @@ export class LoginComponent implements OnInit {
         this.otpRequestCountdown--;
       }
     }, 1000);
+
+    this.spinner = false;
   }
 
   get f(): { [key: string]: AbstractControl } {

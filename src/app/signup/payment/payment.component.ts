@@ -25,7 +25,7 @@ export class PaymentComponent implements OnInit {
   public submitted = false;
   private phoneNumber: string;
 
-  public spinner:boolean =  false;
+  public spinner:boolean =  true;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -45,6 +45,7 @@ export class PaymentComponent implements OnInit {
     this.phoneNumber = this.route.snapshot.paramMap
       .get('phoneNumber')
       .replace('+', '');
+    this.spinner = false;
   }
 
   get f(): { [key: string]: AbstractControl } {

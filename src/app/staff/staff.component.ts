@@ -34,7 +34,7 @@ export class StaffComponent implements OnInit {
 
   countryData = new Data();
 
-  public spinner:boolean =  false;
+  public spinner:boolean =  true;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -78,8 +78,10 @@ export class StaffComponent implements OnInit {
       .getStaff(payload)
       .then((res: any) => {
         this.staff = res.storestaff;
+        this.spinner = false;
       })
       .catch((error) => {
+        this.spinner = false;
         this.toasterService.failure(error);
       });
   }

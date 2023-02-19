@@ -44,7 +44,7 @@ export class AddMenuComponent implements OnInit {
   public imageChangedEvent: any;
   public showProfilePic: boolean = true;
 
-  public spinner:boolean =  false;
+  public spinner:boolean =  true;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -77,9 +77,11 @@ export class AddMenuComponent implements OnInit {
     this.api
       .getMenuCategory(new StoreIdSchema(storeId))
       .then((res: {}) => {
+        this.spinner = false;
         this.categories = res['menuCategories'];
       })
       .catch((error) => {
+        this.spinner = false;
         this.toaster.failure(error);
       });
   }

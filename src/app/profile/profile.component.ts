@@ -67,7 +67,7 @@ export class ProfileComponent implements OnInit {
   public croppedImage: string;
   public imageChangedEvent: any;
 
-  public spinner:boolean =  false;
+  public spinner:boolean =  true;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -187,9 +187,11 @@ export class ProfileComponent implements OnInit {
     this.api
       .getStore(payload)
       .then((res: any) => {
+        this.spinner = false;
         this.userInfoForm.controls['storeName'].setValue(res.storename);
       })
       .catch((error) => {
+        this.spinner = false;
         this.toaster.failure(error);
       });
   }
