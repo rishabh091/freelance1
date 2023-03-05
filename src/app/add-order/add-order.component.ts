@@ -69,8 +69,9 @@ export class AddOrderComponent implements OnInit {
     }
 
     const items = []
+    console.log(this.itemName)
     for (let i in this.itemName) {
-      items.push({menuItemName: this.itemName[i], itemCount: this.itemCount[i]})
+      items.push({menuItemName: this.itemName[i], itemCount: parseInt(this.itemCount[i])})
     }
 
     const payload = {

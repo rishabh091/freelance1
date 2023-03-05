@@ -57,7 +57,7 @@ export class AddCategoryComponent implements OnInit {
     this.subCategoryForm = this.formBuilder.group({
       menuCategory: ['', Validators.required],
       menuSubCategory: ['', Validators.required],
-      imageURL: ['', Validators.required],
+      // imageURL: ['', Validators.required],
     });
 
     this.getCategory();
@@ -96,7 +96,6 @@ export class AddCategoryComponent implements OnInit {
       .getItem('phoneWithCountry')
       .replace('+', '');
     const payload = new AddCategory(
-      new UserInfo(phoneNumber),
       new AddCategoryMenuInfo(this.form.value.menuCategory)
     );
     this.api
@@ -176,11 +175,9 @@ export class AddCategoryComponent implements OnInit {
       .getItem('phoneWithCountry')
       .replace('+', '');
     const payload = new AddSubCategory(
-      new UserInfo(phoneNumber),
       new AddSubCategoryMenuInfo(
         this.subCategoryForm.value.menuCategory,
-        this.subCategoryForm.value.menuSubCategory,
-        this.subCategoryForm.value.imageURL
+        this.subCategoryForm.value.menuSubCategory
       )
     );
 

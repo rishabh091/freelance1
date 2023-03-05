@@ -1,11 +1,9 @@
 import { UserInfo } from './auth.interface'
 
 export class AddCategory {
-    userInfo: UserInfo
     menuInfo: AddCategoryMenuInfo
 
-    constructor(userInfo: UserInfo, menuInfo: AddCategoryMenuInfo) {
-        this.userInfo = userInfo
+    constructor(menuInfo: AddCategoryMenuInfo) {
         this.menuInfo = menuInfo
     }
 }
@@ -18,11 +16,9 @@ export class AddCategoryMenuInfo {
 }
 
 export class AddSubCategory {
-    userInfo: UserInfo
     menuInfo: AddSubCategoryMenuInfo
 
-    constructor(userInfo: UserInfo, menuinfo: AddSubCategoryMenuInfo) {
-        this.userInfo = userInfo
+    constructor(menuinfo: AddSubCategoryMenuInfo) {
         this.menuInfo = menuinfo
     }
 }
@@ -30,12 +26,10 @@ export class AddSubCategory {
 export class AddSubCategoryMenuInfo {
     menuCategory: string
     menuSubCategory: string
-    imageURL: string
 
-    constructor(menuCategory: string, menuSubCategory: string, imageUrl: string) {
+    constructor(menuCategory: string, menuSubCategory: string) {
         this.menuCategory = menuCategory
         this.menuSubCategory = menuSubCategory
-        this.imageURL = imageUrl
     }
 }
 
@@ -81,23 +75,17 @@ export class RemoveMenuCategory {
  }
 
  export class UpdateMenuItemPrice {
-    userInfo: UserInfo
     menuInfo: MenuItemPrice
 
-    constructor(userInfo: UserInfo, menuInfo: MenuItemPrice) {
-        this.userInfo = userInfo
+    constructor(menuInfo: MenuItemPrice) {
         this.menuInfo = menuInfo
     }
  }
  export class MenuItemPrice {
-    menuCategory: string
-    menuSubCategory: string
     menuItem: string
     itemPrice: number
 
-    constructor(menuCategory: string, menuSubCategory: string, menuItem: string, itemPrice: number) {
-        this.menuCategory = menuCategory
-        this.menuSubCategory = menuSubCategory
+    constructor(menuItem: string, itemPrice: number) {
         this.menuItem = menuItem
         this.itemPrice = itemPrice
     }

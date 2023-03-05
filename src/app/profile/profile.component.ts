@@ -188,7 +188,7 @@ export class ProfileComponent implements OnInit {
       .getStore(payload)
       .then((res: any) => {
         this.spinner = false;
-        this.userInfoForm.controls['storeName'].setValue(res.storename);
+        this.userInfoForm.controls['storeName'].setValue(res.storeName);
       })
       .catch((error) => {
         this.spinner = false;
@@ -236,7 +236,7 @@ export class ProfileComponent implements OnInit {
         });
 
         this.addressForm.controls['storeaddressBuilding'].setValue(
-          res.storeAddress.storeaddressBuilding
+          res.storeAddress.storeAddressBuilding
         )
         this.addressForm.controls['storeaddressStreet'].setValue(
           res.storeAddress.storeAddressStreet
@@ -356,7 +356,7 @@ export class ProfileComponent implements OnInit {
     this.api
       .getStoreAbout(new StoreIdSchema(storeId))
       .then((res: any) => {
-        this.aboutStoreForm.controls['aboutStore'].setValue(res.aboutstore);
+        this.aboutStoreForm.controls['aboutStore'].setValue(res.aboutStore);
       })
       .catch((error) => {
         this.toaster.failure(error);
@@ -425,7 +425,6 @@ export class ProfileComponent implements OnInit {
       .getItem('phoneWithCountry')
       .replace('+', '');
     const payload = new UpdateAddressModule(
-      new UserInfo(phoneNumber),
       new StoreAddress(
         this.addressForm.value.storeaddressBuilding,
         this.addressForm.value.storeaddressStreet,
@@ -480,7 +479,6 @@ export class ProfileComponent implements OnInit {
       .getItem('phoneWithCountry')
       .replace('+', '');
     const payload = new UpdateContactInfoModule(
-      new UserInfo(phoneNumber),
       new UpdateContactInfo(
         this.contactInfoForm.value.storePhoneNumber,
         this.contactInfoForm.value.storeEmailAddress

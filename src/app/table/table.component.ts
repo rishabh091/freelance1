@@ -67,7 +67,7 @@ export class TableComponent implements OnInit {
     const phoneNumber = localStorage
       .getItem('phoneWithCountry')
       .replace('+', '');
-    const payload = new ZoneSchema(new UserInfo(phoneNumber));
+    const payload = new ZoneSchema();
     this.api
       .getZone(payload)
       .then((res: any) => {

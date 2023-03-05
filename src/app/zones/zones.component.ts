@@ -54,7 +54,7 @@ export class ZonesComponent implements OnInit {
     const phoneNumber = localStorage
       .getItem('phoneWithCountry')
       .replace('+', '');
-    const payload = new ZoneSchema(new UserInfo(phoneNumber));
+    const payload = new ZoneSchema();
     this.api
       .getZone(payload)
       .then((res: any) => {
@@ -82,7 +82,6 @@ export class ZonesComponent implements OnInit {
 
     const phoneNumber = localStorage.getItem('phoneWithCountry').replace('+', '');
     const payload = new CreateZone(
-      new UserInfo(phoneNumber),
       new CreateTableInfo(
         this.addZoneForm.value.zone,
         this.addZoneForm.value.startTableNumber,
@@ -113,7 +112,6 @@ export class ZonesComponent implements OnInit {
     const phoneNumber = localStorage.getItem('phoneWithCountry').replace('+', '');
 
     const payload = new RemoveZone(
-      new UserInfo(phoneNumber),
       new RemoveTableInfo(zone.zone)
     );
     this.api

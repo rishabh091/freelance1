@@ -21,21 +21,17 @@ export class RegisterModule {
 }
 
 export class UpdateAddressModule {
-  userInfo: UserInfo;
   storeAddress: StoreAddress;
 
-  constructor(userInfo: UserInfo, storeaddress: StoreAddress) {
-    this.userInfo = userInfo;
+  constructor(storeaddress: StoreAddress) {
     this.storeAddress = storeaddress;
   }
 }
 
 export class UpdateContactInfoModule {
-	userInfo: UserInfo
 	storeInfo: UpdateContactInfo
 
-	constructor(userInfo: UserInfo, storeinfo: UpdateContactInfo) {
-		this.userInfo = userInfo
+	constructor(storeinfo: UpdateContactInfo) {
 		this.storeInfo = storeinfo
 	}
 }

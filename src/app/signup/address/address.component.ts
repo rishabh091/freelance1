@@ -69,7 +69,6 @@ export class AddressComponent implements OnInit {
     }
 
     const payload = new UpdateAddressModule(
-      new UserInfo(this.phoneNumber),
       new StoreAddress(
         this.form.value.storeaddressBuilding,
         this.form.value.storeaddressStreet,

@@ -72,10 +72,10 @@ export class ShowProdsComponent implements OnInit {
   setMenuItems(items) {
     this.setCategoryName = items.menu;
     this.setSubCategoryName = items.subMenu;
-    this.setItemName = items.menuItemName;
-    this.menuItemForm.controls['ItemName'].setValue(items.menuItemName);
-    this.menuItemForm.controls['ItemType'].setValue(items.itemType[0]);
-    this.menuItemForm.controls['Price'].setValue(items.basePrice);
+    this.setItemName = items.menuItem;
+    this.menuItemForm.controls['ItemName'].setValue(items.menuItem);
+    this.menuItemForm.controls['ItemType'].setValue(items.itemType);
+    this.menuItemForm.controls['Price'].setValue(items.price);
     this.menuItemForm.controls['DisplayImagePath'].setValue(items.imgURL);
   }
 
@@ -89,10 +89,7 @@ export class ShowProdsComponent implements OnInit {
       .getItem('phoneWithCountry')
       .replace('+', '');
     const pricePayload = new UpdateMenuItemPrice(
-      new UserInfo(phoneNumber),
       new MenuItemPrice(
-        this.setCategoryName,
-        this.setSubCategoryName,
         this.menuItemForm.value.ItemName,
         this.menuItemForm.value.Price
       )

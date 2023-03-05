@@ -30,39 +30,33 @@ export class UpdateStoreStaff {
 }
 
 export class AddStaff {
-    userInfo: UserInfo
     storeUser: StoreStaff
 
-    constructor(userInfo: UserInfo, storestaff: StoreStaff) {
-        this.userInfo = userInfo
+    constructor(storestaff: StoreStaff) {
         this.storeUser = storestaff
     }
 }
 
 export class UpdateStaff {
-    userInfo: UserInfo
     storestaff: UpdateStoreStaff
 
-    constructor(userInfo: UserInfo, storestaff: UpdateStoreStaff) {
-        this.userInfo = userInfo
+    constructor(storestaff: UpdateStoreStaff) {
         this.storestaff = storestaff
     }
 }
 
 export class RemoveStaff {
-    userInfo: UserInfo
     storestaff: UpdateStoreStaff
 
-    constructor(userInfo: UserInfo, storestaff: UpdateStoreStaff) {
-        this.userInfo = userInfo
+    constructor(storestaff: UpdateStoreStaff) {
         this.storestaff = storestaff
     }
 }
 
 export class GetStaff {
-    userInfo: UserInfo
+    // userInfo: UserInfo
 
-    constructor(userInfo: UserInfo) {
-        this.userInfo = userInfo
-    }
+    // constructor(userInfo: UserInfo) {
+    //     this.userInfo = userInfo
+    // }
 }

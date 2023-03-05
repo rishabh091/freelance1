@@ -72,7 +72,7 @@ export class StaffComponent implements OnInit {
     const phoneNumber = localStorage
       .getItem('phoneWithCountry')
       .replace('+', '');
-    const payload = new GetStaff(new UserInfo(phoneNumber));
+    const payload = new GetStaff();
 
     this.api
       .getStaff(payload)
@@ -94,7 +94,6 @@ export class StaffComponent implements OnInit {
       .getItem('phoneWithCountry')
       .replace('+', '');
     const payload = new AddStaff(
-      new UserInfo(phoneNumber),
       new StoreStaff(
         this.addStaffForm.value.name,
         this.addStaffForm.value.role,
@@ -138,7 +137,6 @@ export class StaffComponent implements OnInit {
       .getItem('phoneWithCountry')
       .replace('+', '');
     const payload = new UpdateStaff(
-      new UserInfo(phoneNumber),
       new UpdateStoreStaff(
         this.updateStaffForm.value.name,
         this.updateStaffForm.value.role[0],
@@ -165,7 +163,6 @@ export class StaffComponent implements OnInit {
       .replace('+', '');
 
     const payload = new RemoveStaff(
-      new UserInfo(phoneNumber),
       new UpdateStoreStaff(
         staff.name,
         staff.role[0],

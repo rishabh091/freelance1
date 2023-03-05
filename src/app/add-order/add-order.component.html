@@ -58,7 +58,7 @@
                     [ngModelOptions]="{ standalone: true }"
                   >
                     <option value="">--Select--</option>
-                    <option *ngFor="let sub of menuItem" [value]="sub">
+                    <option *ngFor="let sub of menuItem" [value]="sub.menuItem">
                       {{ sub.menuItem }}
                     </option>
                   </select>

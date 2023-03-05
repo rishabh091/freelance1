@@ -21,27 +21,23 @@ export class RemoveTableInfo {
 }
 
 export class ZoneSchema {
-    userInfo: UserInfo
+    // userInfo: UserInfo
     
-    constructor(userInfo: UserInfo) { this.userInfo = userInfo }
+    // constructor(userInfo: UserInfo) { this.userInfo = userInfo }
 }
 
 export class CreateZone {
-    userInfo: UserInfo
     tableInfo: CreateTableInfo
 
-    constructor(userInfo: UserInfo, tableInfo: CreateTableInfo) {
-        this.userInfo = userInfo
+    constructor(tableInfo: CreateTableInfo) {
         this.tableInfo = tableInfo
     }
 }
 
 export class RemoveZone {
-    userInfo: UserInfo
     tableInfo: RemoveTableInfo
     
-    constructor(userInfo: UserInfo, tableInfo: RemoveTableInfo) {
-        this.userInfo = userInfo
+    constructor(tableInfo: RemoveTableInfo) {
         this.tableInfo = tableInfo
     }
 }
