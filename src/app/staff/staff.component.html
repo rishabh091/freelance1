@@ -31,7 +31,6 @@
             <tr class="text-center">
               <th>S.No</th>
               <th>Name</th>
-              <th>Role</th>
               <th>Phone</th>
               <th>Email</th>
               <th>Actions</th>
@@ -41,9 +40,8 @@
             <tr *ngFor="let st of staff; let i = index" class="text-center">
               <td class="text-uppercase">{{ i + 1 }}</td>
               <td class="text-uppercase">{{ st.name }}</td>
-              <td class="text-uppercase">{{ st.role }}</td>
               <td class="">{{ st.phoneNumber }}</td>
-              <td class="">{{ st.emailAddress }}</td>
+              <td class="">{{ st.email }}</td>
               <td>
                 <img
                   class="img-size"
@@ -58,6 +56,7 @@
                   src="../../assets/images/delete.png"
                   alt=""
                   data-toggle="modal"
+                  (click)="selectRemoveStaff(i)"
                   data-target="#removeStaff"
                 />
               </td>
@@ -343,7 +342,7 @@
         <div>Are you sure you want to remove staff ?</div>
         <button
           class="btn btn-warning rounded-0"
-          (click)="removeStaff(1)"
+          (click)="removeStaff()"
           style="width: 200px; margin-bottom: 20px; margin-top: 20px"
           data-dismiss="modal"
         >

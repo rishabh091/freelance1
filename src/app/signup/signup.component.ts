@@ -132,34 +132,48 @@ export class SignupComponent implements OnInit {
         this.form.disable();
         clearInterval(this.otpCheckInterval);
 
-        const payload = new RegisterModule(
-          this.form.value.userName,
-          this.form.value.storeName,
-          this.form.value.emailAddress,
-          this.form.value.storeCategory,
-          new UserInfo(
-            (
-              this.form.value.countryCode +
-              this.form.value.phoneNumber +
-              ''
-            ).replace('+', '')
-          )
-        );
-
-        this.apiAuthService
-          .register(payload)
-          .then((res) => {
-            this.toasterService.success('');
-            this.router.navigate([
-              '/signup/address/' +
+        this.auth.login().then((value) => {
+          const payload = new RegisterModule(
+            this.form.value.userName,
+            this.form.value.storeName,
+            this.form.value.emailAddress,
+            this.form.value.storeCategory,
+            new UserInfo(
+              (
                 this.form.value.countryCode +
-                this.form.value.phoneNumber,
-            ]);
-          })
-          .catch((error) => {
-            this.toasterService.failure(error);
-            console.log(error);
-          });
+                this.form.value.phoneNumber +
+                ''
+              ).replace('+', '')
+            )
+          );
+  
+          this.apiAuthService
+            .register(payload)
+            .then((res) => {
+              const payload2 = new UserInfo(
+                (
+                  this.form.value.countryCode +
+                  this.form.value.phoneNumber +
+                  ''
+                ).replace('+', '')
+              );
+              this.apiAuthService.isUserRegisterd(payload2).then((res) => {
+                localStorage.setItem('privilege', res['isprivilegedUser']);
+                localStorage.setItem('storeId', res['storeID']);
+                // this.router.navigate(['/orders']);
+              });
+              this.toasterService.success('');
+              this.router.navigate([
+                '/signup/address/' +
+                  this.form.value.countryCode +
+                  this.form.value.phoneNumber,
+              ]);
+            })
+            .catch((error) => {
+              this.toasterService.failure(error);
+              console.log(error);
+            });
+        })
       })
       .catch((error) => {
         this.form.enable();

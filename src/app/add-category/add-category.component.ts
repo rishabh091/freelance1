@@ -160,7 +160,7 @@ export class AddCategoryComponent implements OnInit {
         this.toasterService.success('');
       })
       .catch((error) => {
-        this.toasterService.failure(error);
+        // this.toasterService.failure(error);
         console.log(error);
       });
   }

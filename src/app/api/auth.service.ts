@@ -82,7 +82,7 @@ export class AuthService {
   }
 
   removeStaff(payload: RemoveStaff) {
-    let url = environment.apiUrl + 'removestaff'
+    let url = environment.apiUrl + 'removestoreuser'
     return this.httpClient.post(url, payload, this.getUIDHeaders()).toPromise()
   }
 

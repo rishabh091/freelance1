@@ -5,25 +5,23 @@ export class StoreStaff {
     public name: string
     public role: string[]
     public phoneNumber: string
-    public emailAddress: string
+    public email: string
 
     constructor(name: string, role: string[], phoneNumber: string, emailAddress: string) {
         this.name = name
         this.role = role
         this.phoneNumber = phoneNumber
-        this.emailAddress = emailAddress
+        this.email = emailAddress
     }
 }
 
 export class UpdateStoreStaff {
     public name: string
-    public role: string
     public phoneNumber: string
     public emailAddress: string
 
-    constructor(name: string, role: string, phoneNumber: string, emailAddress: string) {
+    constructor(name: string, phoneNumber: string, emailAddress: string) {
         this.name = name
-        this.role = role
         this.phoneNumber = phoneNumber
         this.emailAddress = emailAddress
     }

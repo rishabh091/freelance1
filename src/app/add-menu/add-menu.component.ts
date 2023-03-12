@@ -65,7 +65,7 @@ export class AddMenuComponent implements OnInit {
     });
 
     this.getCategory();
-    this.getSubCategory();
+    // this.getSubCategory();
   }
 
   get f(): { [key: string]: AbstractControl } {
@@ -146,7 +146,7 @@ export class AddMenuComponent implements OnInit {
         this.getItemImage();
       })
       .catch((error) => {
-        this.toaster.failure(error);
+        // this.toaster.failure(error);
         this.getItemImage();
       });
   }

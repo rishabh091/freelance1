@@ -34,6 +34,8 @@ export class StaffComponent implements OnInit {
 
   countryData = new Data();
 
+  selectedRemoveStaff;
+
   public spinner:boolean =  true;
 
   constructor(
@@ -68,6 +70,10 @@ export class StaffComponent implements OnInit {
     return this.updateStaffForm.controls;
   }
 
+  selectRemoveStaff(index) {
+    this.selectedRemoveStaff = index;
+  }
+
   getStaff(): void {
     const phoneNumber = localStorage
       .getItem('phoneWithCountry')
@@ -77,7 +83,7 @@ export class StaffComponent implements OnInit {
     this.api
       .getStaff(payload)
       .then((res: any) => {
-        this.staff = res.storestaff;
+        this.staff = res.storeUsers;
         this.spinner = false;
       })
       .catch((error) => {
@@ -126,7 +132,7 @@ export class StaffComponent implements OnInit {
     this.updateStaffForm.controls['phoneNumber'].setValue(
       staff.phoneNumber.replace('+', '')
     );
-    this.updateStaffForm.controls['emailAddress'].setValue(staff.emailAddress);
+    this.updateStaffForm.controls['emailAddress'].setValue(staff.email);
   }
 
   updateStaff(): void {
@@ -139,7 +145,6 @@ export class StaffComponent implements OnInit {
     const payload = new UpdateStaff(
       new UpdateStoreStaff(
         this.updateStaffForm.value.name,
-        this.updateStaffForm.value.role[0],
         this.updateStaffForm.value.phoneNumber + '',
         this.updateStaffForm.value.emailAddress
       )
@@ -156,8 +161,8 @@ export class StaffComponent implements OnInit {
       });
   }
 
-  removeStaff(index: number): void {
-    const staff = this.staff[index];
+  removeStaff(): void {
+    const staff = this.staff[this.selectedRemoveStaff];
     const phoneNumber = localStorage
       .getItem('phoneWithCountry')
       .replace('+', '');
@@ -165,9 +170,8 @@ export class StaffComponent implements OnInit {
     const payload = new RemoveStaff(
       new UpdateStoreStaff(
         staff.name,
-        staff.role[0],
         staff.phoneNumber,
-        staff.emailAddress
+        staff.email
       )
     );
 

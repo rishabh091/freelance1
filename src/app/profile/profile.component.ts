@@ -165,7 +165,7 @@ export class ProfileComponent implements OnInit {
         this.toaster.success('Profile Picture Updated');
       })
       .catch((error) => {
-        this.toaster.failure(error);
+        // this.toaster.failure(error);
       });
   }
 
