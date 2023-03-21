@@ -23,7 +23,8 @@ export class AddOrderComponent implements OnInit {
   orderArray = [0];
 
   itemName=[];
-  itemCount=[]
+  itemCount=[];
+
   constructor(
     private formBuilder: FormBuilder,
     private api: AuthApiService,
@@ -69,13 +70,18 @@ export class AddOrderComponent implements OnInit {
     }
 
     const items = []
-    console.log(this.itemName)
     for (let i in this.itemName) {
-      items.push({menuItemName: this.itemName[i], itemCount: parseInt(this.itemCount[i])})
+      if (this.itemName[i] && this.itemCount[i] && this.itemCount[i] > 0) {
+        items.push({menuItemName: this.itemName[i], itemCount: parseInt(this.itemCount[i])})
+      }
+    }
+
+    if (!items.length) {
+      this.toaster.failure('Enter valid item name and count');
+      return;
     }
 
     const payload = {
-      tableNumber: this.form.value.tableNumber,
       menuItems: {
         items: items
       }

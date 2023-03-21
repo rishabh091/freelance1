@@ -13,11 +13,11 @@ export class ServiceToasterService {
   infoNote: boolean = false;
 
   success(text: string) {
-    this.errorNote = true;
+    this.successNote = true;
     this.text = text;
 
     setTimeout(() => {
-      this.errorNote = false;
+      this.successNote = false;
       this.text = '';
     }, 5000);
   }

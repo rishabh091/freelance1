@@ -46,8 +46,7 @@ export class TableComponent implements OnInit {
   public qrCode: string = `https://hiveezy.com/store?storeid=${localStorage.getItem(
     'storeId'
   )}`;
-  public spinner:boolean =  true;
-
+  public spinner: boolean = true;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -181,6 +180,13 @@ export class TableComponent implements OnInit {
       });
   }
 
+  checkTable(tableNumber, tableState) {
+    if (tableNumber && tableState) {
+      return false;
+    } else {
+      return true;
+    }
+  }
   moveTableTransaction() {
     const phoneNumber = localStorage
       .getItem('phoneWithCountry')
@@ -196,8 +202,12 @@ export class TableComponent implements OnInit {
       .then((res) => {
         this.moveToTableNumber = 0;
         this.toasterService.success('Table moved!');
+        this.moveToTableNumber = null;
+        this.getTableState(this.tableNumber);
       })
       .catch((error) => {
+        this.getTableState(this.tableNumber);
+        this.moveToTableNumber = null;
         this.toasterService.failure(error);
       });
   }

@@ -48,7 +48,9 @@ export class AuthService {
 
   createOrder(payload) {
     let url = environment.apiUrl + 'postpaidorder'
-    return this.httpClient.post(url, payload, this.getUIDHeaders()).toPromise()
+    let headers = this.getUIDHeaders().headers;
+    headers = headers.append('authcheck', 'ok');
+    return this.httpClient.post(url, payload, {headers: headers}).toPromise()
   }
 
   updatePayment(payload: UpdatePaymentModule) {

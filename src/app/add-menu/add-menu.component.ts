@@ -217,7 +217,7 @@ export class AddMenuComponent implements OnInit {
         ];
       })
       .catch((error) => {
-        this.toaster.failure(error)
+        this.toaster.failure('Error')
       });
   }
 

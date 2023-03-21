@@ -24,7 +24,7 @@ import { Data } from '../countryCodes.data';
   styleUrls: ['./staff.component.css'],
 })
 export class StaffComponent implements OnInit {
-  staff: StoreStaff[] = [];
+  staff = [];
 
   addStaffForm: FormGroup;
   addStaffSubmitted = false;
@@ -113,12 +113,10 @@ export class StaffComponent implements OnInit {
     this.api
       .addStaff(payload)
       .then((res: any) => {
-        if (res.status == 'user added sucessfully') {
           this.addStaffForm.reset();
           this.addStaffSubmitted = false;
           this.toasterService.success('You have added the staff successfully!');
           this.getStaff();
-        }
       })
       .catch((error) => {
         this.toasterService.failure('Error in adding the staff!');
@@ -132,7 +130,7 @@ export class StaffComponent implements OnInit {
     this.updateStaffForm.controls['phoneNumber'].setValue(
       staff.phoneNumber.replace('+', '')
     );
-    this.updateStaffForm.controls['emailAddress'].setValue(staff.email);
+    this.updateStaffForm.controls['emailAddress'].setValue(staff.emailAddress);
   }
 
   updateStaff(): void {
@@ -146,7 +144,8 @@ export class StaffComponent implements OnInit {
       new UpdateStoreStaff(
         this.updateStaffForm.value.name,
         this.updateStaffForm.value.phoneNumber + '',
-        this.updateStaffForm.value.emailAddress
+        this.updateStaffForm.value.emailAddress,
+        this.updateStaffForm.value.role
       )
     );
 
@@ -171,7 +170,8 @@ export class StaffComponent implements OnInit {
       new UpdateStoreStaff(
         staff.name,
         staff.phoneNumber,
-        staff.email
+        staff.email,
+        staff.role[0]
       )
     );
 
