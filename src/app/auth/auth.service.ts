@@ -18,7 +18,8 @@ export class AuthService {
     const currentUser = getAuth().currentUser
     if (currentUser) {
       const token = await currentUser.getIdToken(true);
-      localStorage.setItem('token', token);
+      console.log(token)
+      localStorage.setItem('token', JSON.stringify({token, expiry: new Date().getTime() + 600000}));
       return token;
     }
     return null
@@ -42,6 +43,19 @@ export class AuthService {
     // const token = localStorage.getItem('token')
     const storeId = localStorage.getItem('storeId')
     return storeId
+  }
+
+  isTokenValid() {
+    const tokenObject = JSON.parse(localStorage.getItem('token'))
+    const currentTimestamp = new Date().getTime()
+    const expiryTimestamp = tokenObject.expiry
+
+    console.log({expiryTimestamp, currentTimestamp})
+    if (currentTimestamp > expiryTimestamp) {
+      this.login().then((token) => {
+        console.log({token})
+      })
+    }
   }
 
   checkPrivilage() {

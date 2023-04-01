@@ -6,7 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { AuthService as ApiAuthService } from '../api/auth.service';
+import { ApiService as ApiAuthService } from '../api/auth.service';
 import { UserInfo } from '../interface/auth.interface';
 import { StoreIdSchema } from '../interface/interface';
 import {
@@ -33,7 +33,7 @@ export class TableComponent implements OnInit {
   public selectedZone: string;
   public allZones: [];
   public selectedZoneObject: CreateTableInfo[];
-  public tableTransactions: [];
+  public tableTransactions: {};
   public tableState = {
     tableCode: '',
     tableOpen: false,

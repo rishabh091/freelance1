@@ -3,7 +3,7 @@ import { FormGroup } from '@angular/forms';
 import { UserInfo } from '../interface/auth.interface';
 import { MenuInfo, RemoveMenuCategory } from '../interface/category.interface';
 import { StoreIdSchema } from '../interface/interface';
-import { AuthService as Api } from '../api/auth.service';
+import { ApiService as Api } from '../api/auth.service';
 import { ServiceToasterService } from '../service-toaster.service';
 import { Router } from '@angular/router';
 

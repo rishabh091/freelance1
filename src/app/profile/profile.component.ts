@@ -6,7 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Country, State, City } from 'country-state-city';
-import { AuthService as Api } from '../api/auth.service';
+import { ApiService as Api } from '../api/auth.service';
 import {
   AboutStore,
   StoreAddress,
@@ -296,7 +296,7 @@ export class ProfileComponent implements OnInit {
       .getCategory(new StoreIdSchema(storeId))
       .then((res: any) => {
         this.updateCategoryForm.controls['storeSubCategory'].setValue(
-          res['storeSubCatagory']
+          res['serviceType']
         );
         this.updateCategoryForm.controls['isFoodServedToTable'].setValue(
           res['isFoodServedToTable']

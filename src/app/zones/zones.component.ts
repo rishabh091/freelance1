@@ -14,7 +14,7 @@ import {
   ZoneSchema,
 } from '../interface/zone.interface';
 import { UserInfo } from '../interface/auth.interface';
-import { AuthService as ApiAuthService } from '../api/auth.service';
+import { ApiService as ApiAuthService } from '../api/auth.service';
 import { ServiceToasterService } from '../service-toaster.service';
 
 @Component({

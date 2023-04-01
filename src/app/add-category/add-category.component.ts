@@ -6,7 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { ImageCroppedEvent } from 'ngx-image-cropper';
-import { AuthService as ApiAuthService } from '../api/auth.service';
+import { ApiService as ApiAuthService } from '../api/auth.service';
 import { UserInfo } from '../interface/auth.interface';
 import {
   AddCategory,

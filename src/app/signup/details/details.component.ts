@@ -6,7 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService as ApiAuthService } from 'src/app/api/auth.service';
+import { ApiService as ApiAuthService } from 'src/app/api/auth.service';
 import { AuthService } from 'src/app/auth/auth.service';
 import {
   AboutStore,

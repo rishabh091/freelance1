@@ -5,7 +5,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { AuthService as AuthApiService } from '../api/auth.service';
+import { ApiService as AuthApiService } from '../api/auth.service';
 import { UserInfo } from '../interface/auth.interface';
 import { SubMenuCategories } from '../interface/category.interface';
 import {

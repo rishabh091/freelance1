@@ -13,7 +13,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { AuthService as AuthApiService } from '../api/auth.service';
+import { ApiService as AuthApiService } from '../api/auth.service';
 import { UserInfo } from '../interface/auth.interface';
 import { ServiceToasterService } from '../service-toaster.service';
 import { Data } from '../countryCodes.data';

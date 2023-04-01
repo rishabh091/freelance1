@@ -7,7 +7,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RegisterModule, UserInfo } from '../interface/auth.interface';
-import { AuthService as ApiAuthService } from '../api/auth.service';
+import { ApiService as ApiAuthService } from '../api/auth.service';
 import { getAuth, RecaptchaVerifier } from 'firebase/auth';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AuthService } from '../auth/auth.service';

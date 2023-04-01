@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ImageCroppedEvent } from 'ngx-image-cropper';
-import { AuthService } from 'src/app/api/auth.service';
+import { ApiService } from 'src/app/api/auth.service';
 import { UserInfo } from 'src/app/interface/auth.interface';
 import { MenuItemPrice, UpdateMenuItemPrice } from 'src/app/interface/category.interface';
 import { StoreIdSchema } from 'src/app/interface/interface';
@@ -31,7 +31,7 @@ export class ShowProdsComponent implements OnInit {
   public imageChangedEvent: any
   public showProfilePic: boolean = true
 
-  constructor(private api: AuthService, private route: ActivatedRoute, private formBuilder: FormBuilder) { }
+  constructor(private api: ApiService, private route: ActivatedRoute, private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
     this.menuItemForm = this.formBuilder.group({

@@ -11,7 +11,7 @@ import {
   UserInfo,
   StorePayment,
 } from 'src/app/interface/auth.interface';
-import { AuthService as ApiAuthService } from 'src/app/api/auth.service';
+import { ApiService as ApiAuthService } from 'src/app/api/auth.service';
 import { AuthService } from 'src/app/auth/auth.service';
 import { ServiceToasterService } from '../../service-toaster.service';
 

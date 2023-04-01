@@ -6,7 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { ServiceToasterService } from '../service-toaster.service';
-import { AuthService as AuthApiService } from '../api/auth.service';
+import { ApiService as AuthApiService } from '../api/auth.service';
 import { StoreIdSchema } from '../interface/interface';
 
 @Component({

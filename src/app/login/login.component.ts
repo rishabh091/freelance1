@@ -17,7 +17,7 @@ import {
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AuthService } from '../auth/auth.service';
 import { UserInfo } from '../interface/auth.interface';
-import { AuthService as Api } from '../api/auth.service';
+import { ApiService as Api } from '../api/auth.service';
 import { ServiceToasterService } from '../service-toaster.service';
 import { Data } from '../countryCodes.data';
 import { first } from 'rxjs/operators';

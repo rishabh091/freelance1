@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService } from 'src/app/api/auth.service';
+import { ApiService } from 'src/app/api/auth.service';
 import { SubMenuCategories } from 'src/app/interface/category.interface';
 
 @Component({
@@ -13,7 +13,7 @@ export class ShowSubcategoryComponent implements OnInit {
   public selectedCategory: string
   public subCategories: any[]
 
-  constructor(private router: Router, private route: ActivatedRoute, private api: AuthService) { }
+  constructor(private router: Router, private route: ActivatedRoute, private api: ApiService) { }
 
   ngOnInit(): void {
     this.selectedCategory = this.route.snapshot.paramMap.get('category')

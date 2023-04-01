@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
 import { AuthService } from '../auth/auth.service';
-import { AuthService as Api } from '../api/auth.service';
+import { ApiService as Api } from '../api/auth.service';
 import { Nav } from '../enums/orders.enum';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { GetOrders, UpdateOrderStatus } from '../interface/orders.interface';
@@ -106,7 +106,7 @@ export class OrdersComponent implements OnInit {
       .getOrdersByType(payload)
       .then((res) => {
         this.spinner = false;
-        this.activeArray = res['restaurantOrders'];
+        this.activeArray = res;
       })
       .catch((error) => {
         this.spinner = false;
