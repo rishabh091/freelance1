@@ -9,6 +9,8 @@ import { ServiceToasterService } from '../service-toaster.service';
 import { ApiService as AuthApiService } from '../api/auth.service';
 import { StoreIdSchema } from '../interface/interface';
 import { ActivatedRoute } from '@angular/router';
+import { TableTransactions } from '../interface/table.interface';
+import { UserInfo } from '../interface/auth.interface';
 
 @Component({
   selector: 'app-add-order',
@@ -46,6 +48,25 @@ export class AddOrderComponent implements OnInit {
     this.tableNumber = this.route.snapshot.paramMap
     .get('tableNumber');
     this.userId = this.route.snapshot.paramMap.get('id');
+    this.getTableTransaction(parseInt(this.tableNumber));
+  }
+
+  getTableTransaction(tableNumber: number) {
+    const phoneNumber = localStorage
+      .getItem('phoneWithCountry')
+      .replace('+', '');
+    const payload = new TableTransactions(
+      new UserInfo(phoneNumber),
+      tableNumber
+    );
+    this.api
+      .getTableTransaction(payload)
+      .then((res: any) => {
+        this.userId = res.tableTransaction.orders.length ? res.tableTransaction.orders[0].userID: undefined;
+      })
+      .catch((error) => {
+        console.log(error)
+      });
   }
 
   getItems() {
