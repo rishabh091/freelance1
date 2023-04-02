@@ -77,6 +77,7 @@
             class="form-control"
             [(ngModel)]="moveToTableNumber"
             style="width: 40%"
+            disabled="{{ !tableState.tableOpen }}"
           />
           <button
             type="button"
@@ -89,7 +90,7 @@
         </div>
 
         <div class="m-2 p-2">
-          <div class="text-center font-weight-bold text-uppercase m-2">
+          <div *ngIf="tableTransactions['tableBillTotal']" class="text-center font-weight-bold text-uppercase m-2">
             Table Total bill: {{ tableTransactions['tableBillTotal'] }}
           </div>
           <div class="table-responsive">
@@ -139,6 +140,8 @@
             [errorCorrectionLevel]="'M'"
           ></qrcode>
         </div>
+
+        <button [disabled]="!tableState.tableOpen" (click)="navigate(tableNumber)" class="btn btn-primary" style="width: 100%">Add Order</button>
       </div>
       <!-- <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">

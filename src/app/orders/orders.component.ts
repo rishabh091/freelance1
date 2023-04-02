@@ -95,6 +95,10 @@ export class OrdersComponent implements OnInit {
       });
   }
 
+  navigateToOrder(tableNumber) {
+    location.href = `/addOrder/${tableNumber}/id/abcd`
+  }
+
   getOrderByType(type: string) {
     this.activatedOrderType = type;
     const phoneNumber = localStorage

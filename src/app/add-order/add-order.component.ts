@@ -8,6 +8,7 @@ import {
 import { ServiceToasterService } from '../service-toaster.service';
 import { ApiService as AuthApiService } from '../api/auth.service';
 import { StoreIdSchema } from '../interface/interface';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-add-order',
@@ -25,18 +26,26 @@ export class AddOrderComponent implements OnInit {
   itemName=[];
   itemCount=[];
 
+  tableNumber
+  userId
+
   constructor(
     private formBuilder: FormBuilder,
     private api: AuthApiService,
-    private toaster: ServiceToasterService
+    private toaster: ServiceToasterService,
+    private route: ActivatedRoute,
   ) {}
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
-      tableNumber: ['', Validators.required],
+      // tableNumber: ['', Validators.required],
       // tableCode: ['', [Validators.required]],
     });
     this.getItems();
+
+    this.tableNumber = this.route.snapshot.paramMap
+    .get('tableNumber');
+    this.userId = this.route.snapshot.paramMap.get('id');
   }
 
   getItems() {
@@ -82,9 +91,14 @@ export class AddOrderComponent implements OnInit {
     }
 
     const payload = {
+      tableNumber: parseInt(this.tableNumber),
       menuItems: {
         items: items
       }
+    }
+
+    if (this.userId) {
+      payload['userID'] = this.userId;
     }
 
     this.api.createOrder(payload).then(res => {

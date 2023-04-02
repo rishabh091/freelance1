@@ -62,6 +62,11 @@ export class TableComponent implements OnInit {
     });
   }
 
+
+  navigate(tableNumber) {
+    location.href = '/addOrder/' + tableNumber
+  }
+
   getZone() {
     const phoneNumber = localStorage
       .getItem('phoneWithCountry')
