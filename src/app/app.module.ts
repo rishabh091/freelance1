@@ -18,7 +18,7 @@ import { AngularFireAuthModule} from '@angular/fire/compat/auth';
 import {MatListModule} from '@angular/material/list';
 import { ZonesComponent } from './zones/zones.component';
 import { TableComponent } from './table/table.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AddressComponent } from './signup/address/address.component';
 import { PaymentComponent } from './signup/payment/payment.component';
 import { ProfileComponent } from './profile/profile.component';
@@ -31,6 +31,7 @@ import { QRCodeModule } from 'angularx-qrcode';
 import { ShowSubcategoryComponent } from './show-menu/show-subcategory/show-subcategory.component';
 import { ShowProdsComponent } from './show-menu/show-prods/show-prods.component';
 import { AddOrderComponent } from './add-order/add-order.component';
+import { AuthInterceptor } from './auth/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -66,7 +67,9 @@ import { AddOrderComponent } from './add-order/add-order.component';
     QRCodeModule,
     ImageCropperModule
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi:true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -18,7 +18,6 @@ export class AuthService {
     const currentUser = getAuth().currentUser
     if (currentUser) {
       const token = await currentUser.getIdToken(true);
-      console.log(token)
       localStorage.setItem('token', JSON.stringify({token, expiry: new Date().getTime() + 600000}));
       return token;
     }
@@ -50,7 +49,6 @@ export class AuthService {
     const currentTimestamp = new Date().getTime()
     const expiryTimestamp = tokenObject.expiry
 
-    console.log({expiryTimestamp, currentTimestamp})
     if (currentTimestamp > expiryTimestamp) {
       this.login().then((token) => {
         console.log({token})
